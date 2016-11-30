@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>南华大学舆情系统</title>
+	<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="./css/index.css">
+	<script src="./js/lib/jquery.min.js"></script>
+	<script src="./js/lib/bootstrap.min.js"></script>
+	<script src="../js/lib/echarts/echarts.js"></script>
+	<script src="./js/echarts.common.min.js" type="text/javascript" charset="utf-8" async defer></script>
+</head>
+<body>
+	<div class="container" id="profile">
+		<div  class="col-md-6">
+			<img src="Image/Title.png" alt=""></div>
+		<div  class="col-md-6 " id="RightCorner" >
+			<div  class="col-md-3">帮助</div>
+			<div  class="col-md-3">系统消息</div>
+			<div  class="col-md-3">联系客服</div>
+			<div  class="col-md-3">安全退出</div>
+		</div>
+	</div>
+
+	<div id="index">
+		<div class="container">
+			<ul id="nav" >
+				<li id ="page1">
+					<a href ="YQSY.html">首页</a>
+				</li>
+				<li id ="page2">
+					<a href ="YQLL.html">舆情浏览</a>
+				</li>
+				<li id ="page3">
+					<a href ="#page3">舆情预警</a>
+				</li>
+				<li id ="page4">
+					<a href ="TJFX.html">统计分析</a>
+				</li>
+				<li id ="page5">
+					<a href ="#page5">网络情报</a>
+				</li>
+				<li id ="page6">
+					<a href ="#page6">舆情简报</a>
+				</li>
+				<li id ="page7">
+					<a href ="#page7">云搜索</a>
+				</li>
+				<li id ="page8">
+					<a href ="#page8">话题挖掘</a>
+				</li>
+				<li id ="page9">
+					<a href ="#page9">网参</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="container ">
+		<div class="row">
+			<div class="col-md-8">
+				<div><br></div>
+				<div class="panel panel-default">
+					<div class="panel-heading" >一周走势图</div>
+					<div class="panel-body" id='main'>
+					</div>
+						
+				</div>
+
+				<div class="panel panel-default">
+					<div class="panel-heading">舆情预警</div>
+					<div class="panel-body" id="alarm"></div>
+				</div>
+
+				<div class="panel panel-default">
+					<div class="panel-heading">最新舆情</div>
+					<div class="panel-body" id = "latest"></div>
+				</div>
+                
+                <div class="panel panel-default">
+					<div class="panel-heading">省域舆情</div>
+					<div class="panel-body">
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br></div>
+				</div>
+				 <div class="panel panel-default">
+					<div class="panel-heading">国内热点</div>
+					<div class="panel-body">
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br></div>
+				</div>
+				  <div class="panel panel-default">
+					<div class="panel-heading">舆情日报</div>
+					<div class="panel-body">
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br></div>
+				 </div>
+
+			</div>
+			<div class="col-md-4">
+				<div>
+					<br></div>
+				<div class="panel panel-default category-bar">
+					<div class="panel-heading">今日舆情</div>
+					<div class="panel-body">
+						<span class="blue">
+							<span class="glyphicon glyphicon-stop"></span>
+							正面
+						</span>
+						<span class="red">
+							<span class="glyphicon glyphicon-stop"></span>
+							负面
+						</span>
+
+						<div class="clearfix"></div>
+
+						<div class="categorys">
+							<div class="col-md-4 category">
+								<div class="content"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel panel-default">
+					<div class="panel-heading">微博</div>
+					<div class="panel-body">
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br></div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+    
+	<script type="text/javascript">
+     //一周走势图
+     
+    var now = new Date(2015,9,28);
+    var pre = new Date(2015,9,28);
+    pre.setDate(now.getDate()-7);
+    
+     function setFormat(date){
+        var year = date.getFullYear();
+        var month = date.getMonth();
+        var date = date.getDate();
+        return (year + "-" + month + "-" + date);
+    }
+    startTime=setFormat(pre);
+    endTime=setFormat(now);
+    var arrobj=new Array;
+    var temp=new Date(2015,9,28);
+    for(var i=7;i>=1;i--)
+    {
+       temp.setDate(now.getDate()-i);
+       arrobj[i-1]=setFormat(temp);
+      
+    }
+	 $(document).ready(function(){
+            $.ajax({
+                type:"GET",
+                url:"./servlet/IndexServlet",
+                dataType:"json",
+                data : {
+                 	     "startTime": startTime,
+                	     "endTime": endTime,
+                         "method" : 'getTendency'
+
+                       },
+                success: function(data)
+                {
+
+                 var myChart = echarts.init(document.getElementById('main'));
+                
+                 myChart.setOption({
+                     title: {
+                        text: '一周走势图',
+                        subtext: '条数'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data:['全部','负面']
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            dataZoom: {},
+                            magicType: {type: ['line', 'bar']},
+                            saveAsImage: {}
+                        }
+                    },
+                    
+                    yAxis: {
+                        type: 'value',
+                        axisLabel: {
+                            formatter: '{value} 条'
+                        }
+                    }
+                    ,
+                    xAxis:  {
+                     
+                        
+                    },
+                });
+                    myChart.setOption
+                    ({
+    
+                     xAxis:  {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: arrobj
+                    },
+                    series: [
+                        {
+                            name:'全部',
+                            type:'line',
+                            data:data.series.all
+                        },
+                        {
+                            name:'负面',
+                            type:'line',
+                            data:data.series.neg       
+                        }
+                    ]
+                    });
+                }
+            })
+
+        });
+       //舆情日报
+       $(document).ready(function(){
+            $.ajax({
+                type:"GET",
+                url:"./JSON/getAlarm.json",
+                dataType:"json",
+                success: function(data){
+                    var json=data;
+                    $.each(json, function(i,item){
+                        var content = "";
+                        
+                        content += '<div class="col-sm-8">';
+                        content += item.title;
+                        content += '</div>';
+                        
+                        content += '<div class="col-sm-2">';
+                        content += '<a>预览<a>';
+                        content += '</div>';
+                        $("#newspaper").append(content);
+                    })
+                }
+            })
+        });
+        //舆情预警
+         $(document).ready(function(){
+            $.ajax({
+                type:"GET",
+                url:"./JSON/getAlarm.json",
+                dataType:"json",
+                success: function(data){
+                    $.each(data, function(i,item){
+                        var content = "";
+                        
+                        content += '<div class="col-sm-9 ">';
+                        content += '<a url="';
+                        content += item.url;
+                        content += '">';
+                        content += item.title;
+                        content += '</a>'
+                        content += '</div>';
+                        
+                        content += '<div class="col-sm-1">';
+                        content += item.date;
+                        content += '</div>';
+                        
+                        
+                        content += '<div class="col-sm-2">';
+                        content += item.source;
+                        content += '</div>';
+                        
+                        $("#alarm").append(content);
+                    })
+                }
+            })
+        });
+      
+    	// 最新舆情
+        $(document).ready(function(){
+            $.ajax({
+                type:"GET",
+                url:"./JSON/getLatestMessage.json",
+                dataType:"json",
+                success: function(data){
+                    $.each(data, function(i,item){
+                        var content = "";
+                        
+                        content += '<div class="col-sm-8">';
+                        content += item.title;
+                        content += '</div>';
+                        
+                        content += '<div class="col-sm-1">';
+                        content += item.date;
+                        content += '</div>';
+                        
+                        content += '<div class="col-sm-1">';
+                        content += item.time;
+                        content += '</div>';
+                        
+                        content += '<div class="col-sm-2">';
+                        content += item.source;
+                        content += '</div>';
+                        
+                        $("#latest").append(content);
+                    })
+                }
+            })
+        });
+        //舆情日报
+    
+       	// 今日舆情
+       	$(document).ready(function(){
+	        function showCategory(data) {
+				var $cats = $('.category-bar .categorys');
+				var $demo = $cats.find('.category').clone();
+				$cats.find('.category').remove();
+
+				for (var i = 0; i < data.websiteName.length; i++) {
+					var $div = $demo.clone();
+					//$div.find('.content').html(data.websiteName[i])
+					$cats.append($div);
+					$div.find('.content').css('height', $div.find('.content').width() + 'px');
+
+					(function(div, data, idx){
+						require.config({
+				            paths: {
+				                echarts: '/poMonitor/js/lib/echarts'
+				            }
+				        });
+
+						require(
+						    [ 
+						        'echarts', 
+						        'echarts/chart/pie',
+						        'echarts/chart/bar'
+						    ],
+
+							function (ec) {
+				                // 基于准备好的dom，初始化echarts图表
+				                //console.log(div);
+				                
+				                var myChart = ec.init(div); 
+				                
+				                var option = {
+				                	title:{
+				                		text: data.websiteName[idx],
+				                		x:'center',
+				                		y:'center',
+				                		zlevel:-99,
+				                		show: true
+				                	},
+				                	// tooltip : {
+			                	 //        trigger: 'item',
+			                	 //        formatter: "{a} <br/>{b} : {c} ({d}%)"
+			                	 //    },
+			                	    calculable : false,
+			                	    series : [
+			                	        {
+			                	            name:'访问来源',
+			                	            type:'pie',
+			                	            radius : ['50%', '70%'],
+			                	            itemStyle : {
+			                	                normal : {
+			                	                    label : {
+			                	                        show : false
+			                	                    },
+			                	                    labelLine : {
+			                	                        show : false
+			                	                    }
+			                	                },
+			                	                emphasis : {
+			                	                    label : {
+			                	                        show : true,
+			                	                        position : 'center',
+			                	                        textStyle : {
+			                	                            fontSize : '30',
+			                	                            fontWeight : 'bold'
+			                	                        }
+			                	                    }
+			                	                }
+			                	            },
+			                	            data:[
+			                	                {value:data.totalNum[idx] - data.negativeNum[idx], name:data.totalNum[idx] - data.negativeNum[idx]},
+			                	                {value:data.negativeNum[idx], name:data.totalNum[idx]},
+			                	            ]
+			                	        }
+			                	    ]
+				                };
+							                    
+		    					myChart.setOption(option);
+				    		}
+					    );
+					}( $div.find('.content').get(0), data, i ));
+				}
+			}
+
+			$.ajax({
+                type:"GET",
+                //url:"./JSON/testJinRiYuQin.json",
+                url:"./servlet/IndexServlet",
+                data : {
+                        "method" : 'checkStatus'
+                       },
+                dataType:"json",
+                success: function(data) {
+					showCategory(data)
+			}});
+       	});
+        
+
+    </script>
+</body>
+</html>

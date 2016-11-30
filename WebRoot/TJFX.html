@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>南华大学舆情系统</title>
+  <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="./css/TJFX.css">
+  <script src="./js/lib/jquery.min.js"></script>
+  <script src="./js/lib/bootstrap.min.js"></script>
+  <script src="../js/lib/echarts/echarts.js"></script>
+  <script src="./js/echarts.common.min.js"></script>
+</head>
+<body>
+   <div class="container">
+          <div class="row">
+               <img src="Image/Title.png" class="img-responsive col-md-5" alt="Title">
+                <br>
+                <br>
+               <div class="col-md-offset-1 col-md-1" style="width: 120px;">
+                <img src="Image/BZ.png" alt="BZ">
+                 帮助
+               </div>
+               <div class="col-md-1" style="width: 120px; ">
+                 <img src="Image/XTXX.png" alt="XTXX">
+                 系统消息
+                </div>
+                <div class="col-md-1" style="width: 120px; ">
+                 <img src="Image/LXKF.png" alt="LXKF">
+                 联系客服
+                </div>
+                <div class="col-md-1" style="width: 120px;">
+                 <img src="Image/AQTC.png" alt="AQTC">
+                 安全退出
+               </div>
+
+          </div>
+  </div>
+   <div class="container center-block" style="width:100%;background-color: #2A83D3">      
+       <ul class="nav nav-tabs col-md-5 " style="width:55%;left: 20%" >
+           <li ><a href="YQSY.php" title="" style="color:#fff; ">首页</a></li>
+           <li ><a href="#" title="" style="color:#fff">舆情浏览</a></li>
+           <li ><a href="#" title="" style="color:#fff; ">舆情预警</a></li>
+           <li class="active" ><a href="#" title="" style="color:#6D86B5; ">统计分析</a></li>
+           <li ><a href="#" title="" style="color:#fff; ">网络情报</a></li>
+           <li ><a href="#" title="" style="color:#fff; ">舆情简报</a></li>
+           <li ><a href="#" title="" style="color:#fff; ">云搜索</a></li>
+           <li ><a href="#" title="" style="color:#fff; ">话题挖掘</a></li>
+           <li ><a href="#" title="" style="color:#fff; ">网参</a></li>
+           <li class="pull-right" id="XTSZ"><a href="#" title="" style="color:#fff; "> <img src="Image/XTSZ.png" alt="">系统设置</a></li>
+    </ul>
+   </div>
+   <div class="container center">
+      <div class="row"> 
+        
+        <div class="MediumType">    
+          <span id="MediumType">媒体类型</span> 
+          <span class="MediumTypeSelect"><input type="checkbox" name="" value="" placeholder="">新闻</span>
+          <span class="MediumTypeSelect"><input type="checkbox" name="" value="" placeholder="">论坛</span>
+          <span class="MediumTypeSelect"><input type="checkbox" name="" value="" placeholder="">博客</span>
+          <span class="MediumTypeSelect"><input type="checkbox" name="" value="" placeholder="">微博</span>
+          <span class="MediumTypeSelect"><input type="checkbox" name="" value="" placeholder="">平煤</span>
+          <span class="MediumTypeSelect"><input type="checkbox" name="" value="" placeholder="">微信</span>
+          <span class="MediumTypeSelect"><input type="checkbox" name="" value="" placeholder="">视频</span>
+          <span class="MediumTypeSelect"><input type="checkbox" name="" value="" placeholder="">其他</span>
+        </div>  
+        
+
+        <div class="Tendentiousness">      
+          <span id="Tendentiousness">倾向性</span> 
+          <span class="TendentiousnessSelect"><input type="checkbox" name="" value="" placeholder="">正面</span>
+          <span class="TendentiousnessSelect"><input type="checkbox" name="" value="" placeholder="">负面</span>
+          <span class="TendentiousnessSelect"><input type="checkbox" name="" value="" placeholder="">中性</span>
+          <span id="Tendentiousness">专题选择</span>
+          <span class="TendentiousnessSelect">
+                <select>  
+                     <option value ="1">--全部信息--</option>  
+               </select>  
+          </span>  
+        </div>  
+
+
+        <div class="StartTime">    
+          <span id="StartTime">起止时间</span> 
+          <span class="StartTimeSelect"><input type="radio" name="" value="" placeholder="">当天</span>
+          <span class="StartTimeSelect"><input type="radio" name="" value="" placeholder="">一周内</span>
+          <span class="StartTimeSelect"><input type="radio" name="" value="" placeholder="">自定义</span> 
+        </div> 
+        
+         <div class="inner-center">
+           
+            <div id="subtitle"><p>南華大學數據監測</p></div> 
+            <div id="Tendency"><input type="checkbox" name="" value=""><span>傾向性走勢圖</span> </div> 
+            <div id="Picture1" style="width: auto;height:400px"></div>
+        
+         </div>
+
+
+         <div class="inner-center">
+           
+            <div id="Tendency"><input type="checkbox" name="" value=""><span>信息来源分类,倾向性数据统计</span> </div> 
+            <div id="Picture2" style="width: auto;height:400px"></div>
+        
+         </div>
+
+          <div class="inner-center">
+           
+            <div id="Tendency"><input type="checkbox" name="" value=""><span>x信息来源top10</span> </div> 
+            <div id="Picture3" style="width: auto;height:400px"></div>
+        
+         </div>
+         
+      </div>
+        
+      <!--傾向性走勢圖-->
+      <script type="text/javascript">
+      $(document).ready(function(){
+            $.ajax({
+                type:"GET",
+                url:"./JSON/TJFXP1.json",
+                dataType:"json",
+                
+                success: function(data)
+                {
+
+                 var myChart = echarts.init(document.getElementById('Picture1'));
+
+        
+                  option = {
+   
+                   tooltip: {
+                       trigger: 'axis'
+                   },
+                   legend: {
+                       data:['全部','负面']
+                   },
+                   toolbox: {
+                       show: true,
+                       feature: {
+                           dataZoom: {
+                               yAxisIndex: 'none'
+                           },
+                           dataView: {readOnly: false},
+                           magicType: {type: ['line', 'bar']},
+                           restore: {},
+                           saveAsImage: {}
+                       }
+                   },
+                   xAxis:  {
+                       type: 'category',
+                       boundaryGap: false,
+                       data: data.xAxis,
+                   },
+                   yAxis: {
+                       type: 'value',
+                       axisLabel: {
+                           formatter: '{value} 条'
+                       }
+                   },
+                   series: [
+                       {
+                           name:'全部',
+                           type:'line',
+                           data:data.all,
+                       },
+                       {
+                           name:'负面',
+                           type:'line',
+                           data:data.regitive,
+                       }
+                   ]
+              };
+              myChart.setOption(option);
+                
+                }
+            })
+
+        });
+        
+     </script>
+
+     <!--信息来源,倾向性分布图-->
+      <script type="text/javascript">
+      $(document).ready(function(){
+            $.ajax({
+                type:"GET",
+                url:"./JSON/TJFXP1.json",
+                dataType:"json",
+                
+                success: function(data)
+                {
+
+                 var myChart = echarts.init(document.getElementById('Picture2'));
+
+        
+                  option = {  
+                             tooltip: {
+                                 trigger: 'item',
+                                 formatter: "{a} <br/>{b}: {c} ({d}%)"
+                             },
+                             legend: {
+                                 orient: 'vertical',
+                                 x: 'left',
+                                 data:['正面','负面','中性','新闻','论坛','博客','平煤','微博','微博','微信','视频','其他']
+                             },
+                             series: [
+                                 {
+                                     name:'访问来源',
+                                     type:'pie',
+                                     selectedMode: 'single',
+                                     radius: [0, '30%'],
+                         
+                                     label: {
+                                         normal: {
+                                             position: 'inner'
+                                         }
+                                     },
+                                     labelLine: {
+                                         normal: {
+                                             show: false
+                                         }
+                                     },
+                                     data:[
+                                         {value:335, name:'正面19.87%', selected:true},
+                                         {value:679, name:'负面29.07%'},
+                                         {value:1548, name:'中性51.07%'}
+                                     ]
+                                 },
+                                 {
+                                     name:'访问来源',
+                                     type:'pie',
+                                     radius: ['40%', '55%'],
+                         
+                                     data:[
+                                         {value:335, name:'正面'},
+                                         {value:310, name:'负面'},
+                                         {value:234, name:'中性'},
+                                         {value:135, name:'新闻'},
+                                         {value:1048, name:'论坛'},
+                                         {value:251, name:'平煤'},
+                                         {value:147, name:'微博'},
+                                         {value:102, name:'其他'}
+                                     ]
+                                 }
+                             ]
+                         };
+              myChart.setOption(option);
+                
+                }
+            })
+
+        });
+        
+     </script>
+
+     <!--信息来源站点-->
+      <script type="text/javascript">
+      $(document).ready(function(){
+            $.ajax({
+                type:"GET",
+                url:"./JSON/TJFXP1.json",
+                dataType:"json",
+                
+                success: function(data)
+                {
+
+                 var myChart = echarts.init(document.getElementById('Picture3'));
+
+        
+                 option = {
+ 
+                           tooltip: {},
+                          
+                           xAxis: {
+                               data: ["微信","新浪博客","湖南日报","百度网页","新浪博客","百度贴吧","耒阳在线","搜狐公众平台","腾讯微博","其他"],
+                             
+                           },
+                           yAxis: {  
+                               axisLabel: {formatter: '{value} 条'}
+                               
+                           },
+                           series: [{
+                               name: '销量',
+                               type: 'bar',
+                               data: [470, 255, 144, 132, 75, 37,5,4,3,3]
+                           }]
+                       };
+              myChart.setOption(option);
+                
+                }
+            })
+
+        });
+        
+     </script>
+
+
+   </div>
+</body>
+</html>

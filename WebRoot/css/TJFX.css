@@ -1,0 +1,55 @@
+.MediumType
+{
+	margin-top:  3%;
+	margin-left: 2%;
+}
+.center
+{   
+	margin-top: 0.5%;
+	border-radius: 10px;
+	background-color: #EBEBEB;
+}
+#MediumType,#Tendentiousness,#StartTime
+{
+	background-color: #38B4E1;
+	padding: 0 1%;
+	color: white;
+	font-size: 15px;
+	
+}
+#Tendentiousness
+{
+ padding: 0 1.6%;
+}
+.MediumTypeSelect,.TendentiousnessSelect,.StartTimeSelect
+{
+	margin: 0 1%;
+}
+.Tendentiousness,.StartTime
+{
+	margin-top:1%;
+	margin-left:2%;
+}
+.inner-center
+{   
+	margin: 0.5% 0.5%;
+	background-color: white;
+	color: red;
+	font-size: 32px;
+	padding: 0.5% 0.5%;
+}
+#Tendency
+{
+	height:30px;
+	color: white;
+	font-size: 20px;
+    background-color: #5094D1;
+    padding:0 1%;
+    margin:8px;
+
+}
+#subtitle{
+	margin: 10px;
+	font-size: 32px;
+	color:#C9000B;
+}

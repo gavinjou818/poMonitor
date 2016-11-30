@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+    <script src="./js/lib/jquery.min.js"></script>
+    <script src="./js/lib/bootstrap.min.js"></script>
+	
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+   <script type="text/javascript" charset="utf-8" async defer>
+   	$(document).ready(function()
+   	{
+      $("#ZT").click( function()
+      {
+      	$("p").toggle(500);
+      });
+       
+   	});
+   </script>
+</head>
+<body>
+    <!--标题-->
+     <div class="container">
+          <div class="row">
+               <img src="Image/Title.png" class="img-responsive col-md-5" alt="Title">
+                <br>
+                <br>
+               <div class="col-md-offset-1 col-md-1" style="width: 120px;">
+               	<img src="Image/BZ.png" alt="BZ">
+               	 帮助
+               </div>
+               <div class="col-md-1" style="width: 120px; ">
+                 <img src="Image/XTXX.png" alt="XTXX">
+               	 系统消息
+                </div>
+                <div class="col-md-1" style="width: 120px; ">
+                 <img src="Image/LXKF.png" alt="LXKF">
+               	 联系客服
+                </div>
+                <div class="col-md-1" style="width: 120px;">
+                 <img src="Image/AQTC.png" alt="AQTC">
+               	 安全退出
+               </div>
+
+          </div>
+	</div>
+	 <div class="container center-block" style="width:100%;background-color: #2A83D3">	    
+	     <ul class="nav nav-tabs col-md-5 " style="width:55%;left: 20%" >
+           <li ><a href="YQSY.php" title="" style="color:#fff; ">首页</a></li>
+           <li  class="active"><a href="#" title="" style="color:#6D86B5;">舆情浏览</a></li>
+           <li ><a href="#" title="" style="color:#fff; ">舆情预警</a></li>
+           <li ><a href="#" title="" style="color:#fff; ">统计分析</a></li>
+           <li ><a href="#" title="" style="color:#fff; ">网络情报</a></li>
+           <li ><a href="#" title="" style="color:#fff; ">舆情简报</a></li>
+           <li ><a href="#" title="" style="color:#fff; ">云搜索</a></li>
+           <li ><a href="#" title="" style="color:#fff; ">话题挖掘</a></li>
+           <li ><a href="#" title="" style="color:#fff; ">网参</a></li>
+           <li class="pull-right" id="XTSZ"><a href="#" title="" style="color:#fff; "> <img src="Image/XTSZ.png" alt="">系统设置</a></li>
+	 	</ul>
+	 </div>
+	 <div class="container">
+	     <div class="panel-group" id="accordion" style="width:20%;text-align: center;float:left;">
+	         <div class="panel panel-default">
+	           <div class="panel-heading">
+	           	  <h4 class="panel-title">
+	           	  	<a data-toggle="collapse" data-parent="#accordion"  href="#collapseOne">
+	           	  		
+	           	  		专题浏览
+	           	  	</a>
+	           	  </h4>
+	           </div>
+	           <div id="collapseOne" class="panel-collapse collapse ">
+	              <div class="panel-body" >
+	              	    <p>校园安全</p>
+	              	    <hr>
+	              	    <p>学校作风</p>
+	              	    <hr>
+	              	    <p>南华信息</p>
+	              	    <hr>
+	              	    <p>领导信息</p>
+	              	    <hr>
+	              	    <p>学校信息</p>     
+	              </div>
+	           	
+	           </div>	
+	         </div>
+
+	         <div class="panel panel-default">
+	            <div class="panel-heading">
+	                 <h4 class="panel-title">
+	                   <a data-toggle="collapse" data-parent="#accordion"  href="#collapseTwo">
+	                   	属性论坛
+	                   </a>
+	                 </h4>
+	            </div>
+	         	<div id="collapseTwo" class="panel-collapse collapse ">
+	         	    <div class="panel-body">
+	         	    	
+	         	    </div>
+	         		
+	         	</div>
+	         </div>
+
+	         <div class="panel panel-default">
+	            <div class="panel-heading">
+	                 <h4 class="panel-title">
+	                   <a data-toggle="collapse" data-parent="#accordion"  href="#collapseThird">
+	                   	属性论坛
+	                   </a>
+	                 </h4>
+	            </div>
+	         	<div id="collapseThird" class="panel-collapse collapse">
+	         	    <div class="panel-body">
+	         	    	
+	         	    </div>
+	         		
+	         	</div>
+	         </div>
+	     	
+	     </div>
+
+	     <div  style="width: 80%;float:right;">
+	     	   <ul class="nav nav-tabs  nav-justified">
+	     	    	   <li class="active"><a href="#"><span class="glyphicon glyphicon-align-justify"></span>&nbsp;&nbsp;全部</a></li>
+                       <li><a href="#"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;新闻</a></li>
+                       <li><a href="#"><span class="glyphicon glyphicon-comment"></span>&nbsp;&nbsp;论坛</a></li>
+                       <li><a href="#"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;博客</a></li>
+                       <li><a href="#"><span class="glyphicon glyphicon-signal"></span>&nbsp;&nbsp;微博</a></li>
+                       <li><a href="#"><span class="glyphicon glyphicon-tag"></span>&nbsp;&nbsp;平煤</a></li>
+                       <li><a href="#"><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;微信</a></li>
+                       <li><a href="#"><span class="glyphicon glyphicon-facetime-video"></span>&nbsp;&nbsp;视频</a></li>
+                       <li><a href="#"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;其他</a></li>	
+	     	   </ul> 
+               <div style="margin: 0px 15px;">
+               	  <span style="float :left;font-size: 14px;font-weight:bold;display: block;width: 80px"> 倾向性:</span>
+               	  <div style="float:left;margin-left:10px">
+               	  	<a href="" title="" style="margin: 0px 15px">全部</a>
+               	  	<a href="" title="" style="margin: 0px 15px">正面</a>
+               	  	<a href="" title="" style="margin: 0px 15px">负面</a>
+               	  	<a href="" title="" style="margin: 0px 15px">中性</a>
+               	  </div>
+               	   <div style="clear: both;"></div>
+               </div>
+               <hr style="margin: 2px 0px">
+               <div style="margin: 0px 15px;">
+               	  <span style="float :left;font-size: 14px;font-weight:bold;display: block;width: 80px"> 噪音过滤:</span>
+               	  <div style="float:left;margin-left:10px">
+               	  	<a href="" title="" style="margin: 0px 15px">全部消息</a>
+               	  	<a href="" title="" style="margin: 0px 15px">正常消息</a>
+               	  	<a href="" title="" style="margin: 0px 15px">精准消息</a>
+               	  	<a href="" title="" style="margin: 0px 15px">过滤消息</a>
+               	  </div>
+               	  <div style="clear: both;"></div>
+               </div>
+               <hr style="margin: 2px 0px">
+
+               <div style="margin: 0px 15px;">
+               	  <span style="float :left;font-size: 14px;font-weight:bold;display: block;width: 80px">重复消息</span>
+               	  <div style="float:left;margin-left:10px">
+               	  	<a href="" title="" style="margin: 0px 15px">去重</a>
+               	  	<a href="" title="" style="margin: 0px 15px">不去重</a>
+               	  </div>
+               	  <div style="clear: both;"></div>
+               </div>
+
+               <hr style="margin: 2px 0px">
+               <div style="margin: 0px 15px;">
+               	  <span style="float :left;font-size: 14px;font-weight:bold;display: block;width: 80px"> 浏览范围:</span>
+               	  <div style="float:left;margin-left:10px">
+               	  	<a href="" title="" style="margin: 0px 15px">全部消息</a>
+               	  	<a href="" title="" style="margin: 0px 15px">未读</a>
+               	  	<a href="" title="" style="margin: 0px 15px">已读</a>
+               	  </div>
+               	  <div style="clear: both;"></div>
+               </div>
+
+               <hr style="margin: 2px 0px">
+               <div style="margin: 0px 15px;border: ">
+               	  <span style="float :left;font-size: 14px;font-weight:bold;display: block;width: 80px"> 起止时间:</span>
+               	  <div style="float:left;margin-left:10px">
+               	  	<a href="" title="" style="margin: 0px 15px">全部</a>
+               	  	<a href="" title="" style="margin: 0px 15px">当天</a>
+               	  	<a href="" title="" style="margin: 0px 15px">一周内</a>
+               	  </div>
+               	  <div style="clear: both;"></div>
+               </div>
+
+               <hr style="margin: 2px 0px">
+               <div style="margin: 0px 15px;">
+               	  <span style="float :left;font-size: 14px;font-weight:bold;display: block;width: 80px"> 搜索:</span>
+               	  <div style="float:left;margin-left:10px">
+                      <form action="" method="get" accept-charset="utf-8">
+                      	 <select name="Search">
+                      	   	<option value="全文搜索">全文搜索</option>
+                      	 </select>  
+                      	 <input type="text" name="" value="" placeholder="">
+                      	 <input type="submit" name="" value="搜索" placeholder="">
+                      </form>
+               	  </div>
+               	  <div style="clear: both;"></div>
+               </div>
+               
+               <div style="margin: 0px 15px; background-color: #ECECEC">
+               	  <form action="" method="get" accept-charset="utf-8">
+               	     <input type="checkbox" name="" value="S" placeholder="">全选
+               	     <input type="button" name="" value="批量导出" placeholder="">
+               	     <input type="button" name="" value="加入简报" placeholder="">
+               	     <input type="button" name="" value="标为已读" placeholder="">
+               	     <input type="button" name="" value="标注预警" placeholder="">
+               	     <input type="button" name="" value="标注中性" placeholder="">
+               	     <input type="button" name="" value="删除" placeholder="">
+                      <span style="margin-left: 30%">隐形摘要</span> 
+               	      <select name="Search">
+                      	   	<option value="全文搜索">10名</option>
+                      </select>  
+               	  </form>
+               </div>
+                
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                         <h3 class="panel-title">
+                           暂定
+                         </h3>
+                    </div>
+                    <div class="panel-body">
+                    暂定
+                     </div>
+               </div>
+         
+         <div class="panel panel-default">
+             <div class="panel-heading">
+                <h3 class="panel-title">
+                暂定
+                </h3>
+             </div>
+             <div class="panel-body">
+              暂定
+             </div>
+          </div>
+
+           
+           <div class="panel panel-default">
+             <div class="panel-heading">
+                <h3 class="panel-title">
+                暂定
+                </h3>
+             </div>
+             <div class="panel-body">
+              暂定
+             </div>
+          </div>
+
+           
+           <div class="panel panel-default">
+             <div class="panel-heading">
+                <h3 class="panel-title">
+                暂定
+                </h3>
+             </div>
+             <div class="panel-body">
+              暂定
+             </div>
+          </div>
+	     </div>  	
+	 </div>
+</body>
+</html>
