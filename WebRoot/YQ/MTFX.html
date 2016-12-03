@@ -1,0 +1,465 @@
+ <!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>南华大学核电舆情系统</title>
+
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css"  />
+<link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css"  />
+<script src="js/jquery-3.1.1.js"></script>
+<script src="js/bootstrap.js" ></script>
+<script src="js/echarts.js" ></script>
+<script src="js/d3.js"></script>
+<link href="css/MTFX.css" rel="stylesheet" type="text/css"  />
+
+
+
+<!--jq-->
+
+<script type="text/javascript"> 
+function displaySubMenu(li) { 
+var subMenu = li.getElementsByTagName("ul")[0]; 
+subMenu.style.display = "block"; 
+} 
+function hideSubMenu(li) { 
+var subMenu = li.getElementsByTagName("ul")[0]; 
+  subMenu.style.display = "none"; 
+} 
+</script> 
+
+<script  src="js/tagcloud.js"></script>
+
+<style type="text/css">
+.node circle 
+{
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.node 
+{
+  font: 12px sans-serif;
+}
+
+.link 
+{
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<!--Tbar-->
+<div class="Tbar">
+    <span>今日总量:</span>&nbsp;<span id="tValue">68754</span>
+    <span>敏感:</span>&nbsp;<span id="mValue">230</span>
+    <span>非敏感:</span>&nbsp;<span id="nValue">66524</span>
+    <span>敏感比重:</span>&nbsp;<span id="iValue">3.4%</span>
+
+
+    <div class="rfloat">
+        <span>时间设定:</span>
+        <span><a href="#">今天</a></span>
+        &nbsp;
+        <span><a href="#">本周</a></span>
+        &nbsp;
+        <span><a href="#">本月</a></span>
+        &nbsp;
+        <span><a href="#">时间自定义</a></span>
+    </div>
+</div>
+
+<!--header-->
+<div class="Header">
+    <div class="Welcome">
+        <span>欢迎 <span class="glyphicon glyphicon-user"></span></span>
+        <span id="User">***</span>
+        <span id="CandL"><a href="#">改密码<span class="glyphicon glyphicon-hand-left"></span></a>|<a href="#">退出<span class="glyphicon glyphicon-off"></span></a></span>
+    </div>
+</div>
+
+<!--导航栏-->
+
+<div class="bar-title">
+
+    <div class="bar-status"><a href="SY.html">首页</a></div>
+    <div class="bar-status" id="nav" onMouseOver="displaySubMenu(this)" onMouseOut="hideSubMenu(this)">
+        <a href="#">舆情分析<span class="caret"></span></a>
+        <ul class="nav-block">
+            <li><a href="MTFX.html">媒体分析</a></li>
+            <li><a href="QGFX.html">情感分析</a></li>
+        </ul>
+
+    </div>
+    <div class="bar-status"><a href="#">伪舆情分析</a></div>
+    <div class="bar-status"><a href="YQYJ.html">舆情预警</a></div>
+    <div class="bar-status" onMouseOver="displaySubMenu(this)" onMouseOut="hideSubMenu(this)">
+        <a href="#">舆情报表<span class="caret"></span></a>
+        <ul class="nav-block">
+            <li><a href="TP.html">时间报表</a></li>
+            <li><a href="SP.html">事件报表</a></li>
+        </ul>
+
+    </div>
+    <div class="bar-status bar-status2"><a href="#">后台管理<span class="glyphicon glyphicon-asterisk"></span></a></div>
+</div>
+
+
+<!--主体-->
+  <div class="container" id="Contan">
+     <div class="row">
+        
+         <!--关键词云-->
+         <div class="col-md-6">
+            <div class="panel panel-primary " >
+               <div class="panel-heading">
+                       <h3 class="panel-title">关键词云</h3>
+               </div>
+              <div class="panel-body" id="Ccloud">
+                   <div id="Cloud"></div>
+                   
+              
+              </div>
+          </div>  
+        </div>
+        
+         <!--媒体来源-->
+         <div class="col-md-6 ">
+               <div class="panel panel-primary">
+                     <div class="panel-heading">
+                           <h3 class="panel-title">媒体来源</h3>
+                     </div>
+
+                     <div class="panel-body">
+                           <div id="MTorigin" style="width:500px;height:370px"></div>
+                     </div>
+              </div> 
+         </div>
+         
+         
+     </div> 
+     <div class="row">
+        <!--信息来源类型-->
+          <div class="col-md-6 ">
+               <div class="panel panel-primary">
+                     <div class="panel-heading">
+                           <h3 class="panel-title">信息来源类型</h3>
+                     </div>
+
+                     <div class="panel-body">
+                           <div id="MTcome" style="width:500px;height:370px"></div>
+                     </div>
+              </div> 
+         </div>
+         
+         <!--媒体活跃度-->
+          <div class="col-md-6 ">
+               <div class="panel panel-primary">
+                     <div class="panel-heading">
+                           <h3 class="panel-title">媒体活跃度</h3>
+                     </div>
+
+                     <div class="panel-body">
+                           <div id="MTactive" style="width:500px;height:370px"></div>
+                     </div>
+              </div> 
+         </div>
+             
+     </div>
+     
+     <!--传播路径-->
+     <div class="row">
+        
+        <div class="col-md-12">
+               <div class="panel panel-primary "  style="height:600px;">
+                     <div class="panel-heading">
+                           <h3 class="panel-title">传播路径</h3>
+                     </div>
+
+                     <div class="panel-body">
+                           <div id="Transpath" style="width:1110px;height:500px">
+                           <svg style="width:500px;height:500px"></svg>
+                           </div>
+                     </div>
+              </div> 
+         </div>
+           
+     </div>
+  </div>
+<!--foot-->
+
+<div class="foot"> <span class="glyphicon glyphicon-copyright-mark"></span>all right by usc</div>  
+         
+        <!--媒体来源-->
+        <script type="text/javascript">
+        $(document).ready(function() {
+            $.ajax({
+                type: "GET",
+                url:"json/MTorigin.json",
+                dataType: "json",
+
+                success: function(datt) 
+                {
+
+                var myChart = echarts.init(document.getElementById('MTorigin'));
+               
+
+              option = {
+					  title : {
+						  text: '某站点用户访问来源',
+						  subtext: '纯属虚构',
+						  x:'center'
+					  },
+					  tooltip : {
+						  trigger: 'item',
+						  formatter: "{a} <br/>{b} : {c} ({d}%)"
+					  },
+					  legend: {
+						  orient : 'vertical',
+						  x : 'left',
+						  data:datt.lengdata
+					  },
+					  toolbox: {
+						  show : true,
+						  feature : {
+							  mark : {show: true},
+							  dataView : {show: true, readOnly: false},
+							  magicType : {
+								  show: true, 
+								  type: ['pie', 'funnel'],
+								  option: {
+									  funnel: {
+										  x: '25%',
+										  width: '50%',
+										  funnelAlign: 'left',
+										  max: 1548
+									  }
+								  }
+							  },
+							  restore : {show: true},
+							  saveAsImage : {show: true}
+						  }
+					  },
+					  calculable : true,
+					  series : [
+						  {
+							  name:'访问来源',
+							  type:'pie',
+							  radius : '55%',
+							  center: ['50%', '60%'],
+							  data:[
+								  {value:335, name:'直接访问'},
+								  {value:310, name:'邮件营销'},
+								  {value:234, name:'联盟广告'},
+								  {value:135, name:'视频广告'},
+								  {value:1548, name:'搜索引擎'}
+							  ]
+						  }
+					  ]
+				  };
+                    	  	   
+                  
+                    myChart.setOption(option);
+
+                }
+            })
+
+        });
+        </script>
+        
+         
+        <!--信息来源类型-->
+        <script type="text/javascript">
+        $(document).ready(function() {
+            $.ajax({
+                type: "GET",
+                url:"json/MTcome.json",
+                dataType: "json",
+
+                success: function(datt) 
+                {
+
+                var myChart = echarts.init(document.getElementById('MTcome'));
+               
+
+             option = {
+					  title : {
+						  text: '南丁格尔玫瑰图',
+						  subtext: '纯属虚构',
+						  x:'center'
+					  },
+					  tooltip : {
+						  trigger: 'item',
+						  formatter: "{a} <br/>{b} : {c} ({d}%)"
+					  },
+					  legend: {
+						  x : 'center',
+						  y : 'bottom',
+					  },
+					  toolbox: {
+						  
+						   
+						  show : true,
+						  feature : {
+							  mark : {show: true},
+							  dataView : {show: true, readOnly: false},
+							  magicType : {
+								  show: true, 
+								  type: ['pie', 'funnel']
+							  },
+							  restore : {show: true},
+							  saveAsImage : {show: true}
+						  },
+						  orient : 'vertical',
+					  },
+					  calculable : true,
+					  series : [
+					   
+						  {
+							  name:'面积模式',
+							  type:'pie',
+							  radius : [30, 110],
+							  center : ['50%', 200],
+							  roseType : 'area',
+							  x: '50%',               // for funnel
+							  max: 40,                // for funnel
+							  sort : 'ascending',     // for funnel
+							  data:[
+								  {value:10, name:datt.lengdata[0]},
+								  {value:5, name:'rose2'},
+								  {value:15, name:'rose3'},
+								  {value:25, name:'rose4'},
+								  {value:20, name:'rose5'},
+								  {value:35, name:'rose6'},
+								  {value:30, name:'rose7'},
+								  {value:40, name:'rose8'}
+							  ]
+						  }
+					  ]
+				  }; 
+                  myChart.setOption(option);
+
+                }
+            })
+
+        });
+        </script>
+        
+    
+        
+        <!--媒体活跃度-->
+        <script type="text/javascript">
+        $(document).ready(function() {
+            $.ajax({
+                type: "GET",
+                url:"json/MTactive.json",
+                dataType: "json",
+
+                success: function(datt) 
+                {
+
+                var myChart = echarts.init(document.getElementById('MTactive'));
+               
+
+                    var option = {
+									title: {
+										text: 'ECharts 入门示例'
+									},
+									tooltip: {},
+							        toolbox: {
+										  
+										   
+										  show : true,
+										  feature : {
+											  mark : {show: true},
+											  dataView : {show: true, readOnly: false},
+											  magicType : {
+												  show: true, 
+												  type: ['pie', 'funnel']
+											  },
+											  restore : {show: true},
+											  saveAsImage : {show: true}
+										  },
+										  orient : 'vertical',
+									  },
+									legend: {
+										data:['销量']
+									},
+									xAxis: {
+										data: datt.lengdata,
+									},
+									yAxis: {},
+									series: [{
+										name: '销量',
+										type: 'bar',
+										data: [5, 20, 36, 10, 10, 20]
+									}]
+								};
+
+                  myChart.setOption(option);
+
+                }
+            })
+
+        });
+        </script>
+        
+        <!--传播路径图-->
+        <script>
+
+			var width = 500,height = 500;
+			
+			var tree = d3.layout.tree()
+				.size([width, height-200])
+				.separation(function(a, b) { return (a.parent == b.parent ? 1 : 2); });
+			
+			var diagonal = d3.svg.diagonal()
+				.projection(function(d) { return [d.y, d.x]; });
+			
+			var svg = d3.select("#Transpath").select("svg")
+				.attr("width", width)
+				.attr("height", height)
+				.append("g")
+				.attr("transform", "translate(40,0)");
+			
+			
+			d3.json("json/city_tree.json", function(error, root) {
+			
+				var nodes = tree.nodes(root);
+				var links = tree.links(nodes);
+				
+				
+				var link = svg.selectAll(".link")
+				  .data(links)
+				  .enter()
+				  .append("path")
+				  .attr("class", "link")
+				  .attr("d", diagonal);
+				
+				var node = svg.selectAll(".node")
+				  .data(nodes)
+				  .enter()
+				  .append("g")
+				  .attr("class", "node")
+				  .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
+				
+				node.append("circle")
+				  .attr("r", 4.5);
+				
+				node.append("text")
+				  .attr("dx", function(d) { return d.children ? -8 : 8; })
+				  .attr("dy", 3)
+				  .style("text-anchor", function(d) { return d.children ? "end" : "start"; })
+				  .text(function(d) { return d.name; });
+				});
+			</script>
+        
+      
+</body>
+</html>
