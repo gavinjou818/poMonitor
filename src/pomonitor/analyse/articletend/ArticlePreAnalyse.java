@@ -15,11 +15,12 @@ import pomonitor.entity.NewsEntity;
  * 
  * @author zhaolong 2015年12月16日 下午9:31:20
  */
-public class ArticlePreAnalyse {
+public class ArticlePreAnalyse 
+{
 
 	private NewsEntity news;
 
-	private TendAnalyseArticle article;
+	private TendAnalyseArticle article;//每篇新闻对应的文章对象
 
 	// 文章分析器
 	private ArticleSplier articleSplier;
@@ -30,7 +31,8 @@ public class ArticlePreAnalyse {
 	// 将需要加分的词性组装成set
 	private Set<String> propertysSet;
 
-	public ArticlePreAnalyse(ArticleSplier articleSplier) {
+	public ArticlePreAnalyse(ArticleSplier articleSplier) 
+	{
 		this.articleSplier = new ArticleSplier();
 		propertysSet = new HashSet<String>(Arrays.asList(propertys));
 	}
@@ -40,7 +42,8 @@ public class ArticlePreAnalyse {
 	 * 
 	 * @param news
 	 */
-	private void init(NewsEntity news) {
+	private void init(NewsEntity news) 
+	{
 		this.news = news;
 		article = new TendAnalyseArticle();
 		article.setKeyWords(news.getKeywords());

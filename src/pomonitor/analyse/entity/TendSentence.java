@@ -8,6 +8,7 @@ import java.util.List;
  * @author Administrator
  * 
  */
+
 public class TendSentence {
 	// 句子在文章中的序号
 	private int id;

@@ -18,7 +18,8 @@ import com.alibaba.fastjson.JSONArray;
  * 
  * @author zhaolong 2015年12月16日 下午9:27:44
  */
-public class ArticleSplier {
+public class ArticleSplier
+{
 
 	/**
 	 * 将String形态的文章预处理为自定义的TendSentence列表
@@ -26,7 +27,8 @@ public class ArticleSplier {
 	 * @param sentence
 	 * @return
 	 */
-	public List<TendSentence> spil(String aricleStr) {
+	public List<TendSentence> spil(String aricleStr) 
+	{
 		List<TendSentence> sentenceList = new ArrayList<>();
 		try {
 			// 如果文章超过了最大所能分析的字数限制，就做截断处理，没办法之举动
@@ -58,9 +60,11 @@ public class ArticleSplier {
 		// 句子的序号
 		int count = 0;
 		JSONArray rootList = JSON.parseArray(jsonStr);
-		for (int i = 0; i < rootList.size(); i++) {
+		for (int i = 0; i < rootList.size(); i++) 
+		{
 			JSONArray fatherList = rootList.getJSONArray(i);
-			for (int j = 0; j < fatherList.size(); j++) {
+			for (int j = 0; j < fatherList.size(); j++)
+			{
 				JSONArray thisList = fatherList.getJSONArray(j);
 				String thisListString = thisList.toJSONString();
 

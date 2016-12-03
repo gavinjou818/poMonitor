@@ -1,6 +1,9 @@
 package pomonitor.analyse.entity;
-
-public class TendArg {
+/*
+ * 语义角色
+ */
+public class TendArg 
+{
 	// 序号
 	private String id;
 	// 角色名称

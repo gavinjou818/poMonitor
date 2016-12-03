@@ -1,6 +1,7 @@
 package pomonitor.analyse;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -20,9 +21,10 @@ import com.alibaba.fastjson.JSON;
  * 
  * @author xiaoyulun 2016年1月5日 上午11:44:52
  */
-public class ArticleTendAnalyse {
-	private static int positiveScore;
-	private static int negativeScore;
+public class ArticleTendAnalyse 
+{    
+	private static int positiveScore;//正面新闻的得分阀值
+	private static int negativeScore;//负面新闻的得分阈值
 
 	static {
 		PropertiesReader propertiesReader = new PropertiesReader();
@@ -35,8 +37,8 @@ public class ArticleTendAnalyse {
 	public static void tendAnalyse(String start_time, String end_time,
 			String UserId) {
 		NewsDAO newsDAO = new NewsDAO();
-		List<News> newsList = newsDAO.findBetweenDate(start_time, end_time);
-		HashMap<String, Float> hashMap = new HashMap<>();
+		List<News> newsList = newsDAO.findBetweenDate(start_time, end_time);//通过事件获得对象实体
+		HashMap<String, Float> hashMap = new HashMap<>();//映射
 		ArticleTendAnalyseRealize analyseRealize = new ArticleTendAnalyseRealize();
 		for (News news : newsList) {
 			if (news.getIsFinsh() == 0) {

@@ -9,7 +9,8 @@ import java.util.Set;
  * @author Administrator
  * 
  */
-public class TendAnalyseArticle {
+public class TendAnalyseArticle 
+{
 	// ÎÄÕÂ±êÌâ
 	private String title;
 

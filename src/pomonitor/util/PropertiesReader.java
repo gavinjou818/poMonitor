@@ -1,6 +1,7 @@
 package pomonitor.util;
 
 import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -10,6 +11,10 @@ import java.util.Properties;
  * 
  * @author caihengyi
  *         2016年1月14日 下午2:30:48
+ */
+
+/*
+ * 读取pomonitor.properties下的对应的propertyName 属性
  */
 public class PropertiesReader {
 	String result = "";

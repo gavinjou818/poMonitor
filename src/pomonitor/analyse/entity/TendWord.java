@@ -1,8 +1,11 @@
 package pomonitor.analyse.entity;
 
 import java.util.List;
-
-public class TendWord {
+/*
+ * 分词
+ */
+public class TendWord 
+{
 	// 分词的序号
 	private int id;
 	// 分词的内容

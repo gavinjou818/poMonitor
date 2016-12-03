@@ -14,10 +14,17 @@ import javax.persistence.UniqueConstraint;
 /**
  * News entity. @author MyEclipse Persistence Tools
  */
-@Entity
+/*
+ * zhouzhifeng
+ * 2016年12月2日
+ * 标记注释
+ */
+
+//jpa实体映射
+@Entity  
 @Table(name = "news", catalog = "pomonitor", uniqueConstraints = {
 		@UniqueConstraint(columnNames = "id"),
-		@UniqueConstraint(columnNames = "url") })
+		@UniqueConstraint(columnNames = "url") })//映射 表名,calalog应该是数据库名,约束
 public class News implements java.io.Serializable {
 
 	// Fields

@@ -22,7 +22,8 @@ import pomonitor.util.NewsAndNewsEnriryTran;
  * 
  * @author zhaolong 2015年12月24日 下午3:24:28
  */
-public class ArticleTendAnalyseRealize implements IArticleTendAnalyse {
+public class ArticleTendAnalyseRealize implements IArticleTendAnalyse
+{
 	// 文章预处理器
 	private ArticlePreAnalyse preAnalyser;
 
