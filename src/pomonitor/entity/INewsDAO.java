@@ -14,7 +14,6 @@ import java.util.List;
  *  2016年12月2日
  *  标记注释
  */
-
 public interface INewsDAO {
 	/**
 	 * Perform an initial save of a previously unsaved News entity. All

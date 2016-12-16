@@ -12,8 +12,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "levelword", catalog = "pomonitor")
-public class LeverWord implements java.io.Serializable 
-{
+public class LeverWord implements java.io.Serializable {
 
 	// Fields
 

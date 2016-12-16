@@ -18,8 +18,7 @@ import javax.persistence.Query;
  * @see .SynonyMousWord
  * @author MyEclipse Persistence Tools
  */
-public class SynonyMousWordDAO implements ISynonyMousWordDAO 
-{
+public class SynonyMousWordDAO implements ISynonyMousWordDAO {
 	// property constants
 	public static final String CATEGORY = "category";
 	public static final String WORDS = "words";

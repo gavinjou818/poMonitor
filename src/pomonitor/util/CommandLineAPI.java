@@ -12,10 +12,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
-public class CommandLineAPI 
-{
-	public static void main(String[] args)
-	{
+public class CommandLineAPI {
+	public static void main(String[] args) {
 		CommandLineAPI api = new CommandLineAPI();
 		if (!api.parseArguments(args)) {
 			api.usage();
@@ -62,11 +60,9 @@ public class CommandLineAPI
 				.println("      --format  FORMAT      use to specify the output format [xml/json/conll]");
 	}
 
-	private boolean parseArguments(String[] args) 
-	{
+	private boolean parseArguments(String[] args) {
 		int flag = 0;
-		for (int i = 0; i < args.length; ++i) 
-		{
+		for (int i = 0; i < args.length; ++i) {
 			if (args[i].equals("--text")) {
 				++i;
 				flag |= (1 << 0);
@@ -94,8 +90,7 @@ public class CommandLineAPI
 		return flag == ((1 << 4) - 1);
 	}
 
-	public static boolean contains(Class<? extends Enum> choices, String val)
-	{
+	public static boolean contains(Class<? extends Enum> choices, String val) {
 		Object[] arr = choices.getEnumConstants();
 		for (Object e : arr) {
 			if (((Enum) e).name().equals(val)) {
@@ -105,13 +100,11 @@ public class CommandLineAPI
 		return false;
 	}
 
-	private static enum PATTERNS
-	{
+	private static enum PATTERNS {
 		ws, pos, dp, ner, srl, all;
 	}
 
-	private static enum FORMATS 
-	{
+	private static enum FORMATS {
 		xml, json, conll, plain;
 	}
 

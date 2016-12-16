@@ -11,8 +11,7 @@ import pomonitor.util.IdeaWordDictionary;
  * @author Administrator
  * 
  */
-public class SubScoreAddThink implements ISubScoreAdd 
-{
+public class SubScoreAddThink implements ISubScoreAdd {
 	private IdeaWordDictionary ideaWordDictionary;
 
 	public SubScoreAddThink() {

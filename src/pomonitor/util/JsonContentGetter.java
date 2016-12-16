@@ -7,10 +7,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class JsonContentGetter 
-{
-	public static String getJsonContent(String urlStr) 
-	{
+public class JsonContentGetter {
+	public static String getJsonContent(String urlStr) {
 		try {
 			System.out.println(urlStr + "~~~~~~~~~~~~");
 			URL url = new URL(urlStr);
@@ -33,8 +31,7 @@ public class JsonContentGetter
 		return "";
 	}
 
-	private static String ConvertStream2Json(InputStream inputStream) 
-	{
+	private static String ConvertStream2Json(InputStream inputStream) {
 		String jsonStr = "";
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		byte[] buffer = new byte[1024];

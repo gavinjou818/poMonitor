@@ -9,12 +9,10 @@ import pomonitor.analyse.entity.TendSentence;
  */
 
 public class SentenceSubCountByWeightAverage implements
-		ISentenceSubCountByWeight 
-{
+		ISentenceSubCountByWeight {
 
 	@Override
-	public TendSentence sentenceSubCount(TendSentence sentence) 
-	{
+	public TendSentence sentenceSubCount(TendSentence sentence) {
 		System.out.println("¾ä×ÓId" + sentence.getId());
 		System.out.println("Î»ÖÃ£º" + sentence.getPosScore());
 		System.out.println("title:" + sentence.getTitleScore());

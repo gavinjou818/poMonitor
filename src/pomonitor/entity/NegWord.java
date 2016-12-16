@@ -15,8 +15,7 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "negword", catalog = "pomonitor", uniqueConstraints = @UniqueConstraint(columnNames = "word"))
-public class NegWord implements java.io.Serializable 
-{
+public class NegWord implements java.io.Serializable {
 
 	// Fields
 

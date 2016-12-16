@@ -5,8 +5,7 @@ package pomonitor.analyse.hotworddiscovery;
  * 
  * @author caihengyi 2015年12月20日 下午9:33:39
  */
-public class SimilarityMatrics 
-{
+public class SimilarityMatrics {
 
 	private static double ZERO_THRESHOLD = 0.00001;
 
@@ -17,8 +16,7 @@ public class SimilarityMatrics
 	 * @param vecB
 	 * @return
 	 */
-	public static double FindCosineSimilarity(double[] vecA, double[] vecB) 
-	{
+	public static double FindCosineSimilarity(double[] vecA, double[] vecB) {
 		double dotProduct = DotProduct(vecA, vecB);
 		double magnitudeOfA = Magnitude(vecA);
 		double magnitudeOfB = Magnitude(vecB);

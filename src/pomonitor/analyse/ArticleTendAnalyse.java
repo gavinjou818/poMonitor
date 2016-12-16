@@ -2,7 +2,6 @@ package pomonitor.analyse;
 
 import java.util.ArrayList;
 
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -22,14 +21,12 @@ import com.alibaba.fastjson.JSON;
  * 
  * @author xiaoyulun 2016年1月5日 上午11:44:52
  */
-
 public class ArticleTendAnalyse 
 {    
 	private static int positiveScore;//正面新闻的得分阀值
 	private static int negativeScore;//负面新闻的得分阈值
 
-	static 
-	{
+	static {
 		PropertiesReader propertiesReader = new PropertiesReader();
 		positiveScore = Integer.parseInt(propertiesReader
 				.getPropertyByName("PositiveScore"));
@@ -38,14 +35,12 @@ public class ArticleTendAnalyse
 	}
 
 	public static void tendAnalyse(String start_time, String end_time,
-			String UserId) 
-	{
+			String UserId) {
 		NewsDAO newsDAO = new NewsDAO();
 		List<News> newsList = newsDAO.findBetweenDate(start_time, end_time);//通过事件获得对象实体
 		HashMap<String, Float> hashMap = new HashMap<>();//映射
 		ArticleTendAnalyseRealize analyseRealize = new ArticleTendAnalyseRealize();
-		for (News news : newsList) 
-		{
+		for (News news : newsList) {
 			if (news.getIsFinsh() == 0) {
 				continue;
 			}
@@ -72,8 +67,8 @@ public class ArticleTendAnalyse
 	 * @param UserId
 	 * @return
 	 */
-	public HashMap<String, WebScore> showWebTend(String start_time,String end_time, String UserId) 
-	{
+	public HashMap<String, WebScore> showWebTend(String start_time,
+			String end_time, String UserId) {
 
 		NewsTendDAO newsTendDAO = new NewsTendDAO();
 		List<NewsTend> newsList = newsTendDAO.findBetweenDate(start_time,
@@ -143,8 +138,7 @@ public class ArticleTendAnalyse
 		}
 	}
 
-	public String GenerateJSon(String start_time, String end_time, String UserId) 
-	{
+	public String GenerateJSon(String start_time, String end_time, String UserId) {
 		String resJson = "";
 
 		// tendAnalyse(start_time, end_time, UserId);
@@ -152,8 +146,8 @@ public class ArticleTendAnalyse
 				UserId);
 		Result result = new Result();
 		Test test = new Test();
-		for (Iterator iterator = hashMap.keySet().iterator(); iterator.hasNext();) 
-		{
+		for (Iterator iterator = hashMap.keySet().iterator(); iterator
+				.hasNext();) {
 			String webName = (String) iterator.next();
 			WebScore webScore = hashMap.get(webName);
 			int all = webScore.allSize();
@@ -169,8 +163,7 @@ public class ArticleTendAnalyse
 		return resJson;
 	}
 
-	public static String ChineseWebNameToEng(String webname) 
-	{
+	public static String ChineseWebNameToEng(String webname) {
 		switch (webname) {
 		case "光明网":
 			webname = "GuangMing";
@@ -208,10 +201,8 @@ public class ArticleTendAnalyse
 		return webname;
 	}
 
-	public static String EnglishWebNameToChinese(String webname) 
-	{
-		switch (webname) 
-		{
+	public static String EnglishWebNameToChinese(String webname) {
+		switch (webname) {
 		case "GuangMing":
 			webname = "光明网";
 			break;
@@ -252,8 +243,7 @@ public class ArticleTendAnalyse
 	 * 构造json数据的内部类
 	 */
 
-	class WebScore 
-	{
+	class WebScore {
 		public int pos; // 正面情感新闻数量
 		public int obj; // 客观情感新闻数量
 		public int neg; // 负面情感新闻数量
@@ -273,8 +263,7 @@ public class ArticleTendAnalyse
 		}
 	}
 
-	class Series 
-	{
+	class Series {
 		public ArrayList<Double> data;
 		public String name;
 
@@ -284,8 +273,7 @@ public class ArticleTendAnalyse
 		}
 	}
 
-	class Result 
-	{
+	class Result {
 		public Series[] series;
 		public ArrayList<String> xAxis;
 
@@ -301,8 +289,7 @@ public class ArticleTendAnalyse
 		}
 	}
 
-	class Test 
-	{
+	class Test {
 		public String message;
 		public int status;
 		public Result results;

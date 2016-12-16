@@ -1,7 +1,6 @@
 package pomonitor.analyse.entity;
 
-public enum ArticleDegree 
-{
+public enum ArticleDegree {
 
 	O("0级"), A("一级"), B("二级"), C("三级");// 级别越高越严重
 

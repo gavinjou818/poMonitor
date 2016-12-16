@@ -5,8 +5,7 @@ package pomonitor.analyse.entity;
  * 
  * @author caihengyi 2015年12月15日 下午2:40:53
  */
-public class TDArticleTerm 
-{
+public class TDArticleTerm {
 	private String value;// 词项内容
 	private TDPosition position;// 该词项在该文本的位置
 

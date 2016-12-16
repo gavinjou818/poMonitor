@@ -6,8 +6,7 @@ package pomonitor.analyse.entity;
  * @author caihengyi
  *         2016年1月15日 上午10:58:21
  */
-public class RetHotWord
-{
+public class RetHotWord {
 	// 热词极性，0-->中性 1-->褒义 2-->贬义
 	private int category;
 	// 热词索引

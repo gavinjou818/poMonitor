@@ -2,7 +2,6 @@ package pomonitor.util;
 
 /**
  * ÌáÈ¡¹Ø¼ü´Ê
-
  */
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +10,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class KeyWords
-{
+public class KeyWords {
 	// private static String stHtml;
 
 	public static List<String> KdWords(String stHtml) {

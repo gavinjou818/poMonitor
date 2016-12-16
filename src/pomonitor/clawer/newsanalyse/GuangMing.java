@@ -28,8 +28,7 @@ import pomonitor.entity.NewsEntity;
  * 
  */
 
-public class GuangMing extends BaseAnalyse 
-{
+public class GuangMing extends BaseAnalyse {
 
 	public GuangMing(String webName, boolean isKeep) {
 		super(webName, isKeep);
@@ -42,8 +41,7 @@ public class GuangMing extends BaseAnalyse
 	}
 
 	@Override
-	public int getPageCount(String key, boolean isLatest)
-	{
+	public int getPageCount(String key, boolean isLatest) {
 		key = URLEncoder.encode(key);
 
 		// 设置要搜索的关键字
@@ -99,8 +97,7 @@ public class GuangMing extends BaseAnalyse
 	}
 
 	@Override
-	public HashMap<String, Object> analyseAnyPage(String Strurl) 
-	{
+	public HashMap<String, Object> analyseAnyPage(String Strurl) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		try {
 			URL url = new URL(Strurl);

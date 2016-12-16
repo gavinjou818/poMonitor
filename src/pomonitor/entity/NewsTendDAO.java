@@ -22,8 +22,7 @@ import javax.persistence.TemporalType;
  * @see .NewsTend
  * @author MyEclipse Persistence Tools
  */
-public class NewsTendDAO implements INewsTendDAO
-{
+public class NewsTendDAO implements INewsTendDAO {
 
 	// property constants
 	public static final String NEWS_ID = "newsId";

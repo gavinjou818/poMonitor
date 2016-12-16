@@ -1,11 +1,10 @@
-	package pomonitor.entity;
+package pomonitor.entity;
 
 import java.util.List;
 
 import org.junit.Test;
 
-public class TestDao 
-{
+public class TestDao {
 	@Test
 	public void add() {
 		LeverWord lword = new LeverWord();

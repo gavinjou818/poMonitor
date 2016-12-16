@@ -23,8 +23,7 @@ import com.hankcs.hanlp.seg.common.Term;
  * 
  * @author caihengyi 2015年12月15日 下午4:12:07
  */
-public class HotWordDiscoveryAnalyse 
-{
+public class HotWordDiscoveryAnalyse {
 	private double[][] relevanceMat;
 	private ArrayList<RetHotWord> retHotWords;
 	private List<HotWord> hotwords;
@@ -70,8 +69,7 @@ public class HotWordDiscoveryAnalyse
 	}
 
 	public List<TDArticle> getArticlesBetweenDate(String startDateStr,
-			String endDateStr) 
-	{
+			String endDateStr) {
 		// 根据起止时间获取数据库中的新闻文本
 		NewsDAO nd = new NewsDAO();
 		long start = System.currentTimeMillis();

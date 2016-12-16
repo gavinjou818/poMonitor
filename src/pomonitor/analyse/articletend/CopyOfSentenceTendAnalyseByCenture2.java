@@ -21,8 +21,7 @@ import pomonitor.util.NegWordDictionary;
  * @author zhaolong 2015年12月23日 下午7:09:30
  */
 public class CopyOfSentenceTendAnalyseByCenture2 implements
-		ISentenceTendAnalyse 
-{
+		ISentenceTendAnalyse {
 	// 情感词字典
 	private EmotionalDictionary emotionalDictionary;
 
@@ -54,8 +53,7 @@ public class CopyOfSentenceTendAnalyseByCenture2 implements
 	}
 
 	@Override
-	public float analyseSentenceTend(TendSentence sentence) 
-	{
+	public float analyseSentenceTend(TendSentence sentence) {
 		this.sentence = sentence;
 		wordsList = sentence.getWords();
 		mapCount = new HashMap<Float, Integer>();
@@ -88,9 +86,7 @@ public class CopyOfSentenceTendAnalyseByCenture2 implements
 	 * @param id
 	 * @return LevelAndEmotion
 	 */
-	private LevelAndEmotion getTendScore(int id) 
-	{
-		
+	private LevelAndEmotion getTendScore(int id) {
 		System.out.println();
 		System.out.println();
 
@@ -197,8 +193,7 @@ public class CopyOfSentenceTendAnalyseByCenture2 implements
 	 * @param word
 	 * @return float
 	 */
-	private float findLevelValue(String word) 
-	{
+	private float findLevelValue(String word) {
 		float score = 1;
 		LeverWord lvWord = levelDictionary.getWord(word);
 		if (lvWord != null) {
@@ -226,8 +221,7 @@ public class CopyOfSentenceTendAnalyseByCenture2 implements
 	}
 
 	@Test
-	public void test() 
-	{
+	public void test() {
 		SentenceSplier splier = new SentenceSplier();
 		String testStr = "你不是一个好人";
 		List<TendWord> list = splier.spil(testStr);

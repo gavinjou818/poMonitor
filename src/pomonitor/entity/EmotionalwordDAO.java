@@ -15,8 +15,7 @@ import javax.persistence.Query;
  * @see pomonitor.entity.Emotionalword
  * @author MyEclipse Persistence Tools
  */
-public class EmotionalwordDAO implements IEmotionalwordDAO 
-{
+public class EmotionalwordDAO implements IEmotionalwordDAO {
 	// property constants
 	public static final String WORD = "word";
 	public static final String SPEECH = "speech";

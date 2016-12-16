@@ -15,8 +15,6 @@ import pomonitor.entity.NewsEntity;
  * 
  * @author zhaolong 2015年12月16日 下午9:31:20
  */
-
-
 public class ArticlePreAnalyse 
 {
 
@@ -32,9 +30,7 @@ public class ArticlePreAnalyse
 			"ni", "nl", "ns", "nt", "nz", "v", "ws" };
 	// 将需要加分的词性组装成set
 	private Set<String> propertysSet;
-     
-	
-	//  !问题  articleSplier该参数似乎没用
+
 	public ArticlePreAnalyse(ArticleSplier articleSplier) 
 	{
 		this.articleSplier = new ArticleSplier();
@@ -58,22 +54,18 @@ public class ArticlePreAnalyse
 	/**
 	 * 主要处理keyWord和title
 	 */
-	private void splitTitieAndKeyWord() 
-	{
+	private void splitTitieAndKeyWord() {
 		Set<String> usefulWordSet = new HashSet<>();
 		String keyWords = "";
-		for (String key : article.getKeyWords()) 
-		{
+		for (String key : article.getKeyWords()) {
 			keyWords += "#" + key;
 		}
 
 		String titleAndKey = news.getTitle() + keyWords;
 		List<TendSentence> sentenceList = articleSplier.spil(titleAndKey);
-		for (TendSentence ts : sentenceList) 
-		{
+		for (TendSentence ts : sentenceList) {
 			for (TendWord td : ts.getWords())
-				if (propertysSet.contains(td.getPos())) 
-				{
+				if (propertysSet.contains(td.getPos())) {
 					usefulWordSet.add(td.getCont());
 				}
 		}

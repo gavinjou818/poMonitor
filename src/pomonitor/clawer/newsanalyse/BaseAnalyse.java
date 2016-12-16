@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public abstract class BaseAnalyse implements Ianalyse
-{
+public abstract class BaseAnalyse implements Ianalyse {
 
 	// 需要爬取的url
 	protected String seedUrl;
@@ -41,8 +40,7 @@ public abstract class BaseAnalyse implements Ianalyse
 	public abstract HashMap<String, Object> analyseAnyPage(String url);
 
 	@Override
-	public HashMap<String, Object> analyseAllPage(String key, boolean isLatest) 
-	{
+	public HashMap<String, Object> analyseAllPage(String key, boolean isLatest) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		// 获得需要爬取的总页数
 		pageCount = getPageCount(key, isLatest);

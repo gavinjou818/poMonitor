@@ -9,8 +9,7 @@ import java.util.Set;
  * @author MyEclipse Persistence Tools
  */
 
-public interface IUserDAO 
-{
+public interface IUserDAO {
 	/**
 	 * Perform an initial save of a previously unsaved User entity. All
 	 * subsequent persist actions of this entity should use the #update()

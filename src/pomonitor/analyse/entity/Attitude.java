@@ -1,7 +1,6 @@
 package pomonitor.analyse.entity;
 
-public enum Attitude 
-{
+public enum Attitude {
 
 	PRAISE("praise"), NEUTRAL("neutral"), DEROGATORY("derogatory");
 

@@ -7,9 +7,7 @@ import pomonitor.analyse.entity.TendSentence;
  * 
  * @author zhaolong 2015年12月15日 上午11:44:49
  */
-
-public interface ISentenceTendAnalyse 
-{
+public interface ISentenceTendAnalyse {
 
 	/**
 	 * 

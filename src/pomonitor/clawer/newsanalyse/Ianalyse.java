@@ -3,8 +3,7 @@ package pomonitor.clawer.newsanalyse;
 import java.util.HashMap;
 import java.util.List;
 
-public interface Ianalyse 
-{
+public interface Ianalyse {
 	/**
 	 * 计算有多少页需要爬取URL
 	 * 

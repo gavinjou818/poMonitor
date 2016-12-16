@@ -24,8 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class CrawlController 
-{
+public class CrawlController {
 
 	/**
 	 * 自定义的，用于存放爬取下来的实体对象

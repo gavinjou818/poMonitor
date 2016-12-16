@@ -26,8 +26,7 @@ import ucar.nc2.util.net.URLencode;
  * 
  */
 
-public class WangYi extends BaseAnalyse 
-{
+public class WangYi extends BaseAnalyse {
 
 	public WangYi(String webName, boolean isKeep) {
 		super(webName, isKeep);

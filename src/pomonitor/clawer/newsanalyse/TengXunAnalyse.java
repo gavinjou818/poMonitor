@@ -20,8 +20,7 @@ import ucar.nc2.util.net.URLencode;
  * 
  */
 
-public class TengXunAnalyse extends BaseAnalyse 
-{
+public class TengXunAnalyse extends BaseAnalyse {
 	public TengXunAnalyse(String webName, boolean isKeep) {
 		super(webName, isKeep);
 		// url

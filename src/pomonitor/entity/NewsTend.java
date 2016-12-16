@@ -20,8 +20,7 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "newstend", catalog = "pomonitor", uniqueConstraints = @UniqueConstraint(columnNames = "newsId"))
-public class NewsTend implements java.io.Serializable 
-{
+public class NewsTend implements java.io.Serializable {
 
 	// Fields
 	private Integer id;

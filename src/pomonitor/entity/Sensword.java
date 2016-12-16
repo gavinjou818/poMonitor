@@ -18,8 +18,7 @@ import javax.persistence.Table;
  * 
  * @SecondaryTable(name = "user") )
  */
-public class Sensword implements java.io.Serializable
-{
+public class Sensword implements java.io.Serializable {
 
 	// Fields
 

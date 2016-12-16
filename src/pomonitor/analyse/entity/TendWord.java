@@ -4,7 +4,6 @@ import java.util.List;
 /*
  * ·Ö´Ê
  */
-
 public class TendWord 
 {
 	// ·Ö´ÊµÄÐòºÅ

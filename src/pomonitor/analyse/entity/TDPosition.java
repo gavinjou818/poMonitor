@@ -1,7 +1,6 @@
 package pomonitor.analyse.entity;
 
-public enum TDPosition
-{
+public enum TDPosition {
 	META("meta"), BODY("body"), TITLE("title");
 
 	private String position;

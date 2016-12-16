@@ -19,8 +19,7 @@ import pomonitor.util.PropertiesReader;
  * @author caihengyi 2015年12月14日 下午5:26:03
  */
 
-public class TextVectorBuilder
-{
+public class TextVectorBuilder {
 
 	// 新闻文本集合
 	public List<TDArticle> globalArticleList;
@@ -168,8 +167,7 @@ public class TextVectorBuilder
 	 * @param term
 	 * @return
 	 */
-	private void findInverseDocumentFrequency() 
-	{
+	private void findInverseDocumentFrequency() {
 		this.globalIdf=new HashMap<String, Double>();
 		for (TDArticle article : globalArticleList) {
 			Map<String, Double> tempIdf=new HashMap<String, Double>();

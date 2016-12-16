@@ -6,8 +6,7 @@ package pomonitor.analyse.entity;
  * @author caihengyi
  *         2016年1月15日 上午11:03:47
  */
-public class RetLink 
-{
+public class RetLink {
 	private int source;
 	private int target;
 	private double weight;

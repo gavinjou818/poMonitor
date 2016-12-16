@@ -10,8 +10,7 @@ import pomonitor.entity.EmotionalwordDAO;
  * 
  * @author xiaoyulun 2015年12月14日 下午3:26:33
  */
-public class EmotionalDictionary 
-{
+public class EmotionalDictionary {
 	private HashMap<String, Emotionalword> hashMap;
 	private EmotionalwordDAO emotionalwordDAO;
 

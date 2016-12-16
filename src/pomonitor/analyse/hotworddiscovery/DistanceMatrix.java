@@ -22,8 +22,7 @@ import pomonitor.util.PropertiesReader;
  * @author luoxu
  *         2016年1月14日 下午4:34:21
  */
-public class DistanceMatrix 
-{
+public class DistanceMatrix {
 	private double[][] classDistMat;
 	private double[][] overlapMat;
 	private double[][] sameArticleMat;
@@ -37,8 +36,7 @@ public class DistanceMatrix
 	private List<TDCentroid> resTDCentroid ;
 	
 	public DistanceMatrix(List<HotWord> sumHotWords,
-			double[][] globalTDCentroidDist,List<TDArticle> articleLists,List<TDCentroid> resTDCentroid)
-	{
+			double[][] globalTDCentroidDist,List<TDArticle> articleLists,List<TDCentroid> resTDCentroid) {
 		PropertiesReader propertiesReader = new PropertiesReader();
 		this.sameClassVal = Double.parseDouble(propertiesReader
 				.getPropertyByName("SameClassVal"));
@@ -56,8 +54,7 @@ public class DistanceMatrix
 				.getPropertyByName("SameArticleMatWeight"));
 	}
 
-	public double[][] getRelevanceMat() 
-	{
+	public double[][] getRelevanceMat() {
 		classDistMat = this.calClassDistMat();
 		overlapMat = this.calOverlapMat();
 		sameArticleMat=this.calSameArticleMat();
@@ -164,8 +161,7 @@ public class DistanceMatrix
 	 * @param globalTDCentroidDist
 	 * @return
 	 */
-	private double[][] calClassDistMat() 
-	{
+	private double[][] calClassDistMat() {
 		int len = hotWords.size();
 		classDistMat = new double[len][len];
 //		for (int i = 0; i < len; i++) {
@@ -225,8 +221,7 @@ public class DistanceMatrix
 	 * @return
 	 */
 	
-	private double[][] calSameArticleMat()
-	{
+	private double[][] calSameArticleMat(){
 		int len = hotWords.size();
 		sameArticleMat=new double[len][len];
 		for (int i = 0; i < len; i++)
@@ -248,8 +243,7 @@ public class DistanceMatrix
 	 * 
 	 * @return
 	 */
-	private double[][] calOverlapMat() 
-	{
+	private double[][] calOverlapMat() {
 		int len = hotWords.size();
 		overlapMat = new double[len][len];
 		for (int i = 0; i < len; i++)
@@ -283,8 +277,7 @@ public class DistanceMatrix
 	 * @param len
 	 * @return
 	 */
-	private double[][] normalizeMat(double[][] mat, int len) 
-	{
+	private double[][] normalizeMat(double[][] mat, int len) {
 		double maxVal = mat[0][0], minVal = mat[0][0];
 		for (int i = 0; i < len; i++) {
 			for (int j = 0; j < len; j++) {
@@ -303,8 +296,7 @@ public class DistanceMatrix
 		return mat;
 	}
 
-	public static double round(double value, int places) 
-	{
+	public static double round(double value, int places) {
 		if (places < 0)
 			return 0;
 		BigDecimal bd = new BigDecimal(value);

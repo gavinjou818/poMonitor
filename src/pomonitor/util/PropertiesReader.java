@@ -16,8 +16,7 @@ import java.util.Properties;
 /*
  * 读取pomonitor.properties下的对应的propertyName 属性
  */
-public class PropertiesReader
-{
+public class PropertiesReader {
 	String result = "";
 	InputStream inputStream;
 

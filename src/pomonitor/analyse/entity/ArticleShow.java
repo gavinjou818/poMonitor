@@ -7,8 +7,7 @@ import java.util.Date;
  * 
  * @author caihengyi 2015年12月15日 上午10:29:25
  */
-public class ArticleShow implements Comparable<ArticleShow> 
-{
+public class ArticleShow implements Comparable<ArticleShow> {
 
 	private String title;
 	private String url;

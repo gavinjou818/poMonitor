@@ -14,8 +14,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "synonymousword", catalog = "pomonitor")
-public class SynonyMousWord implements java.io.Serializable 
-{
+public class SynonyMousWord implements java.io.Serializable {
 
 	// Fields
 

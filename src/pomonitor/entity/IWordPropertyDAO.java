@@ -10,8 +10,7 @@ import java.util.List;
  * @author MyEclipse Persistence Tools
  */
 
-public interface IWordPropertyDAO 
-{
+public interface IWordPropertyDAO {
 	/**
 	 * Perform an initial save of a previously unsaved WordProperty entity. All
 	 * subsequent persist actions of this entity should use the #update()

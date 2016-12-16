@@ -12,8 +12,7 @@ import pomonitor.analyse.entity.TendWord;
  * @author Administrator
  * 
  */
-public class SubScoreAddTitle implements ISubScoreAdd 
-{
+public class SubScoreAddTitle implements ISubScoreAdd {
 
 	@Override
 	public TendSentence add(TendAnalyseArticle article, TendSentence sentence) {

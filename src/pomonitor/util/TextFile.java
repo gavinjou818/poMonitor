@@ -12,11 +12,9 @@ import java.io.IOException;
  * 
  * @author Touch
  */
-public class TextFile 
-{
+public class TextFile {
 	// 读取指定路径文本文件
-	public static String read(String filePath) 
-	{
+	public static String read(String filePath) {
 		StringBuilder str = new StringBuilder();
 		BufferedReader in = null;
 		try {
@@ -37,8 +35,7 @@ public class TextFile
 
 	// 写入指定的文本文件，append为true表示追加，false表示重头开始写，
 	// text是要写入的文本字符串，text为null时直接返回
-	public static void write(String filePath, boolean append, String text) 
-	{
+	public static void write(String filePath, boolean append, String text) {
 		if (text == null)
 			return;
 		try {

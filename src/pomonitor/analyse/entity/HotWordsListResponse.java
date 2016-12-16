@@ -2,8 +2,7 @@ package pomonitor.analyse.entity;
 
 import java.util.List;
 
-public class HotWordsListResponse 
-{
+public class HotWordsListResponse {
 	// ×´Ì¬Âë
 	private int status;
 	// ½á¹û

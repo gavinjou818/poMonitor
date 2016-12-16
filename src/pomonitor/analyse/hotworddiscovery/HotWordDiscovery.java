@@ -22,8 +22,7 @@ import pomonitor.util.PropertiesReader;
  * 
  * @author caihengyi 2015年12月14日 下午9:33:43
  */
-public class HotWordDiscovery 
-{
+public class HotWordDiscovery {
 	private List<String> mBaseStrings;
 	private final int k;
 	private final double sensWeight;// 敏感词加权系数
@@ -93,8 +92,7 @@ public class HotWordDiscovery
 	 * @return
 	 */
 	public List<HotWord> getHotWordsFromCentroid(TDCentroid tdc,
-			List<Sensword> sensitiveDict) 
-	{
+			List<Sensword> sensitiveDict) {
 		NewsTendDAO newsTendDAO = new NewsTendDAO();
 		EmotionalwordDAO emotionalwordDAO = new EmotionalwordDAO();
 		List<HotWord> hotWordsList = new ArrayList<HotWord>(mBaseStrings.size());
@@ -223,8 +221,7 @@ public class HotWordDiscovery
 		return retHotWords;
 	}
 
-	public static double getMax(double[] arr)
-	{
+	public static double getMax(double[] arr) {
 		double maxVar = arr[0];
 		for (int i = 0; i < arr.length; i++) {
 			if (arr[i] > maxVar)
@@ -233,8 +230,7 @@ public class HotWordDiscovery
 		return maxVar;
 	}
 
-	public static double getMin(double[] arr) 
-	{
+	public static double getMin(double[] arr) {
 		double minVar = arr[0];
 		for (int i = 0; i < arr.length; i++) {
 			if (arr[i] < minVar)
@@ -243,8 +239,7 @@ public class HotWordDiscovery
 		return minVar;
 	}
 
-	public static String vectorToString(double[] arr) 
-	{
+	public static String vectorToString(double[] arr) {
 		String str = "";
 		for (double d : arr) {
 			str += d + "->";

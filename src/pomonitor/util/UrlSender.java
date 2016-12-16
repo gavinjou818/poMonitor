@@ -10,8 +10,7 @@ import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
 
-public class UrlSender
-{
+public class UrlSender {
 	/**
 	 * 向指定URL发送GET方法的请求
 	 * 

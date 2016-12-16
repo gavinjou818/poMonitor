@@ -27,8 +27,7 @@ import java.util.regex.Matcher;
  * @author闻市委
  * 
  */
-public class HuaShengAnalyse extends BaseAnalyse
-{
+public class HuaShengAnalyse extends BaseAnalyse {
 
 	public HuaShengAnalyse(String webName, boolean isKeep) {
 		super(webName, isKeep);
@@ -39,8 +38,7 @@ public class HuaShengAnalyse extends BaseAnalyse
 	}
 
 	@Override
-	public int getPageCount(String key, boolean isLatest) 
-	{
+	public int getPageCount(String key, boolean isLatest) {
 		// 对汉字进行编码加密
 		key = URLencode.escape(key);
 		System.out.println(key);
@@ -98,8 +96,7 @@ public class HuaShengAnalyse extends BaseAnalyse
 	}
 
 	@Override
-	public HashMap<String, Object> analyseAnyPage(String Strurl) 
-	{
+	public HashMap<String, Object> analyseAnyPage(String Strurl) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		try {
 			URL url = new URL(Strurl);

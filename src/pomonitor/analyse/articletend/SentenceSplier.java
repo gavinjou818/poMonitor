@@ -15,8 +15,7 @@ import com.alibaba.fastjson.JSON;
  * 
  * @author zhaolong 2015年12月16日 下午9:27:44
  */
-public class SentenceSplier 
-{
+public class SentenceSplier {
 
 	/**
 	 * 将String形态的句子预处理为自定义的TendSentence对象(只能是一句话) >>>>>>> branch 'develop' of

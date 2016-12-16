@@ -8,8 +8,7 @@ import java.util.List;
  * @author MyEclipse Persistence Tools
  */
 
-public interface ISenswordDAO 
-{
+public interface ISenswordDAO {
 	/**
 	 * Perform an initial save of a previously unsaved Sensword entity. All
 	 * subsequent persist actions of this entity should use the #update()

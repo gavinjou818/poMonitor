@@ -17,10 +17,9 @@ import pomonitor.entity.NewsDAO;
 import pomonitor.entity.NewsTend;
 import pomonitor.entity.NewsTendDAO;
 
-public class Summarize 
-{
-	public String getTendency(String startTime, String endTime)throws ParseException 
-	{
+public class Summarize {
+	public String getTendency(String startTime, String endTime)
+			throws ParseException {
 		class Series {
 			public Series(List<Date> dates, HashMap<Date, Integer> allNews,
 					HashMap<Date, Integer> negNews) {
@@ -37,8 +36,7 @@ public class Summarize
 			public ArrayList<Integer> all;
 		}
 
-		class JSONData 
-		{
+		class JSONData {
 			public Series series;
 			public String message;
 			public int status;
@@ -62,8 +60,7 @@ public class Summarize
 		List<Date> dates = new ArrayList<>();
 		HashMap<Date, Integer> allNews = new HashMap<>();
 		HashMap<Date, Integer> negNews = new HashMap<>();
-		while (start.getTime() <= end.getTime()) 
-		{
+		while (start.getTime() <= end.getTime()) {
 			allNews.put(start, 0);
 			negNews.put(start, 0);
 			dates.add(start);
@@ -89,16 +86,13 @@ public class Summarize
 		return JSON.toJSONString(json);
 	}
 
-	public String checkStatus() throws ParseException 
-	{
-		class NewsTendencyClassifyByWeb 
-		{
+	public String checkStatus() throws ParseException {
+		class NewsTendencyClassifyByWeb {
 			public List<Integer> totalNum;
 			public List<Integer> negativeNum;
 			public List<String> websiteName;
 
-			public NewsTendencyClassifyByWeb(List<NewsTend> newsTendLists) 
-			{
+			public NewsTendencyClassifyByWeb(List<NewsTend> newsTendLists) {
 				totalNum = new ArrayList<>();
 				negativeNum = new ArrayList<>();
 				websiteName = new ArrayList<>();
@@ -146,11 +140,9 @@ public class Summarize
 	 * 最新舆情
 	 * @return
 	 */
-	public String getLatestMessage() throws ParseException 
-	{
+	public String getLatestMessage() throws ParseException {
 		
-		class Result
-		{
+		class Result {
 			
 			public String date;//日期，示例：今日，昨日
 			public String source;//来源
@@ -194,13 +186,11 @@ public class Summarize
 		
 		int count = 0;
 		//优先把当天的新闻提取出来
-		for(int i=0, j=0; i<newsList.size() && j<5; i++) 
-		{
+		for(int i=0, j=0; i<newsList.size() && j<5; i++) {
 			News news = newsList.get(i);
 			Date newsdate = news.getTime();
 			String dateString = simpleDateFormat.format(newsdate);
-			if(dateString.equals(nowday)) 
-			{
+			if(dateString.equals(nowday)) {
 				date = "今日";
 				source = news.getWeb();
 				SimpleDateFormat sDateFormat = new SimpleDateFormat("yy-MM-dd");
@@ -213,10 +203,8 @@ public class Summarize
 		}
 		
 		//若当天的新闻不足五条，再从前一天的新闻中提取
-		if(count < 5) 
-		{
-			for(int i=0, j=count; i<newsList.size() && j<5; i++)
-			{
+		if(count < 5) {
+			for(int i=0, j=count; i<newsList.size() && j<5; i++) {
 				News news = newsList.get(i);
 				Date newsdate = news.getTime();
 				String dateString = simpleDateFormat.format(newsdate);

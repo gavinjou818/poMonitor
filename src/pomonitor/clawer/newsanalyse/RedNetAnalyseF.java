@@ -23,8 +23,7 @@ import pomonitor.entity.NewsEntity;
  * @author утаЗ
  * 
  */
-public class RedNetAnalyseF extends BaseAnalyse 
-{
+public class RedNetAnalyseF extends BaseAnalyse {
 
 	public RedNetAnalyseF(String webName, boolean isKeep) {
 		super(webName, isKeep);

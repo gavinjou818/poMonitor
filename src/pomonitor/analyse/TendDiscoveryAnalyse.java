@@ -21,8 +21,7 @@ import pomonitor.util.PropertiesReader;
  * 
  * @author zhaolong 2015年12月25日 下午2:11:35
  */
-public class TendDiscoveryAnalyse 
-{
+public class TendDiscoveryAnalyse {
 	private NewsDAO newsDao;
 	private NewsTendDAO newsTendDao;
 	private static float POS_CLASS_1;
@@ -48,8 +47,7 @@ public class TendDiscoveryAnalyse
 				.getPropertyByName("POS_CLASS_3"));
 	}
 
-	public TendDiscoveryAnalyse() 
-	{
+	public TendDiscoveryAnalyse() {
 		newsDao = new NewsDAO();
 		newsTendDao = new NewsTendDAO();
 	}
@@ -57,15 +55,13 @@ public class TendDiscoveryAnalyse
 	/**
 	 * 启动分析服务,每次只分析没有完成的，这里用News中的isFinish作为是否分析完成， 1表示没有，0表示已经完成
 	 */
-	public void startTendAnalyse() 
-	{
+	public void startTendAnalyse() {
 		NewsDAO newsDao = new NewsDAO();
 		// 只拿那些没有做倾向性分析的新闻
 		List<News> list = newsDao.findByIsFinsh(1);
 		// 创建倾向性分析器
 		IArticleTendAnalyse articleTendAnalyse = new ArticleTendAnalyseRealize();
-		for (News news : list) 
-		{
+		for (News news : list) {
 			try {
 				TendAnalyseArticle article = articleTendAnalyse
 						.analyseArticleTend(news);
@@ -117,8 +113,7 @@ public class TendDiscoveryAnalyse
 	/**
 	 * 对级别的计算
 	 */
-	private int tendClassGet(float score) 
-	{
+	private int tendClassGet(float score) {
 		int classValue = 0;
 		if (score >= POS_CLASS_1 && score < POS_CLASS_2)
 			classValue = 1;

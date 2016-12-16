@@ -19,8 +19,7 @@ import de.l3s.boilerpipe.extractors.ArticleExtractor;
  * 
  * @author xiaoyulun 2015年12月14日 下午12:04:55
  */
-public class Crawl implements Runnable 
-{
+public class Crawl implements Runnable {
 
 	private List<NewsEntity> worksList;
 
@@ -32,20 +31,17 @@ public class Crawl implements Runnable
 
 	private int id;
 
-	public void init(int id, String filePath) 
-	{
+	public void init(int id, String filePath) {
 		this.id = id;
 		textFile = new TextFile();
 		this.filePath = filePath;
 	}
 
-	public List<NewsEntity> getWorksList() 
-	{
+	public List<NewsEntity> getWorksList() {
 		return worksList;
 	}
 
-	public void setWorksList(List<NewsEntity> worksList) 
-	{
+	public void setWorksList(List<NewsEntity> worksList) {
 
 		this.worksList = worksList;
 		System.out.println("爬虫" + id + "  第    " + i + "添加" + worksList.size()
@@ -56,8 +52,7 @@ public class Crawl implements Runnable
 	}
 
 	@Override
-	public void run() 
-	{
+	public void run() {
 
 		while (worksList.size() > 0) {
 			Iterator<NewsEntity> it = worksList.iterator();

@@ -1,7 +1,6 @@
 package pomonitor.util;
 
-public class SomeStaticValues 
-{
+public class SomeStaticValues {
 
 	// 用于向哈工大发送的url以及userKey
 	public final static String url = "http://api.ltp-cloud.com/analysis/?api_key=15k332P7iaVazlMV1ZFXUyqyoMmP7PVcgQICeDTc&pattern=all&format=json&text=";
