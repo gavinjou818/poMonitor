@@ -11,7 +11,8 @@ import java.util.List;
  * @author MyEclipse Persistence Tools
  */
 
-public interface INewsTendDAO {
+public interface INewsTendDAO 
+{
 	/**
 	 * Perform an initial save of a previously unsaved NewsTend entity. All
 	 * subsequent persist actions of this entity should use the #update()

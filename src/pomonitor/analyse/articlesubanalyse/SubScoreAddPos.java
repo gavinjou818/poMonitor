@@ -9,7 +9,8 @@ import pomonitor.analyse.entity.TendSentence;
  * @author Administrator
  * 
  */
-public class SubScoreAddPos implements ISubScoreAdd {
+public class SubScoreAddPos implements ISubScoreAdd 
+{
 	// ×î¸ß·Ö
 	private float heighScore = 1;
 

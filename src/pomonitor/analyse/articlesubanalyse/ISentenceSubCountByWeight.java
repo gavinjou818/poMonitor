@@ -7,7 +7,8 @@ import pomonitor.analyse.entity.TendSentence;
  * 
  * @author zhaolong 2015年12月15日 下午2:06:36
  */
-public interface ISentenceSubCountByWeight {
+public interface ISentenceSubCountByWeight 
+{
 	/**
 	 * 
 	 * @param sentence

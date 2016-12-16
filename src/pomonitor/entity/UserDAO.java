@@ -15,7 +15,8 @@ import javax.persistence.Query;
  * @see pomonitor.entity.User
  * @author MyEclipse Persistence Tools
  */
-public class UserDAO implements IUserDAO {
+public class UserDAO implements IUserDAO 
+{
 	// property constants
 	public static final String USERNAME = "username";
 	public static final String USERPWD = "userpwd";

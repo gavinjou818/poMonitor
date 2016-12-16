@@ -27,7 +27,8 @@ import pomonitor.entity.NewsEntity;
  * 
  */
 
-public class XinHuaAnalyse extends BaseAnalyse {
+public class XinHuaAnalyse extends BaseAnalyse 
+{
 
 	public XinHuaAnalyse(String webName, boolean isKeep) {
 		super(webName, isKeep);

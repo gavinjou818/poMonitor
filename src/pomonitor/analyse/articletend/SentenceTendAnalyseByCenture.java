@@ -49,7 +49,8 @@ public class SentenceTendAnalyseByCenture implements ISentenceTendAnalyse {
 	}
 
 	@Override
-	public float analyseSentenceTend(TendSentence sentence) {
+	public float analyseSentenceTend(TendSentence sentence)
+	{
 		this.sentence = sentence;
 		wordsList = sentence.getWords();
 		int id = getId();
@@ -81,7 +82,8 @@ public class SentenceTendAnalyseByCenture implements ISentenceTendAnalyse {
 	 * @param id
 	 * @return LevelAndEmotion
 	 */
-	private LevelAndEmotion getTendScore(int id) {
+	private LevelAndEmotion getTendScore(int id)
+	{
 		System.out.println();
 		System.out.println();
 		// 保存当前节点的计算结果
@@ -114,7 +116,8 @@ public class SentenceTendAnalyseByCenture implements ISentenceTendAnalyse {
 			System.out.println(tendWord.getCont() + "  拥有 "
 					+ +childrenIdList.size() + " 个孩子 ");
 			// 接收当前词其孩子词的计算结果
-			for (Integer childId : childrenIdList) {
+			for (Integer childId : childrenIdList) 
+			{
 				LevelAndEmotion lae = getTendScore(childId);
 				// 增加此查找只为了测试，以后效率可以省去
 				String nowWord = wordsList.get(childId).getCont();
@@ -143,7 +146,8 @@ public class SentenceTendAnalyseByCenture implements ISentenceTendAnalyse {
 	 * @param id
 	 * @return
 	 */
-	private List<Integer> findChildId(int id) {
+	private List<Integer> findChildId(int id) 
+	{
 		List<Integer> childrenIdList = new ArrayList<>();
 		for (TendWord td : wordsList) {
 			if (td.getParent() == id) {
@@ -159,7 +163,8 @@ public class SentenceTendAnalyseByCenture implements ISentenceTendAnalyse {
 	 * @param word
 	 * @return float
 	 */
-	private float findEmotionValue(String word) {
+	private float findEmotionValue(String word) 
+	{
 		System.out.println("当前词：" + word);
 		float score = 0;
 		// 查找情感词典
@@ -200,7 +205,8 @@ public class SentenceTendAnalyseByCenture implements ISentenceTendAnalyse {
 	}
 
 	@Test
-	public void test() {
+	public void test() 
+	{
 		SentenceSplier splier = new SentenceSplier();
 		String testStr = "说到医科大，由于学风好生源质量高的缘故，好像很受名牌大学的欢迎，纷纷走上合并之路：华西医科大并入四川大学，中山医科大并入中山大学，北京医科大并入北京大学，上海医科大并入复旦大学，山东医科大并入山东大学，走的都是强强合并路线，在名声上我认为并不存在占了便宜的说法，医科大由于其学科的特殊性，得到医学界的认可就算是成功了，合并在某种程度上反而削弱了其特色，或许是因为这个关系，北京医科大在合并之后仍以“北京大学医学部”、上海医科大以“复旦大学医学院”的身份独立招生，对于这些名牌医科大来说，合并的好外多在于可以得到更多的硬件和财力上的支持";
 		List<TendWord> list = splier.spil(testStr);

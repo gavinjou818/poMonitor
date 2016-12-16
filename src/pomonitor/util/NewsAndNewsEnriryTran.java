@@ -13,8 +13,10 @@ import pomonitor.entity.NewsEntity;
  * @author ÊÐÎ¯
  * 
  */
-public class NewsAndNewsEnriryTran {
-	public static NewsEntity newsToNewsEntity(News news) {
+public class NewsAndNewsEnriryTran 
+{
+	public static NewsEntity newsToNewsEntity(News news) 
+	{
 		NewsEntity newsEntity = new NewsEntity();
 		newsEntity.setId(news.getId());
 		newsEntity.setTitle(news.getTitle());

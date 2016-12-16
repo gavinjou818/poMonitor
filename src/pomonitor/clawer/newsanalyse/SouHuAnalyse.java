@@ -29,7 +29,8 @@ import pomonitor.entity.NewsEntity;
  * 
  */
 
-public class SouHuAnalyse extends BaseAnalyse {
+public class SouHuAnalyse extends BaseAnalyse 
+{
 	public SouHuAnalyse(String webName, boolean isKeep) {
 		super(webName, isKeep);
 		// url

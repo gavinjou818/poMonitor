@@ -12,7 +12,9 @@ import pomonitor.analyse.entity.TendSentence;
  * @author zhaolong 2015年12月15日 下午2:26:10
  */
 
-public class SubSentenceGet {
+
+public class SubSentenceGet
+{
 	// 主题类加权方法处理器
 	private ISentenceSubCountByWeight countWeight;
 	// 需要处理的文章

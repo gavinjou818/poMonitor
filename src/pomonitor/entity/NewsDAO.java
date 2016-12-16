@@ -20,6 +20,7 @@ import javax.persistence.Query;
  *  2016年12月2日
  *  设置导入接口,帮助获取实体类
  */
+
 public class NewsDAO implements INewsDAO {
 	// property constants 
 	//属性对应名称

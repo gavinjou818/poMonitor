@@ -15,7 +15,8 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "wordproperty", catalog = "pomonitor", uniqueConstraints = @UniqueConstraint(columnNames = "property"))
-public class WordProperty implements java.io.Serializable {
+public class WordProperty implements java.io.Serializable 
+{
 
 	// Fields
 

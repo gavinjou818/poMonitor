@@ -2,7 +2,8 @@ package pomonitor.clawer;
 
 import pomonitor.clawer.newsanalyse.Ianalyse;
 
-public interface ICrawler {
+public interface ICrawler 
+{
 
 	/**
 	 * 添加需要爬取的网站的analyse

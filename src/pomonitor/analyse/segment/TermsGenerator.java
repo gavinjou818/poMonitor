@@ -9,7 +9,8 @@ import com.hankcs.hanlp.seg.common.Term;
  * 
  * @author luoxu 2015年12月15日 下午1:44:49 分词，得到term term由 单词名称，词性构成。
  */
-public class TermsGenerator {
+public class TermsGenerator
+{
 	/*
 	 * 生成Term
 	 */

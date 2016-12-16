@@ -15,7 +15,8 @@ import pomonitor.util.TextFile;
  * @author 赵龙
  * 
  */
-public class Frontier {
+public class Frontier 
+{
 	// 存放所有的NewsEntity对象
 	private ArrayList<NewsEntity> workingList = new ArrayList<>();
 	// 用于判断其所有的url是否已经加入
@@ -32,19 +33,22 @@ public class Frontier {
 	}
 
 	// 此方法用于初始化一些数据，例如从数据库中加载workingList，和containUrlIds的数据
-	public void init() {
+	public void init() 
+	{
 		initContainUrlIds(filePath);
 		initUnFinishedURL(filePath);
 	}
 
 	// 此方法用于将执行结果保存入数据库
-	public void stop() {
+	public void stop() 
+	{
 		storeContainUrlIds(filePath);
 		storeUnFinishedURL(filePath);
 	}
 
 	// 加载总的urlid map
-	private void initContainUrlIds(String filePath) {
+	private void initContainUrlIds(String filePath) 
+	{
 		String allFileName = filePath + "/containUrlId.txt";
 		File file = new File(allFileName);
 		if (file.exists()) {
@@ -57,7 +61,8 @@ public class Frontier {
 	}
 
 	// 存储总的urlid map
-	private void storeContainUrlIds(String filePath) {
+	private void storeContainUrlIds(String filePath) 
+	{
 		String allFileName = filePath + "/containUrlId.txt";
 		File file = new File(allFileName);
 		if (file.exists()) {
@@ -141,7 +146,8 @@ public class Frontier {
 	 * 
 	 * @param news
 	 */
-	public void add(NewsEntity news) {
+	public void add(NewsEntity news) 
+	{
 		String idStr = news.getId();
 		if (!containUrlIds.containsKey(idStr)) {
 			containUrlIds.put(idStr, "");

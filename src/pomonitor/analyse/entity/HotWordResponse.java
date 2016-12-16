@@ -1,6 +1,7 @@
 package pomonitor.analyse.entity;
 
-public class HotWordResponse {
+public class HotWordResponse 
+{
 	// ×´Ì¬Âë
 	private int status;
 	// ½á¹û

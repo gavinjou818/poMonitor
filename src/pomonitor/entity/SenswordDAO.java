@@ -15,7 +15,8 @@ import javax.persistence.Query;
  * @see pomonitor.entity.Sensword
  * @author MyEclipse Persistence Tools
  */
-public class SenswordDAO implements ISenswordDAO {
+public class SenswordDAO implements ISenswordDAO 
+{
 	// property constants
 	public static final String SENSLEVEL = "senslevel";
 	public static final String SENSVALUE = "sensvalue";

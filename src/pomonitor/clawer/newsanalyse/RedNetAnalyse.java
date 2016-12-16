@@ -24,7 +24,8 @@ import pomonitor.entity.NewsEntity;
  * @author 赵龙
  * 
  */
-public class RedNetAnalyse extends BaseAnalyse {
+public class RedNetAnalyse extends BaseAnalyse 
+{
 
 	public RedNetAnalyse(String webName, boolean isKeep) {
 		super(webName, isKeep);
@@ -35,7 +36,8 @@ public class RedNetAnalyse extends BaseAnalyse {
 	}
 
 	@Override
-	public int getPageCount(String key, boolean isLatest) {
+	public int getPageCount(String key, boolean isLatest) 
+	{
 		// 对汉字进行编码加密
 		key = URLencode.escape(key);
 		System.out.println(key);
@@ -94,7 +96,8 @@ public class RedNetAnalyse extends BaseAnalyse {
 	}
 
 	@Override
-	public HashMap<String, Object> analyseAnyPage(String Strurl) {
+	public HashMap<String, Object> analyseAnyPage(String Strurl)
+	{
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		try {
 			// 发送请求并且拿到内容

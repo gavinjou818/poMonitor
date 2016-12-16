@@ -17,7 +17,8 @@ import javax.persistence.Query;
  * @see .LeverWord
  * @author MyEclipse Persistence Tools
  */
-public class LeverWordDAO implements ILeverWordDAO {
+public class LeverWordDAO implements ILeverWordDAO 
+{
 	// property constants
 	public static final String WORD = "word";
 	public static final String SCORE = "score";

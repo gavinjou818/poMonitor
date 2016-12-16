@@ -21,6 +21,7 @@ import com.alibaba.fastjson.JSONArray;
 public class ArticleSplier
 {
 
+	
 	/**
 	 * 将String形态的文章预处理为自定义的TendSentence列表
 	 * 

@@ -13,7 +13,8 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "emotionalword", catalog = "pomonitor", uniqueConstraints = @UniqueConstraint(columnNames = "word"))
-public class Emotionalword implements java.io.Serializable {
+public class Emotionalword implements java.io.Serializable
+{
 
 	// Fields
 

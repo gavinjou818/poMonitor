@@ -8,7 +8,8 @@ import java.util.List;
  * 
  * @author caihengyi 2015年12月15日 上午10:17:13
  */
-public class HotWord {
+public class HotWord 
+{
 
 	private String content;// 热词内容
 

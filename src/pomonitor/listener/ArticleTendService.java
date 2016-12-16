@@ -9,7 +9,8 @@ import javax.servlet.ServletContextListener;
 
 import pomonitor.analyse.TendDiscoveryAnalyse;
 
-public class ArticleTendService implements ServletContextListener {
+public class ArticleTendService implements ServletContextListener
+{
 	// 用于设置服务定时启动的定时器
 	private Timer timer = new Timer();
 

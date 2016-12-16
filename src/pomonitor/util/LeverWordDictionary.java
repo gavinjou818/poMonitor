@@ -10,7 +10,8 @@ import pomonitor.entity.LeverWordDAO;
  * 
  * @author xiaoyulun 2015年12月14日 下午6:26:07
  */
-public class LeverWordDictionary {
+public class LeverWordDictionary 
+{
 	private HashMap<String, LeverWord> hashMap;
 	private LeverWordDAO leverWordDAO;
 

@@ -11,15 +11,18 @@ import pomonitor.entity.IdeaWordDAO;
  * 
  * @author zhaolong 2015年12月17日 下午6:04:02
  */
-public class IdeaWordDictionary {
+public class IdeaWordDictionary
+{
 	public HashMap<String, String> map;
 	private IdeaWordDAO wordDao;
 
-	public IdeaWordDictionary() {
+	public IdeaWordDictionary() 
+	{
 		map = new HashMap<>();
 		wordDao = new IdeaWordDAO();
 		List<IdeaWord> list = wordDao.findAll();
-		for (int i = 0; i < list.size(); i++) {
+		for (int i = 0; i < list.size(); i++) 
+		{
 			map.put(list.get(i).getWord(), null);
 		}
 	}

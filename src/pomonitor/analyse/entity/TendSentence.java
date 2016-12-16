@@ -9,7 +9,9 @@ import java.util.List;
  * 
  */
 
-public class TendSentence {
+
+public class TendSentence 
+{
 	// 句子在文章中的序号
 	private int id;
 	// 句子包含的词集合

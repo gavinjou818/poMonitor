@@ -3,7 +3,8 @@ package pomonitor.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DateUnify {
+public class DateUnify
+{
 	public static String DataUn(String dates) {
 		String datatime = null;
 		String datatimes = null;

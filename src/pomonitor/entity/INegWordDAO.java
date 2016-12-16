@@ -10,7 +10,8 @@ import java.util.List;
  * @author MyEclipse Persistence Tools
  */
 
-public interface INegWordDAO {
+public interface INegWordDAO 
+{
 	/**
 	 * Perform an initial save of a previously unsaved NegWord entity. All
 	 * subsequent persist actions of this entity should use the #update()

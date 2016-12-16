@@ -18,7 +18,8 @@ import javax.persistence.Query;
  * @see .WordProperty
  * @author MyEclipse Persistence Tools
  */
-public class WordPropertyDAO implements IWordPropertyDAO {
+public class WordPropertyDAO implements IWordPropertyDAO 
+{
 	// property constants
 	public static final String PROPERTY = "property";
 

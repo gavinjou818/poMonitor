@@ -26,7 +26,8 @@ import pomonitor.entity.NewsEntity;
  */
 public class WeiXinAnalyse extends BaseAnalyse {
 
-	public WeiXinAnalyse(String webName, boolean isKeep) {
+	public WeiXinAnalyse(String webName, boolean isKeep)
+	{
 		super(webName, isKeep);
 		// url
 		seedUrl = " http://weixin.sogou.com/weixin?";

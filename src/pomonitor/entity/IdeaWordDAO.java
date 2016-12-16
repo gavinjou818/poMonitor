@@ -18,7 +18,8 @@ import pomonitor.entity.EntityManagerHelper;
  * @see .IdeaWord
  * @author MyEclipse Persistence Tools
  */
-public class IdeaWordDAO implements IIdeaWordDAO {
+public class IdeaWordDAO implements IIdeaWordDAO 
+{
 	// property constants
 	public static final String WORD = "word";
 
@@ -46,7 +47,8 @@ public class IdeaWordDAO implements IIdeaWordDAO {
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(IdeaWord entity) {
+	public void save(IdeaWord entity) 
+	{
 		EntityManagerHelper.log("saving IdeaWord instance", Level.INFO, null);
 		try {
 			getEntityManager().persist(entity);

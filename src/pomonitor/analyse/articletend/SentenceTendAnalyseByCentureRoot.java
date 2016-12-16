@@ -20,7 +20,8 @@ import pomonitor.util.NegWordDictionary;
  * 
  * @author zhaolong 2015年12月23日 下午7:09:30
  */
-public class SentenceTendAnalyseByCentureRoot implements ISentenceTendAnalyse {
+public class SentenceTendAnalyseByCentureRoot implements ISentenceTendAnalyse 
+{
 	// 情感词字典
 	private EmotionalDictionary emotionalDictionary;
 
@@ -196,7 +197,7 @@ public class SentenceTendAnalyseByCentureRoot implements ISentenceTendAnalyse {
 			System.out.println(eword.getStrength() + "~~~~~~~~~");
 			// 计算分数
 			score = eword.getPolarity() * (float) eword.getStrength() / 10;
-		} else {
+		} else { 
 			// 此处查找近义词典计算分数
 		}
 		System.out.println("情感词 " + word + " 得分：" + score);

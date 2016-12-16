@@ -23,7 +23,8 @@ import de.l3s.boilerpipe.extractors.ArticleExtractor;
  * 
  * @author zhaolong 2015年12月14日 下午9:51:41
  */
-public class DbSaveCrawl implements Runnable {
+public class DbSaveCrawl implements Runnable 
+{
 
 	private List<NewsEntity> worksList;
 
@@ -47,7 +48,8 @@ public class DbSaveCrawl implements Runnable {
 		return worksList;
 	}
 
-	public void setWorksList(List<NewsEntity> worksList) {
+	public void setWorksList(List<NewsEntity> worksList)
+	{
 
 		this.worksList = worksList;
 		System.out.println("爬虫" + id + "  第    " + i + "添加" + worksList.size()
@@ -58,7 +60,8 @@ public class DbSaveCrawl implements Runnable {
 	}
 
 	@Override
-	public void run() {
+	public void run() 
+	{
 		EntityManagerHelper.beginTransaction();
 
 		while (worksList.size() > 0) {

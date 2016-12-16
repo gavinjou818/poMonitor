@@ -18,7 +18,8 @@ import pomonitor.entity.EntityManagerHelper;
  * @see .NegWord
  * @author MyEclipse Persistence Tools
  */
-public class NegWordDAO implements INegWordDAO {
+public class NegWordDAO implements INegWordDAO
+{
 	// property constants
 	public static final String WORD = "word";
 

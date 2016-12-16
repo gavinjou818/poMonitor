@@ -9,7 +9,8 @@ import java.util.Map;
  * 
  * @author caihengyi 2015年12月15日 下午2:22:32
  */
-public class TDArticle {
+public class TDArticle
+{
 
 	private String id;
 	private String title;

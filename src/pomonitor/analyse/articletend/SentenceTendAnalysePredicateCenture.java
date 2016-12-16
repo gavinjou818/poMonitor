@@ -18,7 +18,8 @@ import pomonitor.util.NegWordDictionary;
  * @author zhaolong 2015年12月21日 下午1:02:07
  */
 public class SentenceTendAnalysePredicateCenture implements
-		ISentenceTendAnalyse {
+		ISentenceTendAnalyse
+{
 	// 情感词字典
 	private EmotionalDictionary emotionalDictionary;
 
@@ -110,7 +111,8 @@ public class SentenceTendAnalysePredicateCenture implements
 	}
 
 	// 计算核心词否定前缀并计算其否定程度
-	private void analyseNegLevel() {
+	private void analyseNegLevel() 
+	{
 		// 哈工大分词系统是否识别到否定词
 		boolean ifGet = false;
 		for (TendWord td : wordsList) {
@@ -146,7 +148,8 @@ public class SentenceTendAnalysePredicateCenture implements
 	}
 
 	// 计算核心词的修饰词或者其为此发出者的加成
-	private void analysLevel() {
+	private void analysLevel() 
+	{
 		for (TendWord td : wordsList) {
 
 			if (td.getParent() == headId) {

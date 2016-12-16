@@ -1,6 +1,7 @@
 package pomonitor.util;
 
-public class ConsoleLog {
+public class ConsoleLog
+{
 	public static void PrintInfo(Class clazz, String info) {
 		System.out.println("###### Info from " + clazz.getName() + ": " + info);
 	}
@@ -11,7 +12,8 @@ public class ConsoleLog {
 	}
 
 	public static void PrintMat(Class clazz, double[][] mat, int width,
-			int heigth) {
+			int heigth) 
+	{
 		System.out.println("###### Mat from " + clazz.getName());
 		int AlignWidth = 5;
 		System.out.println(StringMulti(
@@ -51,7 +53,8 @@ public class ConsoleLog {
 	}
 
 	public static String AlignHanZiWithPlaceholder(String str,
-			String placeholder, int width) {
+			String placeholder, int width) 
+	{
 		if (str.length() >= width)
 			return str;
 		String placeholders = "";

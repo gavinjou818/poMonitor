@@ -10,7 +10,8 @@ import java.util.List;
  * @author MyEclipse Persistence Tools
  */
 
-public interface IIdeaWordDAO {
+public interface IIdeaWordDAO 
+{
 	/**
 	 * Perform an initial save of a previously unsaved IdeaWord entity. All
 	 * subsequent persist actions of this entity should use the #update()

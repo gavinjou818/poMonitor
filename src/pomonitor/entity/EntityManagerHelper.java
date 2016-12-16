@@ -22,6 +22,7 @@ import javax.persistence.Query;
  */
 
 //用于创建EntityManager并进行增删查改
+
 public class EntityManagerHelper {
 
 	private static final EntityManagerFactory emf;//JPA 实体管理器工厂
@@ -65,11 +66,13 @@ public class EntityManagerHelper {
 		getEntityManager().getTransaction().rollback();//事务回滚
 	}
 
-	public static Query createQuery(String query) { 
+	public static Query createQuery(String query) 
+	{ 
 		return getEntityManager().createQuery(query);
 	}
 
-	public static void log(String info, Level level, Throwable ex) {
+	public static void log(String info, Level level, Throwable ex) 
+	{
 		logger.log(level, info, ex);//日志记录
 	}
 

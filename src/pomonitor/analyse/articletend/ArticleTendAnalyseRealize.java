@@ -22,6 +22,7 @@ import pomonitor.util.NewsAndNewsEnriryTran;
  * 
  * @author zhaolong 2015年12月24日 下午3:24:28
  */
+
 public class ArticleTendAnalyseRealize implements IArticleTendAnalyse
 {
 	// 文章预处理器
@@ -39,7 +40,8 @@ public class ArticleTendAnalyseRealize implements IArticleTendAnalyse
 	/**
 	 * 构造方法构造一些需要用到的器具
 	 */
-	public ArticleTendAnalyseRealize() {
+	public ArticleTendAnalyseRealize() 
+	{
 		// 传入文章拆分器
 		preAnalyser = new ArticlePreAnalyse(new ArticleSplier());
 		// 传入主题影响因子的加权算法

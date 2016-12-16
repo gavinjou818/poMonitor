@@ -16,7 +16,8 @@ import pomonitor.util.PropertiesReader;
  * 
  * @author caihengyi 2015年12月20日 下午10:03:32
  */
-public class KmeansCluster {
+public class KmeansCluster 
+{
 
 	private static int globalCounter = 0;
 	private static int counter;
@@ -95,8 +96,8 @@ public class KmeansCluster {
 	 * @param articleCollection
 	 * 
 	 */
-	private static List<TDCentroid> getInitKCentroid(int k,
-			List<TDArticle> articleCollection) {
+	private static List<TDCentroid> getInitKCentroid(int k,List<TDArticle> articleCollection) 
+    {
 		List<TDCentroid> centroidCollection = new ArrayList<TDCentroid>();
 		TDCentroid c = null;
 		// 防止k超过最大值
@@ -115,9 +116,11 @@ public class KmeansCluster {
 			else {
 				TDArticle theFararticle = null;
 				double theFarDist = 0.0;
-				for (TDArticle article : articleCollection) {
+				for (TDArticle article : articleCollection) 
+				{
 					double theDist = 0.0;
-					for (TDCentroid cent : centroidCollection) {
+					for (TDCentroid cent : centroidCollection) 
+					{
 						theDist += SimilarityMatrics.FindEuclideanDistance(
 								article.vectorSpace, cent.getGroupedArticle()
 										.get(0).vectorSpace);
@@ -144,7 +147,8 @@ public class KmeansCluster {
 	 * @param articleCount
 	 * @return
 	 */
-	private static HashSet<Integer> GenerateRandomNumber(int k, int articleCount) {
+	private static HashSet<Integer> GenerateRandomNumber(int k, int articleCount) 
+	{
 		HashSet<Integer> uniqRand = new HashSet<Integer>();
 		Random r = new Random();
 
@@ -171,7 +175,8 @@ public class KmeansCluster {
 	 * @param count
 	 * @return
 	 */
-	private static List<TDCentroid> InitializeClusterCentroid(int count) {
+	private static List<TDCentroid> InitializeClusterCentroid(int count) 
+	{
 		TDCentroid c;
 		List<TDCentroid> centroid = new ArrayList<TDCentroid>();
 		for (int i = 0; i < count; i++) {
@@ -191,7 +196,8 @@ public class KmeansCluster {
 	 */
 	private static boolean CheckStoppingCriteria(
 			List<TDCentroid> prevClusterCenter,
-			List<TDCentroid> newClusterCenter) {
+			List<TDCentroid> newClusterCenter) 
+	{
 		globalCounter++;
 		counter = globalCounter;
 		if (globalCounter > MAX_NUM)
@@ -242,7 +248,8 @@ public class KmeansCluster {
 	 * @return
 	 */
 	private static List<TDCentroid> CalculateMeanPoints(
-			List<TDCentroid> clusterCenter) {
+			List<TDCentroid> clusterCenter) 
+	{
 		List<TDCentroid> _clusterCenter = clusterCenter;
 		for (int i = 0; i < _clusterCenter.size(); i++) {
 			if (_clusterCenter.get(i).GroupedArticle.size() > 0) {

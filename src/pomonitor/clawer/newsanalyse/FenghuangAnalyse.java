@@ -26,7 +26,8 @@ import ucar.nc2.util.net.URLencode;
  * 
  */
 
-public class FenghuangAnalyse extends BaseAnalyse {
+public class FenghuangAnalyse extends BaseAnalyse 
+{
 	public FenghuangAnalyse(String webName, boolean isKeep) {
 		super(webName, isKeep);
 		// url
@@ -37,7 +38,8 @@ public class FenghuangAnalyse extends BaseAnalyse {
 	}
 
 	@Override
-	public int getPageCount(String key, boolean isLatest) {
+	public int getPageCount(String key, boolean isLatest)
+	{
 		key = URLencode.escape(key);
 		int count = 0;
 		int pageCount = 0;
@@ -81,7 +83,8 @@ public class FenghuangAnalyse extends BaseAnalyse {
 	}
 
 	@Override
-	public HashMap<String, Object> analyseAnyPage(String Strurl) {
+	public HashMap<String, Object> analyseAnyPage(String Strurl) 
+	{
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		try {
 			URL url = new URL(Strurl);

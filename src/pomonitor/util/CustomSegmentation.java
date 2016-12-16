@@ -23,14 +23,17 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class CustomSegmentation {
+public class CustomSegmentation 
+{
+	
 	public static void main(String argv[]) {
 		CustomSegmentation api = new CustomSegmentation();
 		// api.analyze("F:\\ÏîÄ¿3\\ltp-cloud-api-tutorial-master\\ltp-cloud-api-tutorial-master\\Java\\Customs.file");
 		api.analyze("E:\\test.txt");
 	}
 
-	private String buildLTMLFromWords(String[] words) {
+	private String buildLTMLFromWords(String[] words) 
+	{
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory
 					.newInstance();

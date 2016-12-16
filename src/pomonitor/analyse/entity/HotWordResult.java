@@ -2,7 +2,8 @@ package pomonitor.analyse.entity;
 
 import java.util.ArrayList;
 
-public class HotWordResult {
+public class HotWordResult 
+{
 	private ArrayList<RetLink> links;
 	private ArrayList<RetHotWord> nodes;
 

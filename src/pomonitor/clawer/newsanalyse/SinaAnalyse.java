@@ -21,7 +21,8 @@ import pomonitor.entity.NewsEntity;
  * 
  */
 
-public class SinaAnalyse extends BaseAnalyse {
+public class SinaAnalyse extends BaseAnalyse 
+{
 
 	public SinaAnalyse(String webName, boolean isKeep) {
 		super(webName, isKeep);

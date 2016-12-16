@@ -23,7 +23,8 @@ import pomonitor.clawer.newsanalyse.XinHuaAnalyse;
 import pomonitor.clawer.newsanalyse.ZhongXinAnalyse;
 import pomonitor.util.PropertiesReader;
 
-public class ClawerService implements ServletContextListener {
+public class ClawerService implements ServletContextListener 
+{
 
 	// 用于设置服务定时启动的定时器
 	private Timer timer = new Timer();

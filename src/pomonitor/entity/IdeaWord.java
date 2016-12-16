@@ -14,7 +14,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "ideaword", catalog = "pomonitor")
-public class IdeaWord implements java.io.Serializable {
+public class IdeaWord implements java.io.Serializable 
+{
 
 	// Fields
 

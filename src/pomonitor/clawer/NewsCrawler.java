@@ -10,7 +10,8 @@ import pomonitor.clawer.newsanalyse.Ianalyse;
 import pomonitor.entity.NewsEntity;
 import pomonitor.util.MD5Util;
 
-public class NewsCrawler implements ICrawler {
+public class NewsCrawler implements ICrawler
+{
 
 	// 用于存放新闻的map
 	private Map<String, NewsEntity> newsMap;

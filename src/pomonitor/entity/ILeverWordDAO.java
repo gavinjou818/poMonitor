@@ -10,7 +10,8 @@ import java.util.List;
  * @author MyEclipse Persistence Tools
  */
 
-public interface ILeverWordDAO {
+public interface ILeverWordDAO 
+{
 	/**
 	 * Perform an initial save of a previously unsaved LeverWord entity. All
 	 * subsequent persist actions of this entity should use the #update()

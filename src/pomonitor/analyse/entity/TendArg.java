@@ -2,6 +2,7 @@ package pomonitor.analyse.entity;
 /*
  * ÓïÒå½ÇÉ«
  */
+
 public class TendArg 
 {
 	// ĞòºÅ

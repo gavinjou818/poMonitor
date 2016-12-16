@@ -9,7 +9,8 @@ import pomonitor.analyse.entity.TendSentence;
  * @author zhaolong
  * 
  */
-public interface ISubScoreAdd {
+public interface ISubScoreAdd 
+{
 
 	/**
 	 * 

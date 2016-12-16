@@ -11,11 +11,13 @@ import java.util.regex.Pattern;
  * 
  * @author luoxu 2015年12月15日 下午1:44:49
  */
-public class ReadData {
+public class ReadData 
+{
 	/*
 	 * 从本地文本读取新闻内容
 	 */
-	public static String getContentFromText(String filePath) {
+	public static String getContentFromText(String filePath) 
+	{
 		String Content = "";
 		String fileName = filePath;
 		File file = new File(fileName);

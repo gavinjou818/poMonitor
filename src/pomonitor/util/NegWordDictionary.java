@@ -13,7 +13,8 @@ import pomonitor.entity.NegWordDAO;
  * 
  * @author zhaolong 2015年12月17日 下午6:04:02
  */
-public class NegWordDictionary {
+public class NegWordDictionary 
+{
 	// 向外提供此map用来判断
 	public HashMap<String, String> map;
 	private NegWordDAO wordDao;

@@ -20,6 +20,7 @@ import javax.persistence.UniqueConstraint;
  * 标记注释
  */
 
+
 //jpa实体映射
 @Entity  
 @Table(name = "news", catalog = "pomonitor", uniqueConstraints = {
