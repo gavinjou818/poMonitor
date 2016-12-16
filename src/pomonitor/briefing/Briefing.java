@@ -16,6 +16,7 @@ import java.util.Random;
  *   
  *   模拟对应模板类
  *   
+ *  
  *   @author zhouzhifeng
  * 
  */
