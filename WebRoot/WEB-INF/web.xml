@@ -88,6 +88,8 @@
         <welcome-file>default.htm</welcome-file>
         <welcome-file>default.jsp</welcome-file>
     </welcome-file-list>
+    
+    
     <servlet>
         <servlet-name>HotWordsServlet</servlet-name>
         <servlet-class>pomonitor.servlet.HotWordsServlet</servlet-class>
@@ -96,24 +98,44 @@
         <servlet-name>SiteEvaluationServlet</servlet-name>
         <servlet-class>pomonitor.servlet.SiteEvaluationServlet</servlet-class>
     </servlet>
-  <servlet>
-    <servlet-name>IndexServlet</servlet-name>
-    <display-name>This is the display name of my J2EE component</display-name>
-    <description>This is the description of my J2EE component</description>
-    <servlet-class>pomonitor.servlet.IndexServlet</servlet-class>
-  </servlet>
+  
+   <servlet>
+     <servlet-name>IndexServlet</servlet-name>
+     <display-name>This is the display name of my J2EE component</display-name>
+     <description>This is the description of my J2EE component</description>
+     <servlet-class>pomonitor.servlet.IndexServlet</servlet-class>
+   </servlet>
 
 
-    <servlet-mapping>
+
+
+
+  <servlet-mapping>
         <servlet-name>HotWordsServlet</servlet-name>
         <url-pattern>/servlet/HotWordsServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
+  </servlet-mapping>
+  
+  <servlet-mapping>
         <servlet-name>SiteEvaluationServlet</servlet-name>
         <url-pattern>/servlet/SiteEvaluationServlet</url-pattern>
-    </servlet-mapping>
+  </servlet-mapping>
+  
   <servlet-mapping>
     <servlet-name>IndexServlet</servlet-name>
     <url-pattern>/servlet/IndexServlet</url-pattern>
   </servlet-mapping>
+  
+  <!-- 用于生成报表的servlet接口 zhouzhifeng-->
+  <servlet>  
+    <servlet-name>sImageAndcTemplateServlet</servlet-name>  
+    <servlet-class>pomonitor.servlet.sImageAndcTemplateServlet</servlet-class>  
+  </servlet> 
+  <servlet-mapping>
+    <servlet-name>sImageAndcTemplateServlet</servlet-name>
+    <url-pattern>/servlet/sImageAndcTemplateServlet</url-pattern>
+  </servlet-mapping>
+  <!-- 用于生成报表的servlet接口 -->
+  
+  
+  
 </web-app>

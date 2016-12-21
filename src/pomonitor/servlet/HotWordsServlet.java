@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -156,13 +157,15 @@ public class HotWordsServlet extends HttpServlet {
 			int userId = Integer.parseInt(request.getParameter("userId"));
 			HttpSession session=request.getSession(true);
 			this.tdDiscovery=(HotWordDiscoveryAnalyse)session.getAttribute(startDateStr+endDateStr+userId);
-			if(this.tdDiscovery==null){
+			if(this.tdDiscovery==null)
+			{
 				this.tdDiscovery = new HotWordDiscoveryAnalyse();
 				tdDiscovery.discoverHotWords(startDateStr, endDateStr, userId);
 				session.setAttribute(startDateStr+endDateStr+userId,this.tdDiscovery);
 			}
 			// 根据请求的方法，返回对应信息 resultJson
-			switch (methodName) {
+			switch (methodName) 
+			{
 			case "getHotWords":
 				// 返回热词集合
 				resultJson = getHotWords(startDateStr, endDateStr, userId);
@@ -179,6 +182,7 @@ public class HotWordsServlet extends HttpServlet {
 				break;
 			}
 		}
+		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(resultJson);

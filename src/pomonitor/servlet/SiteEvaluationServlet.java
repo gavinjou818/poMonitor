@@ -2,7 +2,9 @@ package pomonitor.servlet;
 
 import java.io.IOException;
 
+
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +17,8 @@ import pomonitor.analyse.ArticleTendAnalyse;
  * @author hengyi
  * 
  */
-public class SiteEvaluationServlet extends HttpServlet {
+public class SiteEvaluationServlet extends HttpServlet
+{
 
 	public SiteEvaluationServlet() {
 		super();
@@ -33,14 +36,18 @@ public class SiteEvaluationServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+        
+		
+		System.out.println("-------------->"+request.getParameter("start_time"));
 		String start_time = request.getParameter("start_time");
 		String end_time = request.getParameter("end_time");
 		String method = request.getParameter("method");
 		String userID = request.getParameter("userID");
-//		System.out.println(start_time);
+		//System.out.println(start_time);
 		String resJson = "";
-		switch (method) {
+		
+		switch (method)
+		{
 		case "getWebTend":
 			resJson = getWebTend(start_time, end_time, userID);
 			break;
@@ -48,8 +55,10 @@ public class SiteEvaluationServlet extends HttpServlet {
 			break;
 		}
 		System.out.println(resJson);
+		
+		
 		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
+	    response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(resJson);
 	}
 
@@ -67,7 +76,8 @@ public class SiteEvaluationServlet extends HttpServlet {
 	 * @param userID
 	 * @return
 	 */
-	private String getWebTend(String start_time, String end_time, String UserId) {
+	private String getWebTend(String start_time, String end_time, String UserId)
+	{
 		String resJson = "";
 		ArticleTendAnalyse articleTendAnalyse = new ArticleTendAnalyse();
 		resJson = articleTendAnalyse.GenerateJSon(start_time, end_time, UserId);

@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import pomonitor.util.PropertiesReader;
+
 
 /** 
  *   
@@ -23,17 +25,19 @@ import java.util.Random;
 
 public class Briefing 
 {
-       private String filePath;//文件路径名
-       private String fileName;//文件名称
-       private Map<String, Object> dataMap;//存入的对应数据
-       private String templateName;//对应模板名
-       
+    private static String filePath;//文件路径名
+    private String fileName;//文件名称
+    private Map<String, Object> dataMap;//存入的对应数据
+    private String templateName;//对应模板名
+    static 
+    {
+    	PropertiesReader propertiesReader = new PropertiesReader();
+    	filePath = propertiesReader.getPropertyByName("BEF_savePath");
+    }
+    
     public String getFilePath() 
     {
 		return filePath;
-	}
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
 	}
 	public String getFileName() {
 		return fileName;

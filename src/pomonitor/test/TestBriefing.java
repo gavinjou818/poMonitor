@@ -1,6 +1,7 @@
 package pomonitor.test;
 
 import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
@@ -16,6 +17,7 @@ import pomonitor.briefing.DocumentHandler;
 
 
 
+
 /**
  * 用于测试方法
  * @author zhouzhifeng
@@ -23,10 +25,14 @@ import pomonitor.briefing.DocumentHandler;
  */
 public class TestBriefing 
 {
-     public static void main(String args[])
-     {
-    	 DocumentHandler documentHandler=new DocumentHandler();
+     public static void main(String args[]) throws Exception
+     {    
+    	 
+    	 //用于测试word文档写入
+    	 /*DocumentHandler documentHandler=new DocumentHandler();
     	 Briefing briefing=new Briefing();
+    	
+    	 int [] a={1,2,3,4,5};
     	 
     	 //组装模板所需数据
     	 Map<String, Object> dataMap=new HashMap<String,Object>();
@@ -91,14 +97,20 @@ public class TestBriefing
     	 dataMap.put("max_day", date.getMinutes());
     	 dataMap.put("max_hour", date.getMinutes()); 
     	 
+    	
     	 
     	 briefing.setFilePath("D:/aaa/");
     	 briefing.setFileName("a.doc");
     	 briefing.setDataMap(dataMap);
-    	 briefing.setTemplateName("template1.ftl");
+    	 briefing.setTemplateName("template2.ftl");
     	 
     	 documentHandler.
-    	 createWord(briefing);
+    	 createWord(briefing);*/
+    	 
+    	 
+    	 //测试文档保存单元
+    	 DocumentHandler documentHandler=new DocumentHandler();
+    	 documentHandler.UpdateCatalogandSave("D:aaa/", "a.doc");
     	
     	 
  	

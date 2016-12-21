@@ -5,13 +5,15 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import pomonitor.statistics.Summarize;
 
-public class IndexServlet extends HttpServlet {
+public class IndexServlet extends HttpServlet 
+{
 
 	/**
 	 * Constructor of the object.
@@ -101,6 +103,7 @@ public class IndexServlet extends HttpServlet {
 		}
 		System.out.println("***" + resJSON);
 		response.setContentType("application/json");
+		
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(resJSON);
 	}

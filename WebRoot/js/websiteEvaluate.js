@@ -1,16 +1,19 @@
 var jsonobj, xAxis1, name1, name2, name3, length1;
 // 加载echart
 require.config({
-	paths : {
-		echarts : './lib/echarts-2.2.7/build/dist'
+	paths : 
+	{
+		echarts : './lib/echarts-2.2.7/echarts',
+		'echarts/chart/bar':'./lib/echarts-2.2.7/chart/bar'
 	}
 });
 
-$("#btn_websiteEvaluate").click(
+$("#btn_websiteEvaluate").click
+(
 		function() {
 			var date_start = document.getElementById('date1').value;
 			var date_end = document.getElementById('date2').value;
-			/** **************** 验证参数完整性 ************************ */
+			/** **************** 验证参数完整性 *************************/
 			if (date_start != undefined && date_end != undefined
 					&& date_start != "" && date_end != "") {
 				if (date_start <= date_end) {
@@ -63,8 +66,12 @@ $("#btn_websiteEvaluate").click(
  */
 function loadEchartBar(jsonobj) {
 	require(// 少一个
-	[ 'echarts', 'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
-	], function(ec) {// 少一个
+	[ 
+	  'echarts', 
+	  'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+	],
+	function(ec) 
+	{// 少一个
 		// 基于准备好的dom，初始化echarts图表
 		var myChart = ec.init(document.getElementById('div_website_eval'));
 
