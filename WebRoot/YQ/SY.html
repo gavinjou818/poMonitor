@@ -1,22 +1,23 @@
- <!doctype html>
+
+<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>南华大学核电舆情系统</title>
-<link href="css/SY.css" rel="stylesheet" type="text/css"  />
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css"  />
-<link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css"  />
+<link href="css/SY.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
 <!--在线jq-->
-<script src="js/jquery-3.1.1.js" ></script>
-<script src="js/bootstrap.js" ></script>
-<script src="js/echarts.js" ></script>
+<script src="js/jquery-3.1.1.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/echarts.js"></script>
 <script src="js/china.js"></script>
 <script src="js/d3.js"></script>
 
 
 
-    <!--加载数据表-->
-    <script type="text/javascript">
+<!--加载数据表-->
+<script type="text/javascript">
 
         var sum = 16;//限制最大条数
 
@@ -143,7 +144,6 @@
 
                     var barsum=Math.min(6,data.length);//头条最多5条
 
-
                     if(barsum<=0) return;
                     var parent = document.getElementById('arthead');
                     parent.innerText=data[0].arthead;
@@ -154,7 +154,7 @@
                     parent = document.getElementById('arthead_body');
                     parent.innerText=data[0].arthead_body;
 
-                    //<!--<div class="daliypaper"><a>2014-06-09分析报告</a></div>-->
+                  
                     parent =document.getElementById('arthead_rla');
                     for(var i=1;i<barsum;i++)
                     {
@@ -168,8 +168,6 @@
                          div1.appendChild(a1);
                          parent.appendChild(div1);
                     }
-
-
                 }
             });
 
@@ -192,182 +190,196 @@
 <body onload="initData()">
 
 
-<!--Tbar-->
-<div class="Tbar">
-    <span>今日总量:</span>&nbsp;<span id="tValue">68754</span>
-    <span>敏感:</span>&nbsp;<span id="mValue">230</span>
-    <span>非敏感:</span>&nbsp;<span id="nValue">66524</span>
-    <span>敏感比重:</span>&nbsp;<span id="iValue">3.4%</span>
+	<!--Tbar-->
+	<div class="Tbar">
+		<span>今日总量:</span>&nbsp;<span id="tValue">68754</span> <span>敏感:</span>&nbsp;<span
+			id="mValue">230</span> <span>非敏感:</span>&nbsp;<span id="nValue">66524</span>
+		<span>敏感比重:</span>&nbsp;<span id="iValue">3.4%</span>
 
 
-    <div class="rfloat">
-        <span>时间设定:</span>
-        <span><a href="#">今天</a></span>
-        &nbsp;
-        <span><a href="#">本周</a></span>
-        &nbsp;
-        <span><a href="#">本月</a></span>
-        &nbsp;
-        <span><a href="#">时间自定义</a></span>
-    </div>
-</div>
+		<div class="rfloat">
+			<span>时间设定:</span> <span><a href="#">今天</a></span> &nbsp; <span><a
+				href="#">本周</a></span> &nbsp; <span><a href="#">本月</a></span> &nbsp; <span><a
+				href="#">时间自定义</a></span>
+		</div>
+	</div>
 
-<!--header-->
-<div class="Header">
-    <div class="Welcome">
-        <span>欢迎 <span class="glyphicon glyphicon-user"></span></span>
-        <span id="User">***</span>
-        <span id="CandL"><a href="#">改密码<span class="glyphicon glyphicon-hand-left"></span></a>|<a href="#">退出<span class="glyphicon glyphicon-off"></span></a></span>
-    </div>
-</div>
+	<!--header-->
+	<div class="Header">
+		<div class="Welcome">
+			<span>欢迎 <span class="glyphicon glyphicon-user"></span></span> <span
+				id="User">***</span> <span id="CandL"><a href="#">改密码<span
+					class="glyphicon glyphicon-hand-left"></span></a>|<a href="#">退出<span
+					class="glyphicon glyphicon-off"></span></a></span>
+		</div>
+	</div>
 
-<!--导航栏-->
+	<!--导航栏-->
 
-<div class="bar-title">
+	<div class="bar-title">
 
-    <div class="bar-status"><a href="SY.html">首页</a></div>
-    <div class="bar-status" id="nav" onMouseOver="displaySubMenu(this)" onMouseOut="hideSubMenu(this)">
-        <a href="#">舆情分析<span class="caret"></span></a>
-        <ul class="nav-block">
-            <li><a href="MTFX.html">媒体分析</a></li>
-            <li><a href="QGFX.html">情感分析</a></li>
-        </ul>
+		<div class="bar-status">
+			<a href="SY.html">首页</a>
+		</div>
+		<div class="bar-status" id="nav" onMouseOver="displaySubMenu(this)"
+			onMouseOut="hideSubMenu(this)">
+			<a href="#">舆情分析<span class="caret"></span></a>
+			<ul class="nav-block">
+				<li><a href="MTFX.html">媒体分析</a></li>
+				<li><a href="QGFX.html">情感分析</a></li>
+			</ul>
 
-    </div>
-    <div class="bar-status"><a href="#">伪舆情分析</a></div>
-    <div class="bar-status"><a href="YQYJ.html">舆情预警</a></div>
-    <div class="bar-status"  onMouseOver="displaySubMenu(this)" onMouseOut="hideSubMenu(this)">
-        <a href="#">舆情报表<span class="caret"></span></a>
-        <ul class="nav-block">
-            <li><a href="TP.html">时间报表</a></li>
-            <li><a href="SP.html">事件报表</a></li>
-        </ul>
+		</div>
+		<div class="bar-status">
+			<a href="#">伪舆情分析</a>
+		</div>
+		<div class="bar-status">
+			<a href="YQYJ.html">舆情预警</a>
+		</div>
+		<div class="bar-status" onMouseOver="displaySubMenu(this)"
+			onMouseOut="hideSubMenu(this)">
+			<a href="#">舆情报表<span class="caret"></span></a>
+			<ul class="nav-block">
+				<li><a href="TP.html">时间报表</a></li>
+				<li><a href="SP.html">事件报表</a></li>
+			</ul>
 
-    </div>
-    <div class="bar-status bar-status2"><a href="#">后台管理<span class="glyphicon glyphicon-asterisk"></span></a></div>
-</div>
-
-
-
-<!--主体-->
-  <div class="container" id="pointnewyq">
-     <div class="row">
-        
-       <!--左1 舆情预警|热点舆情-->
-       <div class="panel panel-default col-md-6">
-         <div class="panel-body pnewyqpanel">
-            <div>
-              <!--Nav tabs-->
-              <ul class="nav nav-tabs" role="tablist">
-                 <li role="presentation" class="active"><a href="#newyq" aria-controls="newyq" role="tab" data-toggle="tab">最新舆情</a></li>
-                 <li role="presentation"><a href="#pointyq" aria-controls="pointyq" role="tab" data-toggle="tab">热点舆情</a></li>
-                 <li id="litoright"><a href="MGYQ.html">more<span class="glyphicon glyphicon-chevron-right"></span></a></li>
-              </ul>
-              
-              <!--Tab panes-->
-               
-               <div class="tab-content">
-                        <!--最新舆情内容-->
-                        <div role="tabpanel" class="tab-pane active" id="newyq" style="padding-top:10px">
-                            <!--由ajax加载-->
-                        </div>
-                        <!--热点舆情内容-->
-                        <div role="tabpanel" class="tab-pane" id="pointyq" style="padding-top:10px">
-                            <!--由ajax加载-->
-                        </div>
-                </div>
-              
-            </div>
-         </div>
-       </div> 
-       
-       
-        <!--右1地域分布-->
-         <div class="col-md-6 ">
-               <div class="panel panel-primary pnewyqpanel">
-                     <div class="panel-heading">
-                           <h3 class="panel-title">地域分布图</h3>
-                     </div>
-                     <!--地域分布图-->
-                     <div class="panel-body">
-                           <div id="ChinaPiture"></div>
-                     </div>
-              </div> 
-         </div>
-              
-     </div>
-     
-     <div class="row">
-         
-         <!--左2每日报表-->
-         <div class="col-md-6">
-               <div class="panel panel-primary pnewyqpanel">
-                     <div class="panel-heading">
-                           <h3 class="panel-title">每日报表</h3>
-                     </div>
-                     <div class="panel-body">
-                        <!--头条-->
-                        <div class="art">
-                           <img src="image/shili.jpg" id="parg" />
-                           <div class="art-title">
-                              <h2 id="arthead"></h2>
-                              <p class="art-time" id="arthead_time"></p>
-                              <p class="art-body" id="arthead_body">
-                              </p>
-                           </div>
-                        </div>
-                        
-                        <!--相关报告-->
-                        <div class="rlapaper" id="arthead_rla">
-                         <!--ajax加载-->
-
-                        </div>
-                        
-                     </div>
-              </div> 
-         </div>
-         
-         
-       <!--右2 舆情总量|媒体信息走势-->
-       <div class="panel panel-default col-md-6">
-         <div class="panel-body pnewyqpanel">
-            <div>
-              <!--Nav tabs-->
-              <ul class="nav nav-tabs" role="tablist">
-                 <li role="presentation" class="active"><a href="#yqtotal" aria-controls="yqtotal" role="tab" data-toggle="tab">舆情总量</a></li>
-                 <li role="presentation"><a href="#tdyq" aria-controls="tdyq" role="tab" data-toggle="tab">媒体信息走势</a></li>
-              </ul>
-              <!--Tab panes-->
-               
-               <div class="tab-content">
-                        <!--舆情总量内容-->
-                        <div role="tabpanel" class="tab-pane active" id="yqtotal">
-                            <div id="yqto" style="width:500px;height:380px;"></div>
-                        </div>
-                        <!--媒体信息走势-->
-                        <div role="tabpanel" class="tab-pane" id="tdyq">
-                           <div id="medtendency" style="width:500px;height:380px;"></div>
-                        </div>
-                </div>
-              
-            </div>
-         </div>
-       </div> 
-         
-         
-         
-         
-     
-     </div> 
-  </div>
-<!--foot-->
-
-<div class="foot"> <span class="glyphicon glyphicon-copyright-mark"></span>all right by usc</div>  
+		</div>
+		<div class="bar-status bar-status2">
+			<a href="#">后台管理<span class="glyphicon glyphicon-asterisk"></span></a>
+		</div>
+	</div>
 
 
 
-        <!--地域分布图-->
-        <script type="text/javascript">
+	<!--主体-->
+	<div class="container" id="pointnewyq">
+		<div class="row">
+
+			<!--左1 舆情预警|热点舆情-->
+			<div class="panel panel-default col-md-6">
+				<div class="panel-body pnewyqpanel">
+					<div>
+						<!--Nav tabs-->
+						<ul class="nav nav-tabs" role="tablist">
+							<li role="presentation" class="active"><a href="#newyq"
+								aria-controls="newyq" role="tab" data-toggle="tab">最新舆情</a></li>
+							<li role="presentation"><a href="#pointyq"
+								aria-controls="pointyq" role="tab" data-toggle="tab">热点舆情</a></li>
+							<li id="litoright"><a href="MGYQ.html">more<span
+									class="glyphicon glyphicon-chevron-right"></span></a></li>
+						</ul>
+
+						<!--Tab panes-->
+
+						<div class="tab-content">
+							<!--最新舆情内容-->
+							<div role="tabpanel" class="tab-pane active" id="newyq"
+								style="padding-top:10px">
+								<!--由ajax加载-->
+							</div>
+							<!--热点舆情内容-->
+							<div role="tabpanel" class="tab-pane" id="pointyq"
+								style="padding-top:10px">
+								<!--由ajax加载-->
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+
+			<!--右1地域分布-->
+			<div class="col-md-6 ">
+				<div class="panel panel-primary pnewyqpanel">
+					<div class="panel-heading">
+						<h3 class="panel-title">地域分布图</h3>
+					</div>
+					<!--地域分布图-->
+					<div class="panel-body">
+						<div id="ChinaPiture"></div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row">
+
+			<!--左2每日报表-->
+			<div class="col-md-6">
+				<div class="panel panel-primary pnewyqpanel">
+					<div class="panel-heading">
+						<h3 class="panel-title">每日报表</h3>
+					</div>
+					<div class="panel-body">
+						<!--头条-->
+						<div class="art">
+							<img src="image/shili.jpg" id="parg" />
+							<div class="art-title">
+								<h2 id="arthead"></h2>
+								<p class="art-time" id="arthead_time"></p>
+								<p class="art-body" id="arthead_body"></p>
+							</div>
+						</div>
+
+						<!--相关报告-->
+						<div class="rlapaper" id="arthead_rla">
+							<!--ajax加载-->
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+
+			<!--右2 舆情总量|媒体信息走势-->
+			<div class="panel panel-default col-md-6">
+				<div class="panel-body pnewyqpanel">
+					<div>
+						<!--Nav tabs-->
+						<ul class="nav nav-tabs" role="tablist">
+							<li role="presentation" class="active"><a href="#yqtotal"
+								aria-controls="yqtotal" role="tab" data-toggle="tab">一周走势图</a></li>
+							<li role="presentation"><a href="#tdyq" aria-controls="tdyq"
+								role="tab" data-toggle="tab">今日舆情</a></li>
+						</ul>
+						<!--Tab panes-->
+
+						<div class="tab-content">
+							<!--舆情总量内容-->
+							<div role="tabpanel" class="tab-pane active" id="yqtotal">
+								<div id="yqto" style="width:500px;height:380px;"></div>
+							</div>
+							<!--媒体信息走势-->
+							<div role="tabpanel" class="tab-pane" id="tdyq">
+								<div id="medtendency" style="width:500px;height:380px;"></div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+
+
+
+
+		</div>
+	</div>
+	<!--foot-->
+
+	<div class="foot">
+		<span class="glyphicon glyphicon-copyright-mark"></span>all right by
+		usc
+	</div>
+
+
+
+	<!--地域分布图-->
+	<script type="text/javascript">
         $(document).ready(function() {
             $.ajax({
                 type: "GET",
@@ -527,89 +539,94 @@
 
         });
         </script>
-        
-      
-        
-        <!--媒体信息走势图-->
-        <script type="text/javascript">
-        $(document).ready(function() {
+
+
+
+	<!--媒体信息走势图-->
+	<script type="text/javascript">
+        $(document).ready(function() 
+        {
             $.ajax({
                 type: "GET",
-                url:"json/medtendency.json",
+                url:'../servlet/IndexServlet',
+                data : 
+                {
+                    "method" : 'checkStatus'
+                },
                 dataType: "json",
 
                 success: function(datt) {
+                 var myChart = echarts.init(document.getElementById('medtendency'));
 
-                    var myChart = echarts.init(document.getElementById('medtendency'));
 
-
-                    option = {
-                        tooltip : {
-                            trigger: 'axis'
-                        },
-                        legend: {
-                    		x:'left',
-                            data:datt.legenddata
-                        },
-                        toolbox: {
-                    		orient:'vertical',
-                    		itemGap: 2,
-                            itemSize: 10,
-                            show : true,
-                            feature : {
-                                mark : {show: true},
-                                dataView : {show: true, readOnly: false},
-                                magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
-                                restore : {show: true},
-                                saveAsImage : {show: true}
-                            }
-                        },
-                        calculable : true,
-                        xAxis : [
-                            {
-                                type : 'category',
-                                boundaryGap : false,
-                                data : datt.xAxis
-                            }
-                        ],
-                        yAxis : [
-                            {
-                                type : 'value'
-                            }
-                        ],
-                        series : [
-                            {
-                                name:'邮件营销',
-                                type:'line',
-                                stack: '总量',
-                                data:[120, 132, 101, 134, 90, 230, 210]
-                            },
-                            {
-                                name:'联盟广告',
-                                type:'line',
-                                stack: '总量',
-                                data:[220, 182, 191, 234, 290, 330, 310]
-                            },
-                            {
-                                name:'视频广告',
-                                type:'line',
-                                stack: '总量',
-                                data:[150, 232, 201, 154, 190, 330, 410]
-                            },
-                            {
-                                name:'直接访问',
-                                type:'line',
-                                stack: '总量',
-                                data:[320, 332, 301, 334, 390, 330, 320]
-                            },
-                            {
-                                name:'搜索引擎',
-                                type:'line',
-                                stack: '总量',
-                                data:[820, 932, 901, 934, 1290, 1330, 1320]
-                            }
-                        ]
-                    };
+option = 
+{
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    legend: {
+        data: ['正面', '负面'],
+    },
+    grid: {
+        left: '0%',
+        right: '0%',
+        top:'5%',
+        bottom:'10%',
+        containLabel: true
+    },
+    xAxis:  {
+        type: 'value'
+    },
+    yAxis: {
+        type: 'category',
+        data: datt.websiteName
+    },
+    series:
+    [
+        {
+            name: '正面',
+            type: 'bar',
+            stack: '总量',
+            label: {
+                normal: {
+                    show: true,
+                    position: 'insideRight'
+                }
+            },
+            data:
+            (
+               function()
+               {
+                  var arrobj=new Array();
+                  var sum=datt.totalNum.length;
+               
+                  for(var i=0;i<sum;i++)
+                  {
+                     arrobj.push(datt.totalNum[i]-datt.negativeNum[i]);
+                  }
+                   return arrobj;
+               }
+               
+            )()
+        },
+        {
+            name: '负面',
+            type: 'bar',
+            stack: '总量',
+            label: {
+                normal: {
+                    show: true,
+                    position: 'insideRight'
+                }
+            },
+            data: datt.negativeNum
+        }
+       
+    ]
+};
                     
                     
                     myChart.setOption(option);
@@ -619,57 +636,107 @@
 
         });
         </script>
-        
-        
-        <!--舆情总量图-->
-        <script type="text/javascript">
-        $(document).ready(function() {
+
+
+	<!--一周走势图-->
+	<script type="text/javascript">
+        //获取这一周的走势图
+        var now = new Date();
+        var pre = new Date();
+        pre.setDate(now.getDate()-6);
+    
+        function setFormat(date)
+        {
+           var year = date.getFullYear();
+           var month = date.getMonth();
+           var date = date.getDate();
+           return (year + "-" + month + "-" + date);
+        }
+        startTime=setFormat(pre);
+        endTime=setFormat(now);
+        var arrobj=new Array;
+        var temp=new Date();
+        for(var i=6;i>=0;i--)
+        {
+           temp.setDate(now.getDate()-i);
+           arrobj[i]=setFormat(temp);
+        }
+        arrobj.reverse();
+        $(document).ready(function() 
+        {
             $.ajax({
                 type: "GET",
-                url:"json/yqto.json",
-                dataType: "json",
+                url:"../servlet/IndexServlet",
+                dataType:"json",
+                data : 
+                {
+                    "startTime": startTime,
+                    "endTime":  endTime,
+                    "method" : 'getTendency'
 
-                success: function(datt) {
+                 },
+
+                success: function(datt) 
+                {
 
                     var myChart = echarts.init(document.getElementById('yqto'));
 
 
                       option = {
-                          title: {
-                              text: '一天用电量分布',
-                              subtext: '纯属虚构'
-                          },
-                          tooltip: {
-                              trigger: 'axis'
-                          },
-                          toolbox: {
-                              show: true,
-                              feature: {
-                                  saveAsImage: {}
-                              }
-                          },
-                          xAxis:  {
-                              type: 'category',
-                              boundaryGap: false,
-                              data: ['00:00', '01:15', '02:30', '03:45', '05:00', '06:15', '07:30', '08:45', '10:00', '11:15', '12:30', '13:45', '15:00', '16:15', '17:30', '18:45', '20:00', '21:15', '22:30', '23:45']
-                          },
-                          yAxis: {
-                              type: 'value',
-                              axisLabel: {
-                                  formatter: '{value} W'
-                              }
-                          },
-                          
-                          series: [
-                              {
-                                  name:'用电量',
-                                  type:'line',
-                                  smooth: true,
-                                  data: datt.xAxis,
-                                 
-                              }
-                          ]
-                      };
+    title: {
+        text: '一周走势图',
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['总数','负面']
+    },
+    toolbox: 
+    {
+        show: true,
+    },
+    xAxis:  {
+        type: 'category',
+        boundaryGap: false,
+        data: arrobj
+    },
+    yAxis: {
+        type: 'value',
+        axisLabel: {
+            formatter: '{value} 条数'
+        }
+    },
+    series: [
+        {
+            name:'总数',
+            type:'line',
+            data:datt.series.all,
+            markPoint: 
+            {
+                data: 
+                [
+                    {type: 'max', name: '最大值'},
+                    {type: 'min', name: '最小值'}
+                ]
+            }
+        },
+        {
+            name:'负面',
+            type:'line',
+            data:datt.series.neg,
+            markPoint: 
+            {
+                data: 
+                [
+                    {type: 'max', name: '最大值'},
+                    {type: 'min', name: '最小值'}
+                ]
+            }
+        },
+    ]
+};
+
 
                     
                     
@@ -680,8 +747,8 @@
 
         });
         </script>
-        
-        
+
+
 
 
 </body>

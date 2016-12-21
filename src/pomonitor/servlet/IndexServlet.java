@@ -70,10 +70,14 @@ public class IndexServlet extends HttpServlet
 		String endTime = request.getParameter("endTime");
 		String method = request.getParameter("method");
 		String resJSON = "";
-		System.out.println(method);
-		switch (method) {
+		
+		System.out.println("----------->"+method);
+		switch (method) 
+		{
 		case "getTendency":
-			try {System.out.println("**");
+			try 
+			{
+				System.out.println("**");
 				resJSON = getTendency(startTime, endTime);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
@@ -101,9 +105,8 @@ public class IndexServlet extends HttpServlet
 		default:
 			break;
 		}
-		System.out.println("***" + resJSON);
+		System.out.println("---->***" + resJSON);
 		response.setContentType("application/json");
-		
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(resJSON);
 	}

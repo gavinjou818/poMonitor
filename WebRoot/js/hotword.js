@@ -14,7 +14,8 @@ $("#btn_hotword").click(
 			var date_end = document.getElementById('date2').value;
 			/** **************** 验证参数完整性 ************************ */
 			if (date_start != undefined && date_end != undefined
-					&& date_start != "" && date_end != "") {
+					&& date_start != "" && date_end != "") 
+			{
 				if (date_start <= date_end) {
 					$.ajax({
 						url : "./servlet/HotWordsServlet",
@@ -39,7 +40,6 @@ $("#btn_hotword").click(
 								jsonobj = data.results;
 								// 对返回数据做进一步处理
                                  
-								
 								
 								// 请求成功加载热词图
 								loadEchartForce(jsonobj)
@@ -108,7 +108,8 @@ function loadEchartForce(jsonobj) {
 						data : [ '褒', '中', '贬' ]
 					},
 					series : 
-					[ {
+					[ 
+					    {
 						type : 'force',
 						name : "热词统计",
 						ribbonType : false,

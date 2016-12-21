@@ -17,7 +17,8 @@ import pomonitor.entity.NewsDAO;
 import pomonitor.entity.NewsTend;
 import pomonitor.entity.NewsTendDAO;
 
-public class Summarize {
+public class Summarize 
+{
 	public String getTendency(String startTime, String endTime)
 			throws ParseException {
 		class Series {
@@ -173,6 +174,7 @@ public class Summarize {
 		NewsDAO newsDAO = new NewsDAO();
 		List<News> newsList = new ArrayList<>();
 		EntityManagerHelper.beginTransaction();
+		
 		newsList = newsDAO.findBetweenDate("2015-1-1", nowday);
 		EntityManagerHelper.commit();
 		
@@ -186,7 +188,8 @@ public class Summarize {
 		
 		int count = 0;
 		//优先把当天的新闻提取出来
-		for(int i=0, j=0; i<newsList.size() && j<5; i++) {
+		for(int i=0, j=0; i<newsList.size() && j<5; i++) 
+		{
 			News news = newsList.get(i);
 			Date newsdate = news.getTime();
 			String dateString = simpleDateFormat.format(newsdate);
@@ -219,7 +222,7 @@ public class Summarize {
 				//} 
 			}
 		}
-		//System.out.println(JSON.toJSONString(results));
+		System.out.println("!!!!"+JSON.toJSONString(results));
 		return JSON.toJSONString(results);
 	}
 

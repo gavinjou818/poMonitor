@@ -8,8 +8,9 @@
 	<link rel="stylesheet" type="text/css" href="./css/index.css">
 	<script src="./js/lib/jquery.min.js"></script>
 	<script src="./js/lib/bootstrap.min.js"></script>
-	<script src="../js/lib/echarts/echarts.js"></script>
-	<script src="./js/echarts.common.min.js" type="text/javascript" charset="utf-8" async defer></script>
+	<!--  <script src="../js/lib/echarts/echarts.js"></script> -->
+	<script src="./lib/echarts-2.2.7/echarts-all.js" type="text/javascript" charset="utf-8" async defer></script>
+    <script type="text/javascript" src="./js/lib/esl.js"></script>
 </head>
 <body>
 	<div class="container" id="profile">
@@ -157,12 +158,13 @@
     var pre = new Date(2015,9,28);
     pre.setDate(now.getDate()-7);
     
-     function setFormat(date){
+     function setFormat(date)
+     {
         var year = date.getFullYear();
         var month = date.getMonth();
         var date = date.getDate();
         return (year + "-" + month + "-" + date);
-    }
+     }
     startTime=setFormat(pre);
     endTime=setFormat(now);
     var arrobj=new Array;
@@ -337,21 +339,26 @@
     
        	// 今日舆情
        	$(document).ready(function(){
-	        function showCategory(data) {
+	        function showCategory(data) 
+	        {
 				var $cats = $('.category-bar .categorys');
 				var $demo = $cats.find('.category').clone();
 				$cats.find('.category').remove();
 
-				for (var i = 0; i < data.websiteName.length; i++) {
+				for (var i = 0; i < data.websiteName.length; i++) 
+				{
 					var $div = $demo.clone();
 					//$div.find('.content').html(data.websiteName[i])
 					$cats.append($div);
 					$div.find('.content').css('height', $div.find('.content').width() + 'px');
 
-					(function(div, data, idx){
+					(
+					   function(div, data, idx)
+				     	{
+					
 						require.config({
 				            paths: {
-				                echarts: '/poMonitor/js/lib/echarts'
+				                echarts: './js/lib/echarts'
 				            }
 				        });
 
@@ -421,7 +428,8 @@
 				}
 			}
 
-			$.ajax({
+			$.ajax
+			({
                 type:"GET",
                 //url:"./JSON/testJinRiYuQin.json",
                 url:"./servlet/IndexServlet",
@@ -429,9 +437,11 @@
                         "method" : 'checkStatus'
                        },
                 dataType:"json",
-                success: function(data) {
+                success: function(data) 
+                {
 					showCategory(data)
-			}});
+			    }
+			});
        	});
         
 

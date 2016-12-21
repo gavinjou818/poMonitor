@@ -16,7 +16,8 @@ $("#btn_websiteEvaluate").click
 			/** **************** 验证参数完整性 *************************/
 			if (date_start != undefined && date_end != undefined
 					&& date_start != "" && date_end != "") {
-				if (date_start <= date_end) {
+				if (date_start <= date_end) 
+				{
 					$.ajax({
 						url : "./servlet/SiteEvaluationServlet",
 						type : "POST",
@@ -75,7 +76,8 @@ function loadEchartBar(jsonobj) {
 		// 基于准备好的dom，初始化echarts图表
 		var myChart = ec.init(document.getElementById('div_website_eval'));
 
-		var option = {
+		var option = 
+		{
 			grid : {
 				x : 30,
 				y : 150,
