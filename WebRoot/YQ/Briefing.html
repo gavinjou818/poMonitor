@@ -1,0 +1,629 @@
+<!doctype html>
+<html>
+<head>
+
+    
+    
+ <title>南华大学</title>
+
+<link href="css/Briefing.css" rel="stylesheet" type="text/css"  />
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css"  />
+<link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap-table.css" rel="stylesheet" type="text/css" />
+
+<!--在线jq-->
+<script src="js/jquery-3.1.1.js" ></script>
+<script src="js/bootstrap.js" ></script>
+<script src="js/echarts.js" ></script>
+<script src="js/china.js"></script>
+<script src="js/d3.js"></script>
+<script src="js/docs.js"></script>
+<script src="js/examples.js"></script>
+<script src="js/bootstrap-table.js"></script>
+<script src="js/saveSvgAsPng.js"></script>
+
+
+
+    <style type="text/css">
+        .node circle
+        {
+            fill: #fff;
+            stroke: steelblue;
+            stroke-width: 1.5px;
+        }
+
+        .node
+        {
+            font: 12px sans-serif;
+        }
+
+        .link
+        {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 1.5px;
+        }
+    </style>
+
+    
+ 
+
+    <script type="text/javascript">
+         var xxx="";
+         //用于存储每个图标
+        var Charts=new Array(4);
+        function displaySubMenu(li)
+        {
+            var subMenu = li.getElementsByTagName("ul")[0];
+            subMenu.style.display = "block";
+        }
+        function hideSubMenu(li)
+        {
+            var subMenu = li.getElementsByTagName("ul")[0];
+            subMenu.style.display = "none";
+        }
+    </script>
+
+
+    <script>
+       
+        function exportImage()
+        {
+                 var data="";
+                 
+                 alert(xxx);
+                 data+="a0="+encodeURIComponent(xxx);
+                 data+="&a1="+encodeURIComponent(Charts[0].getDataURL("png"));
+                 data+="&a2="+encodeURIComponent(Charts[1].getDataURL("png"));
+                 data+="&a3="+encodeURIComponent(Charts[2].getDataURL("png"));
+                 data+="&a4="+encodeURIComponent(Charts[3].getDataURL("png"));
+
+
+                 var xmlhttp;
+                 if(window.XMLHttpRequest)
+                 {
+                     xmlhttp=new XMLHttpRequest();
+                 }
+                 else
+                 {
+                     xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                 }
+
+                 if(xmlhttp==null)
+                 {
+                     alert("你的浏览器不支持");
+                     return;
+                 }
+
+
+                xmlhttp.open("POST","../servlet/sImageAndcTemplateServlet",true);
+                xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                xmlhttp.onreadystatechange = function() {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+                    {
+                        alert("生成成功");
+                    }
+                };
+
+                xmlhttp.send(data);
+
+        }
+    </script>
+     
+     
+     <script type="text/javascript">
+        function tttt()
+        {
+        
+               svgAsPngUri(document.getElementById("diagram"), {}, function(uri) 
+               {
+
+                      xxx=uri;
+                      alert("OK");
+                });
+        
+        }
+     
+     
+     </script>
+</head>
+
+<body>
+
+<!--Tbar-->
+<div class="Tbar">
+    <span>今日总量:</span>&nbsp;<span id="tValue">68754</span>
+    <span>敏感:</span>&nbsp;<span id="mValue">230</span>
+    <span>非敏感:</span>&nbsp;<span id="nValue">66524</span>
+    <span>敏感比重:</span>&nbsp;<span id="iValue">3.4%</span>
+
+
+    <div class="rfloat">
+        <span>时间设定:</span>
+        <span><a href="#">今天</a></span>
+        &nbsp;
+        <span><a href="#">本周</a></span>
+        &nbsp;
+        <span><a href="#">本月</a></span>
+
+        <span><a href="#">时间自定义</a></span>
+    </div>
+</div>
+
+<!--header-->
+<div class="Header">
+    <div class="Welcome">
+        <span>欢迎 <span class="glyphicon glyphicon-user"></span></span>
+        <span id="User">***</span>
+        <span id="CandL"><a href="#">改密码<span class="glyphicon glyphicon-hand-left"></span></a>|<a href="#">退出<span class="glyphicon glyphicon-off"></span></a></span>
+    </div>
+</div>
+
+<!--导航栏-->
+
+<div class="bar-title">
+
+    <div class="bar-status"><a href="SY.html">首页</a></div>
+    <div class="bar-status" id="nav" onMouseOver="displaySubMenu(this)" onMouseOut="hideSubMenu(this)">
+        <a href="#">舆情分析<span class="caret"></span></a>
+        <ul class="nav-block">
+            <li><a href="MTFX.html">媒体分析</a></li>
+            <li><a href="QGFX.html">情感分析</a></li>
+        </ul>
+    </div>
+    <div class="bar-status"><a href="#">伪舆情分析</a></div>
+    <div class="bar-status"><a href="YQYJ.html">舆情预警</a></div>
+    <div class="bar-status"  onMouseOver="displaySubMenu(this)" onMouseOut="hideSubMenu(this)">
+        <a href="#">舆情报表<span class="caret"></span></a>
+        <ul class="nav-block">
+            <li><a href="TP.html">时间报表</a></li>
+            <li><a href="SP.html">事件报表</a></li>
+        </ul>
+
+    </div>
+    <div class="bar-status bar-status2"><a href="#">后台管理<span class="glyphicon glyphicon-asterisk"></span></a></div>
+</div>
+
+
+
+<button onclick="exportImage()">try</button>
+
+<!--foot-->
+<div class="foot"> <span class="glyphicon glyphicon-copyright-mark"></span>all right by usc</div>
+
+<!--图表隐藏域-->
+
+    <div id="SensitiveInfo" style="width:500px;height:370px;"></div>
+    <div id="MTorigin" style="width:500px;height:370px"></div>
+    <div id="MTactive" style="width:500px;height:370px"></div>
+    <div id="ChinaPiture" style="width:500px;height:370px"></div>
+    
+    <div id="Transpath" style="width:1110px;height:500px">
+            <svg id="diagram" style="width:500px;height:500px"></svg>
+    </div>
+
+
+
+    
+ <!--整体走势分析-->
+  <script type="text/javascript">
+        $(document).ready(function() 
+        {
+            $.ajax({
+                type: "GET",
+                url:"json/SensitiveInfo.json",
+                dataType: "json",
+
+                success: function(datt) {
+
+                var myChart = echarts.init(document.getElementById('SensitiveInfo'));
+
+                   
+		    option = {
+				tooltip: {
+					trigger: 'item',
+					formatter: "{a} <br/>{b}: {c} ({d}%)"
+				},
+				legend: {
+					orient: 'vertical',
+					x: 'left',
+					data:['直达','营销广告','搜索引擎','邮件营销','联盟广告','视频广告','百度','谷歌','必应','其他']
+				},
+				series: [
+				  
+					{
+						name:'访问来源',
+						type:'pie',
+						radius: ['40%', '60%'],
+			
+						data:[
+							{value:335, name:'直达'},
+							{value:310, name:'邮件营销'},
+							{value:234, name:'联盟广告'},
+							{value:135, name:'视频广告'},
+							{value:1048, name:'百度'},
+							{value:251, name:'谷歌'},
+							{value:147, name:'必应'},
+							{value:102, name:'其他'}
+						]
+					}
+				]
+			};
+
+                    
+                    
+                    myChart.setOption(option);
+                    
+                    Charts[0]=myChart;
+
+                }
+            })
+
+        });
+ </script>
+
+<!--传播路径图-->
+       <script>
+
+            var width = 500,height = 500;
+
+            var tree = d3.layout.tree()
+                .size([width, height-200])
+                .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2); });
+
+            var diagonal = d3.svg.diagonal()
+                .projection(function(d) { return [d.y, d.x]; });
+
+            var svg = d3.select("#Transpath").select("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .append("g")
+                .attr("transform", "translate(40,0)");
+
+
+            d3.json("json/city_tree.json", function(error, root) {
+
+                var nodes = tree.nodes(root);
+                var links = tree.links(nodes);
+
+
+                var link = svg.selectAll(".link")
+                  .data(links)
+                  .enter()
+                  .append("path")
+                  .attr("class", "link")
+                  .attr("d", diagonal);
+
+                var node = svg.selectAll(".node")
+                  .data(nodes)
+                  .enter()
+                  .append("g")
+                  .attr("class", "node")
+                  .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
+
+                node.append("circle")
+                  .attr("r", 4.5);
+
+                node.append("text")
+                  .attr("dx", function(d) { return d.children ? -8 : 8; })
+                  .attr("dy", 3)
+                  .style("text-anchor", function(d) { return d.children ? "end" : "start"; })
+                  .text(function(d) { return d.name; });
+                  
+                   tttt();
+                });
+
+              
+       </script>
+
+<!--媒体来源-->
+<script type="text/javascript">
+        $(document).ready(function() {
+            $.ajax({
+                type: "GET",
+                url:"json/MTorigin.json",
+                dataType: "json",
+
+                success: function(datt) 
+                {
+
+                var myChart = echarts.init(document.getElementById('MTorigin'));
+               
+
+              option = {
+					  title : {
+						  text: '某站点用户访问来源',
+						  subtext: '纯属虚构',
+						  x:'center'
+					  },
+					  tooltip : {
+						  trigger: 'item',
+						  formatter: "{a} <br/>{b} : {c} ({d}%)"
+					  },
+					  legend: {
+						  orient : 'vertical',
+						  x : 'left',
+						  data:datt.lengdata
+					  },
+					  toolbox: {
+						  show : true,
+						  feature : {
+							  mark : {show: true},
+							  dataView : {show: true, readOnly: false},
+							  magicType : {
+								  show: true, 
+								  type: ['pie', 'funnel'],
+								  option: {
+									  funnel: {
+										  x: '25%',
+										  width: '50%',
+										  funnelAlign: 'left',
+										  max: 1548
+									  }
+								  }
+							  },
+							  restore : {show: true},
+							  saveAsImage : {show: true}
+						  }
+					  },
+					  calculable : true,
+					  series : [
+						  {
+							  name:'访问来源',
+							  type:'pie',
+							  radius : '55%',
+							  center: ['50%', '60%'],
+							  data:[
+								  {value:335, name:'直接访问'},
+								  {value:310, name:'邮件营销'},
+								  {value:234, name:'联盟广告'},
+								  {value:135, name:'视频广告'},
+								  {value:1548, name:'搜索引擎'}
+							  ]
+						  }
+					  ]
+				  };
+                    	  	   
+                  
+                    myChart.setOption(option);
+                    Charts[1]=myChart;
+                    
+                    
+
+                }
+            })
+
+        });
+ </script>
+
+
+<!--媒体活跃度-->
+<script type="text/javascript">
+        $(document).ready(function() {
+            $.ajax({
+                type: "GET",
+                url:"json/MTactive.json",
+                dataType: "json",
+
+                success: function(datt) 
+                {
+
+                var myChart = echarts.init(document.getElementById('MTactive'));
+               
+
+                    var option = {
+									title: {
+										text: 'ECharts 入门示例'
+									},
+									tooltip: {},
+							        toolbox: {
+										  
+										   
+										  show : true,
+										  feature : {
+											  mark : {show: true},
+											  dataView : {show: true, readOnly: false},
+											  magicType : {
+												  show: true, 
+												  type: ['pie', 'funnel']
+											  },
+											  restore : {show: true},
+											  saveAsImage : {show: true}
+										  },
+										  orient : 'vertical',
+									  },
+									legend: {
+										data:['销量']
+									},
+									xAxis: {
+										data: datt.lengdata,
+									},
+									yAxis: {},
+									series: [{
+										name: '销量',
+										type: 'bar',
+										data: [5, 20, 36, 10, 10, 20]
+									}]
+								};
+
+                  myChart.setOption(option);
+                  Charts[2]=myChart;
+
+                }
+            })
+
+        });
+ </script>
+
+
+        <!--地域分布图-->
+ <script type="text/javascript">
+        $(document).ready(function() {
+            $.ajax({
+                type: "GET",
+                url:"json/ChinaPiture.json",
+                dataType: "json",
+
+                success: function(datt) {
+
+                    var myChart = echarts.init(document.getElementById('ChinaPiture'));
+
+
+                      option = {
+                        title : {
+                            text: 'iphone销量',
+                            subtext: '纯属虚构',
+                            x:'center'
+                        },
+                        tooltip : {
+                            trigger: 'item'
+                        },
+                        legend: {
+                            orient: 'vertical',
+                            x:'left',
+                            data:datt.legenddata
+                        },
+                        dataRange: {
+                            min: 0,
+                            max: 2500,
+                            x: 'left',
+                            y: 'center',
+                            text:['高','低'],           // 文本，默认为数值文本
+                            calculable : true
+                        },
+                        toolbox: {
+                            show: true,
+                            orient : 'vertical',
+                            x: 'right',
+                            y: 'center',
+                            feature : {
+                                mark : {show: true},
+                                dataView : {show: true, readOnly: false},
+                                restore : {show: true},
+                                saveAsImage : {show: true}
+                            }
+                        },
+                        roamController: {
+                            show: true,
+                            x: 'right',
+                            mapTypeControl: {
+                                'china': true
+                            }
+                        },
+                        series : [
+                            {
+                                name: 'iphone3',
+                                type: 'map',
+                                mapType: 'china',
+                                roam: false,
+                                itemStyle:{
+                                    normal:{label:{show:true}},
+                                    emphasis:{label:{show:true}}
+                                },
+                                data:[
+                                    {name: '北京',value: Math.round(Math.random()*1000)},
+                                    {name: '天津',value: Math.round(Math.random()*1000)},
+                                    {name: '上海',value: Math.round(Math.random()*1000)},
+                                    {name: '重庆',value: Math.round(Math.random()*1000)},
+                                    {name: '河北',value: Math.round(Math.random()*1000)},
+                                    {name: '河南',value: Math.round(Math.random()*1000)},
+                                    {name: '云南',value: Math.round(Math.random()*1000)},
+                                    {name: '辽宁',value: Math.round(Math.random()*1000)},
+                                    {name: '黑龙江',value: Math.round(Math.random()*1000)},
+                                    {name: '湖南',value: Math.round(Math.random()*1000)},
+                                    {name: '安徽',value: Math.round(Math.random()*1000)},
+                                    {name: '山东',value: Math.round(Math.random()*1000)},
+                                    {name: '新疆',value: Math.round(Math.random()*1000)},
+                                    {name: '江苏',value: Math.round(Math.random()*1000)},
+                                    {name: '浙江',value: Math.round(Math.random()*1000)},
+                                    {name: '江西',value: Math.round(Math.random()*1000)},
+                                    {name: '湖北',value: Math.round(Math.random()*1000)},
+                                    {name: '广西',value: Math.round(Math.random()*1000)},
+                                    {name: '甘肃',value: Math.round(Math.random()*1000)},
+                                    {name: '山西',value: Math.round(Math.random()*1000)},
+                                    {name: '内蒙古',value: Math.round(Math.random()*1000)},
+                                    {name: '陕西',value: Math.round(Math.random()*1000)},
+                                    {name: '吉林',value: Math.round(Math.random()*1000)},
+                                    {name: '福建',value: Math.round(Math.random()*1000)},
+                                    {name: '贵州',value: Math.round(Math.random()*1000)},
+                                    {name: '广东',value: Math.round(Math.random()*1000)},
+                                    {name: '青海',value: Math.round(Math.random()*1000)},
+                                    {name: '西藏',value: Math.round(Math.random()*1000)},
+                                    {name: '四川',value: Math.round(Math.random()*1000)},
+                                    {name: '宁夏',value: Math.round(Math.random()*1000)},
+                                    {name: '海南',value: Math.round(Math.random()*1000)},
+                                    {name: '台湾',value: Math.round(Math.random()*1000)},
+                                    {name: '香港',value: Math.round(Math.random()*1000)},
+                                    {name: '澳门',value: Math.round(Math.random()*1000)}
+                                ]
+                            },
+                            {
+                                name: 'iphone4',
+                                type: 'map',
+                                mapType: 'china',
+                                itemStyle:{
+                                    normal:{label:{show:true}},
+                                    emphasis:{label:{show:true}}
+                                },
+                                data:[
+                                    {name: '北京',value: Math.round(Math.random()*1000)},
+                                    {name: '天津',value: Math.round(Math.random()*1000)},
+                                    {name: '上海',value: Math.round(Math.random()*1000)},
+                                    {name: '重庆',value: Math.round(Math.random()*1000)},
+                                    {name: '河北',value: Math.round(Math.random()*1000)},
+                                    {name: '安徽',value: Math.round(Math.random()*1000)},
+                                    {name: '新疆',value: Math.round(Math.random()*1000)},
+                                    {name: '浙江',value: Math.round(Math.random()*1000)},
+                                    {name: '江西',value: Math.round(Math.random()*1000)},
+                                    {name: '山西',value: Math.round(Math.random()*1000)},
+                                    {name: '内蒙古',value: Math.round(Math.random()*1000)},
+                                    {name: '吉林',value: Math.round(Math.random()*1000)},
+                                    {name: '福建',value: Math.round(Math.random()*1000)},
+                                    {name: '广东',value: Math.round(Math.random()*1000)},
+                                    {name: '西藏',value: Math.round(Math.random()*1000)},
+                                    {name: '四川',value: Math.round(Math.random()*1000)},
+                                    {name: '宁夏',value: Math.round(Math.random()*1000)},
+                                    {name: '香港',value: Math.round(Math.random()*1000)},
+                                    {name: '澳门',value: Math.round(Math.random()*1000)}
+                                ]
+                            },
+                            {
+                                name: 'iphone5',
+                                type: 'map',
+                                mapType: 'china',
+                                itemStyle:{
+                                    normal:{label:{show:true}},
+                                    emphasis:{label:{show:true}}
+                                },
+                                data:[
+                                    {name: '北京',value: Math.round(Math.random()*1000)},
+                                    {name: '天津',value: Math.round(Math.random()*1000)},
+                                    {name: '上海',value: Math.round(Math.random()*1000)},
+                                    {name: '广东',value: Math.round(Math.random()*1000)},
+                                    {name: '台湾',value: Math.round(Math.random()*1000)},
+                                    {name: '香港',value: Math.round(Math.random()*1000)},
+                                    {name: '澳门',value: Math.round(Math.random()*1000)}
+                                ]
+                            }
+                        ]
+                    };
+                    
+                    
+                    
+                    myChart.setOption(option);
+                    
+                    Charts[3]=myChart;
+
+                }
+            })
+
+        });
+        
+        //setTimeout("tttt()",1000);
+ </script>
+
+
+
+
+</body>
+</html>
