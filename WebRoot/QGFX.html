@@ -19,80 +19,62 @@
 <script src="js/bootstrap-table.js"></script>
 
 
-
-<script type="text/javascript"> 
-function displaySubMenu(li) { 
-var subMenu = li.getElementsByTagName("ul")[0]; 
-subMenu.style.display = "block"; 
-} 
-function hideSubMenu(li)
-{
- var subMenu = li.getElementsByTagName("ul")[0];
-  subMenu.style.display = "none"; 
-} 
-</script>
+<link rel="stylesheet" type="text/css" href="./css/master.css">
+<script type="text/javascript" src="./js/master.js"></script>
+<script type="text/javascript" src="./js/YQCHART.js"></script>
 
 </head>
 
 <body>
 
-<!--Tbar-->
-<div class="Tbar">
-    <span>今日总量:</span>&nbsp;<span id="tValue">68754</span>
-    <span>敏感:</span>&nbsp;<span id="mValue">230</span>
-    <span>非敏感:</span>&nbsp;<span id="nValue">66524</span>
-    <span>敏感比重:</span>&nbsp;<span id="iValue">3.4%</span>
 
+<div  id="leftbar">
+         <!--头像-->
+         <div id="leftbarHead">
+             <div style="text-align: right"><img src="./image/timeright.png" style="width: 25px;height:25px;cursor: pointer;" onclick="changeTIME()" ></div>
 
-    <div class="rfloat">
-        <span>时间设定:</span>
-        <span><a href="#">今天</a></span>
-        &nbsp;
-        <span><a href="#">本周</a></span>
-        &nbsp;
-        <span><a href="#">本月</a></span>
-        &nbsp;
-        <span><a href="#">时间自定义</a></span>
-    </div>
-</div>
+             <div id="leftbarBottom">
+                 <div id="jrzl" class="leftbarBottom_div"><img src="./image/jrzl.PNG"><span class="Number">68754</span></div>
+                 <div id="mg"   class="leftbarBottom_div"><img src="./image/mg.PNG"><span   class="Number">230</span></div>
+                 <div id="fmg"  class="leftbarBottom_div"><img src="./image/fmg.PNG"><span  class="Number">66524</span></div>
+                 <div id="mgbz" class="leftbarBottom_div"><img src="./image/mgbz.PNG"><span class="Number">3.4%</span></div>
+             </div>
+         </div>
 
-<!--header-->
-<div class="Header">
-    <div class="Welcome">
-        <span>欢迎 <span class="glyphicon glyphicon-user"></span></span>
-        <span id="User">***</span>
-        <span id="CandL"><a href="#">改密码<span class="glyphicon glyphicon-hand-left"></span></a>|<a href="#">退出<span class="glyphicon glyphicon-off"></span></a></span>
-    </div>
-</div>
+         <div id="leftbarBody">
+             <div id="leftbarBody_Menu">
+                 <div class="Menu_fa"><a href="SY.html" class="Menu">首页</a></div>
+                 <div class="Menu_fa" id="flip1" ><img src="./image/right.png" style="width: 20px;height: 20px"><span class="Menu">舆情分析</span></div>
+                 <div id="Menu_panel1">
+                     <div class="Menu_fa"><a href="MTFX.html" class="Menu" style="font-size:15px">媒体分析</a></div>
+                     <div class="Menu_fa"><a href="QGFX.html" class="Menu" style="font-size:15px">情感分析</a></div>
+                     <div class="Menu_fa"><a href="YQYJ.html" class="Menu" style="font-size:15px">舆情预警</a></div>
+                 </div>
+                 <div class="Menu_fa"><a href="#" class="Menu">伪舆情分析</a></div>
 
-<!--导航栏-->
+                 <div class="Menu_fa" id="flip2" ><img src="./image/right.png" style="width:20px;height: 20px"><span class="Menu">舆情报表</span></div>
+                 <div id="Menu_panel2">
+                     <div class="Menu_fa"><a href="TP.html" class="Menu" style="font-size:15px">时间报表</a></div>
+                     <div class="Menu_fa"><a href="SP.html" class="Menu" style="font-size:15px">事件报表</a></div>
+                 </div>
 
-<div class="bar-title">
-
-    <div class="bar-status"><a href="SY.html">首页</a></div>
-    <div class="bar-status" id="nav" onMouseOver="displaySubMenu(this)" onMouseOut="hideSubMenu(this)">
-        <a href="#">舆情分析<span class="caret"></span></a>
-        <ul class="nav-block">
-            <li><a href="MTFX.html">媒体分析</a></li>
-            <li><a href="QGFX.html">情感分析</a></li>
-        </ul>
+             </div>
+         </div>
+         <div style="clear: both"></div>
 
     </div>
-    <div class="bar-status"><a href="#">伪舆情分析</a></div>
-    <div class="bar-status"><a href="YQYJ.html">舆情预警</a></div>
-    <div class="bar-status"  onMouseOver="displaySubMenu(this)" onMouseOut="hideSubMenu(this)">
-        <a href="#">舆情报表<span class="caret"></span></a>
-        <ul class="nav-block">
-            <li><a href="TP.html">时间报表</a></li>
-            <li><a href="SP.html">事件报表</a></li>
-        </ul>
-
+    <!--右边标题-->
+    <div id="cansetTime">
+         <div class="cansetTimeR"><span>从<span><input type="date" id="starttime" name="starttime" /></div>
+         <div class="cansetTimeR"><span>到<span><input type="date" id="endtime" name="endtime" /></div>
+         <button type="button" class="btn btn-primary .btn-sm" style="float: right;margin-right: 5px">确定</button>
     </div>
-    <div class="bar-status bar-status2"><a href="#">后台管理<span class="glyphicon glyphicon-asterisk"></span></a></div>
-</div>
-
-
-<!--主体-->
+    <div id="rightbar">
+        <img src="./image/nanhua_logo.png"/>
+    </div>
+    <div  id="rightbody">
+         
+          <!--主体-->
   <div class="container" id="mainbody">
          <div class="row">
                 <!--媒体分析-->
@@ -209,348 +191,27 @@ function hideSubMenu(li)
      
      
   </div>
+ </div>
+
+
+
 <!--foot-->
 
-<div class="foot"> <span class="glyphicon glyphicon-copyright-mark"></span>all right by usc</div>  
-   
-    
-        <!--媒体分析-->
         <script type="text/javascript">
-        $(document).ready(function() {
-            $.ajax({
-                type: "GET",
-                url:"json/MediaAnalysis.json",
-                dataType: "json",
-
-                success: function(datt) {
-
-                    var myChart = echarts.init(document.getElementById('MediaAnalysis'));
-
-
-					option = {
-						tooltip : {
-							trigger: 'axis',
-							axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-								type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-							}
-						},
-						legend: {
-							data: ['直接访问', '邮件营销','联盟广告','视频广告','搜索引擎']
-						},
-						grid: {
-							left: '3%',
-							right: '4%',
-							bottom: '3%',
-							containLabel: true
-						},
-						xAxis:  {
-							type: 'value'
-						},
-						yAxis: {
-							type: 'category',
-							data: ['周一','周二','周三','周四','周五','周六','周日','周7']
-						},
-						series: [
-							{
-								name: '直接访问',
-								type: 'bar',
-								stack: '总量',
-								label: {
-									normal: {
-										show: true,
-										position: 'insideRight'
-									}
-								},
-								data: [320, 302, 301, 334, 390, 330, 320,111]
-							},
-							{
-								name: '邮件营销',
-								type: 'bar',
-								stack: '总量',
-								label: {
-									normal: {
-										show: true,
-										position: 'insideRight'
-									}
-								},
-								data: [120, 132, 101, 134, 90, 230, 210,111]
-							},
-							{
-								name: '联盟广告',
-								type: 'bar',
-								stack: '总量',
-								label: {
-									normal: {
-										show: true,
-										position: 'insideRight'
-									}
-								},
-								data: [220, 182, 191, 234, 290, 330, 310,111]
-							},
-							{
-								name: '视频广告',
-								type: 'bar',
-								stack: '总量',
-								label: {
-									normal: {
-										show: true,
-										position: 'insideRight'
-									}
-								},
-								data: [150, 212, 201, 154, 190, 330, 410,111]
-							},
-							{
-								name: '搜索引擎',
-								type: 'bar',
-								stack: '总量',
-								label: {
-									normal: {
-										show: true,
-										position: 'insideRight'
-									}
-								},
-								data: [820, 832, 901, 934, 1290, 1330, 1320,111]
-							}
-						]
-					};
-                    
-                    
-                    myChart.setOption(option);
-
-                }
-            })
-
+        $(document).ready(function() 
+        {  
+            //媒体分析
+            MediaAnalysisChart("json/MediaAnalysis.json",'MediaAnalysis',new Date(),new Date(),null,null);
+            //整体走势分析
+            OverallTrendChart("json/otrendAnalysis.json",'otrendAnalysis',new Date(),new Date(),null,null);
+            //信息敏感分类图
+            InformationSensitiveClassificationChart("json/SensitiveInfo.json",'SensitiveInfo',new Date(),new Date(),null,null);
+            //媒体负面倾向性走势图
+            MediaNegativeTendencyChart("json/NegativeBias.json",'NegativeBias',new Date(),new Date(),null,null);
         });
         </script>
         
         
-        
-        <!--整体走势分析-->
-        <script type="text/javascript">
-        $(document).ready(function() {
-            $.ajax({
-                type: "GET",
-                url:"json/otrendAnalysis.json",
-                dataType: "json",
-
-                success: function(datt) {
-
-                var myChart = echarts.init(document.getElementById('otrendAnalysis'));
-
-                   
-			   option = {
-					title: {
-						text: '未来一周气温变化',
-						subtext: '纯属虚构'
-					},
-					tooltip: {
-						trigger: 'axis'
-					},
-					legend: {
-						data:['最高气温','最低气温',' 无'],
-						bottom:10,
-					},
-					toolbox: {
-						show: true,
-						feature: {
-							dataZoom: {
-								yAxisIndex: 'none'
-							},
-							dataView: {readOnly: false},
-							magicType: {type: ['line', 'bar']},
-							restore: {},
-							saveAsImage: {}
-						},
-						 orient:'vertical',
-					},
-					xAxis:  {
-						type: 'category',
-						boundaryGap: false,
-						data: ['周一','周二','周三','周四','周五','周六','周日']
-					},
-					yAxis: {
-						type: 'value',
-						axisLabel: {
-							formatter: '{value} °C'
-						}
-					},
-					series: [
-						{
-							name:'最高气温',
-							type:'line',
-							data:[11, 11, 15, 13, 12, 13, 10],
-					
-						},
-						{
-							name:'最低气温',
-							type:'line',
-							data:[1, -2, 2, 5, 3, 2, 0],
-						  
-						}
-						,{
-							name:' 无',
-							type:'line',
-							data:[10, 10,4, 6, 8, 3, 2],
-				
-						}
-					]
-				};
-
-
-                    
-                    
-                    myChart.setOption(option);
-
-                }
-            })
-
-        });
-        </script>
-        
-        
-        <!--整体走势分析-->
-        <script type="text/javascript">
-        $(document).ready(function() {
-            $.ajax({
-                type: "GET",
-                url:"json/SensitiveInfo.json",
-                dataType: "json",
-
-                success: function(datt) {
-
-                var myChart = echarts.init(document.getElementById('SensitiveInfo'));
-
-                   
-		    option = {
-				tooltip: {
-					trigger: 'item',
-					formatter: "{a} <br/>{b}: {c} ({d}%)"
-				},
-				legend: {
-					orient: 'vertical',
-					x: 'left',
-					data:['直达','营销广告','搜索引擎','邮件营销','联盟广告','视频广告','百度','谷歌','必应','其他']
-				},
-				series: [
-				  
-					{
-						name:'访问来源',
-						type:'pie',
-						radius: ['40%', '60%'],
-			
-						data:[
-							{value:335, name:'直达'},
-							{value:310, name:'邮件营销'},
-							{value:234, name:'联盟广告'},
-							{value:135, name:'视频广告'},
-							{value:1048, name:'百度'},
-							{value:251, name:'谷歌'},
-							{value:147, name:'必应'},
-							{value:102, name:'其他'}
-						]
-					}
-				]
-			};
-
-                    
-                    
-                    myChart.setOption(option);
-
-                }
-            })
-
-        });
-        </script>
-        
-        <!--媒体负面倾向性走势图-->
-        <script type="text/javascript">
-        $(document).ready(function() {
-            $.ajax({
-                type: "GET",
-                url:"json/NegativeBias.json",
-                dataType: "json",
-
-                success: function(datt) {
-
-                var myChart = echarts.init(document.getElementById('NegativeBias'));
-				
-				option = {
-						 
-						  tooltip: {
-							  trigger: 'axis'
-						  },
-						  legend: {
-							  data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎'],
-							 
-						  },
-						  grid: {
-							  left: '3%',
-							  right: '4%',
-							  bottom: '3%',
-							  containLabel: true
-						  },
-						  toolbox: {
-							  feature: {
-								  saveAsImage: {}
-							  }
-						  },
-						  xAxis: {
-							  type: 'category',
-							  boundaryGap: false,
-							  data: ['周一','周二','周三','周四','周五','周六','周日']
-						  },
-						  yAxis: {
-							  type: 'value'
-						  },
-						  series: [
-							  {
-								  name:'邮件营销',
-								  type:'line',
-								  stack: '总量',
-								  data:[120, 132, 101, 134, 90, 230, 210]
-							  },
-							  {
-								  name:'联盟广告',
-								  type:'line',
-								  stack: '总量',
-								  data:[220, 182, 191, 234, 290, 330, 310]
-							  },
-							  {
-								  name:'视频广告',
-								  type:'line',
-								  stack: '总量',
-								  data:[150, 232, 201, 154, 190, 330, 410]
-							  },
-							  {
-								  name:'直接访问',
-								  type:'line',
-								  stack: '总量',
-								  data:[320, 332, 301, 334, 390, 330, 320]
-							  },
-							  {
-								  name:'搜索引擎',
-								  type:'line',
-								  stack: '总量',
-								  data:[820, 932, 901, 934, 1290, 1330, 1320]
-							  }
-						  ]
-					  };
-
-                    
-                    myChart.setOption(option);
-
-                }
-            })
-
-        });
-        </script>
-
-
-
-
-        
-        
-
 
 </body>
 </html>

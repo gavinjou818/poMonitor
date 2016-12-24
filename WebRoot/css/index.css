@@ -1,103 +1,264 @@
 @charset "utf-8";
 /* CSS Document */
 
+html
+{
+	width: 100%;
+	height: 100%;
+}
 
 
-
-/*背景图片设置*/
+/*背景设置*/
 body
 { 
-   margin:0px;
-   width:100%;
-   height:100%;
-   background-image:url(../image/index.jpg);
-   background-repeat:no-repeat;
-   background-size:cover;
+    margin:0px;
+	background-color:#3C85C4;
 }
-hr
+/*公告板*/
+#Login_Top_fengche
 {
-	margin-bottom:0px;
-	margin-top:10px;
-	border-color:#377BB6;
+	float: left;
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	animation:Run 2s infinite linear ;
+	-moz-animation:Run 2s infinite linear ; /* Firefox */
+	-webkit-animation:Run 2s infinite linear ; /* Safari and Chrome */
+	-o-animation:Run 2s infinite linear ; /* Opera */
 }
 
-/*登录*/
-#log
+#Login_Top_fengche>img
 {
-	width:100%;
-	height:100%;
-	
+	width: 50px;
+	height: 50px;
+	cursor: pointer;
 }
-.Login
+#Notice
 {
-   position:relative;
-   margin-top:20%;
-   left:36%;
-   width:500px;
-   height:290px;
-   background-color:white;
-   border-top-right-radius:3%;
-   border-top-left-radius:3%;
-   text-align:center;
-   box-shadow: 10px 10px 10px #888888;
+	float: left;
+	margin-left: 55px;
+	width: 200px;
+	height: 300px;
+	position: absolute;
+	background-color: white;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	top:-300px;
+}
+#Noticetitle
+{
+	text-align: center;
+	border-bottom: 5px double red;
+}
+/*登录界面*/
+
+#nanhualogo
+{
+	width: 150px;
+	height: 150px;
+}
+#Login_Container
+{
+   text-align: center;
+
+}
+#Login_Center
+{
+    background-color: white;
+	display: inline-block;
+	width: 500px;
+	height: 500px;
+	border-radius: 5px;
+	box-shadow: 0px 0px 35px black;
+}
+#Login_Top
+{
+	text-align: center;
+}
+
+#upload
+{
+	text-align: left;
+	height: 60px;
+	border-bottom: 5px double #3C85C4;
+}
+#body
+{
+
+	height: 320px;
+	border-bottom: 5px double #3C85C4;
+
+}
+#body_UserName
+{
+	text-align: left !important;
+
+}
+.body_input
+{
+	margin-top: 50px;
+    position: relative;
+	animation:Run2 2s  ;
+	-moz-animation:Run2 2s ; /* Firefox */
+	-webkit-animation:Run2 2s  ; /* Safari and Chrome */
+	-o-animation:Run2 2s ; /* Opera */
+}
+.body_up
+{
+	padding: 0 20px;
+}
+
+/*三按钮*/
+#body_botton
+{
+	margin-top: 30px;
+	padding: 0 20px;
+}
+#register
+{
+	width: 120px;
+	height: 35px;
+	background: url("../image/register.PNG");
+	background-repeat: no-repeat;
+	background-color:#3C85C4;
+	float: left;
+	border-radius: 5px;
+	box-shadow: 0px 0px 15px #3C85C4;
+	border: 1px solid  #3C85C4;
+}
+#reset
+{
+	width: 75px;
+	height: 35px;
+	background: url("../image/reset.PNG");
+	background-repeat: no-repeat;
+	background-color:#3C85C4;
+	float: right;
+	margin: 0 5px;
+	border-radius: 5px;
+	box-shadow: 0px 0px 15px #3C85C4;
+	border: 1px solid  #3C85C4;
+}
+#submit
+{
+	width:  90px;
+	height: 35px;
+	background: url("../image/submit.PNG");
+	background-repeat: no-repeat;
+	background-color:#3C85C4;
+	float: right;
+	margin: 0 5px;
+	border-radius: 5px;
+	box-shadow: 0px 0px 15px #3C85C4;
+	border: 1px solid  #3C85C4;
+}
+
+@keyframes Run
+{
+	0%
+	{
+		transform: rotate(0deg);
+		-ms-transform: rotate(0deg); /* IE 9 */
+		-webkit-transform: rotate(0deg); /* Safari and Chrome */
+	}
+	25%
+	{
+		transform: rotate(90deg);
+		-ms-transform: rotate(90deg); /* IE 9 */
+		-webkit-transform: rotate(90deg); /* Safari and Chrome */
+	}
+	50%
+	{
+		transform: rotate(180deg);
+		-ms-transform: rotate(180deg); /* IE 9 */
+		-webkit-transform: rotate(180deg); /* Safari and Chrome */
+	}
+	75%
+	{
+		transform: rotate(270deg);
+		-ms-transform: rotate(270deg); /* IE 9 */
+		-webkit-transform: rotate(270deg); /* Safari and Chrome */
+	}
+	100%
+	{
+		transform: rotate(360deg);
+		-ms-transform: rotate(360deg); /* IE 9 */
+		-webkit-transform: rotate(360deg); /* Safari and Chrome */
+	}
+}
+
+@-webkit-keyframes Run /* Safari 与 Chrome */
+{
+	0%
+	{
+		transform: rotate(0deg);
+		-ms-transform: rotate(0deg); /* IE 9 */
+		-webkit-transform: rotate(0deg); /* Safari and Chrome */
+	}
+	25%
+	{
+		transform: rotate(90deg);
+		-ms-transform: rotate(90deg); /* IE 9 */
+		-webkit-transform: rotate(90deg); /* Safari and Chrome */
+	}
+	50%
+	{
+		transform: rotate(180deg);
+		-ms-transform: rotate(180deg); /* IE 9 */
+		-webkit-transform: rotate(180deg); /* Safari and Chrome */
+	}
+	75%
+	{
+		transform: rotate(270deg);
+		-ms-transform: rotate(270deg); /* IE 9 */
+		-webkit-transform: rotate(270deg); /* Safari and Chrome */
+	}
+	100%
+	{
+		transform: rotate(360deg);
+		-ms-transform: rotate(360deg); /* IE 9 */
+		-webkit-transform: rotate(360deg); /* Safari and Chrome */
+	}
 }
 
 
-/*清楚*/
-.Clear
+@keyframes Run2
 {
-	clear:both;
+	from
+	{
+		left: -100px;
+		filter:alpha(opacity=0);
+		-moz-opacity:0;
+		opacity:0;
+	}
+	to
+	{
+		left: 0px;
+		filter:alpha(opacity=100);
+		-moz-opacity:1;
+		opacity:1;
+	}
 }
 
-.form-control-feedback
+@-webkit-keyframes Run2 /* Safari and Chrome */
 {
-   right:5%; //改称 left:0
+	from
+	{
+		left: -100px;
+		filter:alpha(opacity=0);
+		-moz-opacity:0;
+		opacity:0;
+	}
+	to
+	{
+		left: 0px;
+		filter:alpha(opacity=100);
+		-moz-opacity:1;
+		opacity:1;
+	}
+
 }
 
-#Formdiv1
-{
-   top:25px;	
-}
-#Formdiv2
-{
-	top:45px;
-}
-#Formdiv3
-{
-	top:60px;
-	padding:0 10px;
-	
-}
-#Formdiv4
-{
-	top:50px;
-	left:30px;
-	text-align:left;	
-}
-
-#Up
-{
-	font-weight:bold;
-	font-size:36px;
-	background-color:#377BB6;
-	color:white;
-	border-top-right-radius:3%;
-	border-top-left-radius:3%;
-	
-}
-.btn
-{
-	font-weight:bold;
-}
-#CFormdiv4
-{
-	display:block;
-	position:absolute;
-	top:0px;
-	font-weight:bold;
-	color:#377BB6;
-	right:40px;
-}
 
 
 

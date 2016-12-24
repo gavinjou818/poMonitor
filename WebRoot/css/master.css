@@ -1,0 +1,156 @@
+body
+{
+  margin: 0px 0px;
+}
+
+/*左标题*/
+#leftbar
+{
+    margin: 0;
+    width:250px;
+    height: 100%;
+    background-color:#3C85C4;
+    float: left;
+    position: fixed;
+    box-shadow: 0px 0px 10px black;
+    z-index: 101;
+}
+#setTime
+{
+    float: right;
+}
+#leftbarHead
+{
+    width: 250px;
+    height: 230px;
+}
+#noupload
+{
+    display: block;
+    border-radius: 100%;
+    margin: 0 auto;
+}
+#leftbarBody
+{
+    margin-top: 10px;
+}
+#leftbarBody_Menu
+{
+    margin: 5px 0px;
+    list-style:none;
+    margin-top: 40px;
+}
+.Menu
+{
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    display: inline-block;
+    position: relative;
+    right: 0px;
+    font-family: "微软雅黑 Light";
+
+}
+.Menu_fa
+{
+    margin: 10px 10px;
+    text-align: right;
+
+}
+#flip1
+{
+    cursor: pointer;
+}
+#flip2
+{
+    cursor: pointer;
+}
+#Menu_panel1
+{
+	display:none;
+}
+#Menu_panel2
+{
+	display:none;
+}
+/*左边底部*/
+#leftbarBottom
+{
+
+    margin: 10px 10px;
+    background-color: white;
+    height: 200px;
+
+}
+#leftbarBottom div
+{
+    margin-top: 10px;
+}
+.leftbarBottom_div
+{
+  padding: 7px;
+}
+
+
+.Number
+{
+    float: right;
+    font-family: "微软雅黑 Light";
+    font-weight: bold;
+    font-size: 15px;
+
+}
+.leftbarBottom_div img
+{
+    display: inline-block;
+
+}
+/*右边头部*/
+#rightbar
+{
+    margin-left: 260px;
+    border-bottom: 1px solid #ADADAD;
+    margin-right: 5px;
+}
+.cansetTimeR
+{
+    float: right;
+    margin:5px;
+}
+/*右身体*/
+#rightbody
+{
+    margin-left: 260px;
+}
+#cansetTime
+{
+    position: fixed;
+    z-index: 0;
+    left: 0px;/*0->250*/
+    height: 120px;
+    width: 230px;
+    background-color: white;
+    border:1px solid #3C85C4;
+    box-shadow: 0px 0px 10px black;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    z-index:100;
+    
+}
+.cansetTimeR input
+{
+    display: inline-block;
+    width: 180px;
+    height: 30px;
+    margin-left: 5px;
+}
+.cansetTimeR span
+{
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: "微软雅黑 Light";
+
+}
+
