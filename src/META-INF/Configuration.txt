@@ -1,0 +1,20 @@
+/**
+*  @author zhouzhifeng
+     问题配置
+*/
+//用于更新目录
+1.配置Jacob包
+将jacob包里面的dll文件存入jre的bin目录下
+
+//用于开启baes64权限
+2.右键poMonitor->Build Path->JRE system Library(这个根据原来自己的JRE包）->Access rules->右边一排有个Edit点击->Add..->Resolution:Accessible,Rule Pattern:** 保存
+
+//配置最大内存
+3.
+Window->Preferences->输入jre->Installed JREs->单击(你正在使用的)jre
+->Edit->Default VM arguments填写-Xms128M -Xmx512M;
+
+
+//配置中文词库
+4.选择src包->hanlp.properties,自行上https://github.com/hankcs/HanLP/releases下载data-for-1.2.7.zip
+并设置root路径,只要将data包放进入对应路径即可,若没有hanlp.properties百度hanlp下载,放入src包目录下即可

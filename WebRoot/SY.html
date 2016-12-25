@@ -2,29 +2,34 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>南华大学核电舆情系统</title>
+    <meta charset="utf-8">
+    <title>南华大学核电舆情系统</title>
 
-<link href="css/SY.css" rel="stylesheet" type="text/css" />
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
-<!--在线jq-->
-<script src="js/jquery-3.1.1.js"></script>
-<script src="js/bootstrap.js"></script>
-<script src="js/echarts.js"></script>
-<script src="js/china.js"></script>
-<script src="js/d3.js"></script>
+    <link href="css/SY.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
+    <!--在线jq-->
+    <script src="js/jquery-3.1.1.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/echarts.js"></script>
+    <script src="js/china.js"></script>
+    <script src="js/d3.js"></script>
 
-<link rel="stylesheet" type="text/css" href="./css/master.css">
-<script type="text/javascript" src="./js/master.js"></script>
-<script type="text/javascript" src="./js/YQCHART.js"></script>
+    <script type="text/javascript" src="./js/YQCHART.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/master.css">
+    <script type="text/javascript" src="./js/master.js"></script>
+    <script type="text/javascript" src="./js/smoothscroll.js"></script>
 
 
+    <style>
 
-<!--加载数据表-->
-<script type="text/javascript">
 
-        var sum = 16;//限制最大条数
+    </style>
+
+    <!--加载数据表-->
+    <script type="text/javascript">
+
+        var sum = 13;//限制最大条数
 
         var starttime = new Date();
         var endttime = new Date();
@@ -32,8 +37,7 @@
         //图片指向
         var imgsrc = ["image/nev.jpg", "image/cen.jpg", "image/pos.jpg"];
 
-        function initData()
-        {
+        function initData() {
 
 
             //最新舆情加载
@@ -52,8 +56,7 @@
 
 
                     var parent = document.getElementById('newyq');
-                    for (var i = 0; i < limit; i++)
-                    {
+                    for (var i = 0; i < limit; i++) {
                         //创建div节点
                         var div1 = document.createElement("div");
                         //创建内嵌节点
@@ -66,15 +69,14 @@
 
 
                         //创建链接节点
-                        var a1=document.createElement("a");
-                        a1.setAttribute("href",data[i].alink);
-                        a1.innerText=data[i].title;
+                        var a1 = document.createElement("a");
+                        a1.setAttribute("href", data[i].alink);
+                        a1.innerText = data[i].title;
 
                         //创建时间节点
-                        var span2=document.createElement("span");
-                        span2.setAttribute("class","Time");
-                        span2.innerText=data[i].time;
-
+                        var span2 = document.createElement("span");
+                        span2.setAttribute("class", "Time");
+                        span2.innerText = data[i].time;
 
 
                         //组装
@@ -97,8 +99,7 @@
                 type: "GET",
                 dataType: "json",
                 url: "json/pointyq.json",
-                data: 
-                {
+                data: {
                     "starttime": starttime,
                     "endtime": endttime
                 },
@@ -107,20 +108,19 @@
 
 
                     var parent = document.getElementById('pointyq');
-                    for (var i = 0; i < limit; i++)
-                    {
+                    for (var i = 0; i < limit; i++) {
                         //创建div节点
                         var div1 = document.createElement("div");
 
                         //创建链接节点
-                        var a1=document.createElement("a");
-                        a1.setAttribute("href",data[i].alink);
-                        a1.innerText=data[i].title;
+                        var a1 = document.createElement("a");
+                        a1.setAttribute("href", data[i].alink);
+                        a1.innerText = data[i].title;
 
                         //创建时间节点
-                        var span2=document.createElement("span");
-                        span2.setAttribute("class","Time");
-                        span2.innerText=data[i].time;
+                        var span2 = document.createElement("span");
+                        span2.setAttribute("class", "Time");
+                        span2.innerText = data[i].time;
 
                         //组装
                         div1.appendChild(a1);
@@ -131,240 +131,172 @@
 
                 }
             });
-
-
-            //每日日报加载
-            $.ajax
-            ({
-                type: "GET",
-                dataType: "json",
-                url: "json/arthead.json",
-                data: {
-                    "starttime": starttime,
-                    "endtime": endttime
-                },
-                success: function (data)
-                {
-
-                    var barsum=Math.min(6,data.length);//头条最多5条
-
-                    if(barsum<=0) return;
-                    var parent = document.getElementById('arthead');
-                    parent.innerText=data[0].arthead;
-
-                    parent = document.getElementById('arthead_time');
-                    parent.innerText=data[0].arthead_time;
-
-                    parent = document.getElementById('arthead_body');
-                    parent.innerText=data[0].arthead_body;
-
-                  
-                    parent =document.getElementById('arthead_rla');
-                    for(var i=1;i<barsum;i++)
-                    {
-                         var div1=document.createElement("div");
-                         div1.setAttribute("class","daliypaper");
-
-                         var a1=document.createElement("a");
-                         a1.setAttribute("href",data[i].alink);
-                         a1.innerText=data[i].title;
-
-                         div1.appendChild(a1);
-                         parent.appendChild(div1);
-                    }
-                }
-            });
-
         }
 
+
+
+
     </script>
+
+
 
 
 </head>
 
 <body onload="initData()">
-     <div  id="leftbar">
-         <!--头像-->
-         <div id="leftbarHead">
-             <div style="text-align: right"><img src="./image/timeright.png" style="width: 25px;height:25px;cursor: pointer;" onclick="changeTIME()" ></div>
+<div id="leftbar">
+    <!--头像-->
+    <div id="leftbarHead">
+        <div style="text-align: right"><img src="./image/timeright.png" style="width: 25px;height:25px;cursor: pointer;" title="时间设置显示" onclick="changeTIME()" ></div>
 
-             <div id="leftbarBottom">
-                 <div id="jrzl" class="leftbarBottom_div"><img src="./image/jrzl.PNG"><span class="Number">68754</span></div>
-                 <div id="mg"   class="leftbarBottom_div"><img src="./image/mg.PNG"><span   class="Number">230</span></div>
-                 <div id="fmg"  class="leftbarBottom_div"><img src="./image/fmg.PNG"><span  class="Number">66524</span></div>
-                 <div id="mgbz" class="leftbarBottom_div"><img src="./image/mgbz.PNG"><span class="Number">3.4%</span></div>
-             </div>
-         </div>
-
-         <div id="leftbarBody">
-             <div id="leftbarBody_Menu">
-                 <div class="Menu_fa"><a href="SY.html" class="Menu">首页</a></div>
-                 <div class="Menu_fa" id="flip1" ><img src="./image/right.png" style="width: 20px;height: 20px"><span class="Menu">舆情分析</span></div>
-                 <div id="Menu_panel1">
-                     <div class="Menu_fa"><a href="MTFX.html" class="Menu" style="font-size:15px">媒体分析</a></div>
-                     <div class="Menu_fa"><a href="QGFX.html" class="Menu" style="font-size:15px">情感分析</a></div>
-                     <div class="Menu_fa"><a href="YQYJ.html" class="Menu" style="font-size:15px">舆情预警</a></div>
-                 </div>
-                 <div class="Menu_fa"><a href="#" class="Menu">伪舆情分析</a></div>
-
-                 <div class="Menu_fa" id="flip2" ><img src="./image/right.png" style="width:20px;height: 20px"><span class="Menu">舆情报表</span></div>
-                 <div id="Menu_panel2">
-                     <div class="Menu_fa"><a href="TP.html" class="Menu" style="font-size:15px">时间报表</a></div>
-                     <div class="Menu_fa"><a href="SP.html" class="Menu" style="font-size:15px">事件报表</a></div>
-                 </div>
-
-             </div>
-         </div>
-         <div style="clear: both"></div>
-
+        <div id="leftbarBottom">
+            <div id="jrzl" class="leftbarBottom_div"><img src="./image/jrzl.PNG"><span class="Number">68754</span></div>
+            <div id="mg"   class="leftbarBottom_div"><img src="./image/mg.PNG"><span   class="Number">230</span></div>
+            <div id="fmg"  class="leftbarBottom_div"><img src="./image/fmg.PNG"><span  class="Number">66524</span></div>
+            <div id="mgbz" class="leftbarBottom_div"><img src="./image/mgbz.PNG"><span class="Number">3.4%</span></div>
+        </div>
     </div>
-    <!--右边标题-->
-    <div id="cansetTime">
-         <div class="cansetTimeR"><span>从<span><input type="date" id="starttime" name="starttime" /></div>
-         <div class="cansetTimeR"><span>到<span><input type="date" id="endtime" name="endtime" /></div>
-         <button type="button" class="btn btn-primary .btn-sm" style="float: right;margin-right: 5px">确定</button>
+
+    <div id="leftbarBody">
+        <div id="leftbarBody_Menu">
+            <div class="Menu_fa"><a href="SY.html" class="Menu">首页</a></div>
+            <div class="Menu_fa" id="flip1" ><img src="./image/right.png" style="width: 20px;height: 20px"><span class="Menu">舆情分析</span></div>
+            <div id="Menu_panel1">
+                <div class="Menu_fa"><a href="MTFX.html" class="Menu_son" >媒体分析</a></div>
+                <div class="Menu_fa"><a href="QGFX.html" class="Menu_son" >情感分析</a></div>
+                <div class="Menu_fa"><a href="YQYJ.html" class="Menu_son" >舆情预警</a></div>
+            </div>
+            <div class="Menu_fa"><a href="#" class="Menu">伪舆情分析</a></div>
+
+            <div class="Menu_fa" id="flip2" ><img src="./image/right.png" style="width:20px;height: 20px"><span class="Menu">舆情报表</span></div>
+            <div id="Menu_panel2">
+                <div class="Menu_fa"><a href="TP.html" class="Menu_son" >时间报表</a></div>
+                <div class="Menu_fa"><a href="SP.html" class="Menu_son" >事件报表</a></div>
+            </div>
+
+        </div>
     </div>
-    <div id="rightbar">
-        <img src="./image/nanhua_logo.png"/>
-    </div>
-    
-  <div  id="rightbody">
-                  
+    <div style="text-align: right"><img src="./image/barleft.png" style="width: 25px;height:25px;cursor: pointer;" title="收缩左边栏" onclick="changeBar()"></div>
+    <div style="clear: both"></div>
+
+</div>
+
+<div id="Catalog">
+    <div style="text-align: left"><img src="./image/barleft.png" style="width: 25px;height:25px;cursor: pointer;" title="时间设置显示" onclick="changeCatalog()"></div>
+    <div><a class="smoothScroll" href="#head1" title="最新舆情">最新舆情</a></div>
+    <div><a class="smoothScroll" href="#head2" title="一周走势情况">一周走势情况</a></div>
+    <div><a class="smoothScroll" href="#head3" title="全国舆情情况">全国舆情情况</a></div>
+    <div><a class="smoothScroll" href="#head4" title="媒体倾向度分析">媒体倾向度分析</a></div>
+
+</div>
+<!--右边标题-->
+<div id="cansetTime">
+    <div class="cansetTimeR"><span>从<span><input type="date" id="starttime" name="starttime" /></div>
+    <div class="cansetTimeR"><span>到<span><input type="date" id="endtime" name="endtime" /></div>
+    <button type="button" class="btn btn-primary .btn-sm" style="float: right;margin-right: 5px">确定</button>
+</div>
+<div id="rightbar">
+    <img src="./image/nanhua_logo.png"/>
+</div>
+
+<div  id="rightbody">
+
     <!--主体-->
-	<div class="container" id="pointnewyq">
-		<div class="row">
+    <div class="container">
+        <div class="row">
 
-			<!--左1 舆情预警|热点舆情-->
-			<div class="panel panel-default col-md-6">
-				<div class="panel-body pnewyqpanel">
-					<div>
-						<!--Nav tabs-->
-						<ul class="nav nav-tabs" role="tablist">
-							<li role="presentation" class="active"><a href="#newyq"
-								aria-controls="newyq" role="tab" data-toggle="tab">最新舆情</a></li>
-							<li role="presentation"><a href="#pointyq"
-								aria-controls="pointyq" role="tab" data-toggle="tab">热点舆情</a></li>
-							<li id="litoright"><a href="MGYQ.html">more<span
-									class="glyphicon glyphicon-chevron-right"></span></a></li>
-						</ul>
-
-						<!--Tab panes-->
-
-						<div class="tab-content">
-							<!--最新舆情内容-->
-							<div role="tabpanel" class="tab-pane active" id="newyq"
-								style="padding-top:10px">
-								<!--由ajax加载-->
-							</div>
-							<!--热点舆情内容-->
-							<div role="tabpanel" class="tab-pane" id="pointyq"
-								style="padding-top:10px">
-								<!--由ajax加载-->
-							</div>
-						</div>
-
-					</div>
-				</div>
-			</div>
+            <div class="Ancestor" id="head1">
+                <h1 class="h1Title" >最新舆情
+                    <a href="MGYQ.html" style="float: right;font-size: 15px">more<span
+                        class="glyphicon glyphicon-chevron-right"></span></a>
+                </h1>
+                <div class="col-md-6 col-xs-6 col-lg-6" >
+                    <h2 class="h2Title">最新舆情</h2>
+                    <div id="newyq"></div>
+                </div>
+                <div class="col-md-6 col-xs-6 col-lg-6">
+                    <h2 class="h2Title">热点舆情</h2>
+                    <div id="pointyq" ></div>
+                </div>
+                <div style="clear: both"></div>
+            </div>
 
 
-			<!--右1地域分布-->
-			<div class="col-md-6 ">
-				<div class="panel panel-primary pnewyqpanel">
-					<div class="panel-heading">
-						<h3 class="panel-title">地域分布图</h3>
-					</div>
-					<!--地域分布图-->
-					<div class="panel-body">
-						<div id="ChinaPiture"></div>
-					</div>
-				</div>
-			</div>
-		</div>
+            <!--一周舆情走势+最新舆情-->
+            <div class="Ancestor" id="head2">
+                <h1 class="h1Title">一周走势情况</h1>
+                <div class="Father" style="z-index: 100">
+                    <div id="yqto" style="width: 800px;height:600px;margin: 0 auto" ></div>
+                    <div class="FatherDown"><img src="./image/down.png" style="width: 25px;height: 25px;cursor: pointer" onclick="changeSon('yqtoson')"></div>
+                </div>
 
-		<div class="row">
+                <div class="Son" id="yqtoson" style="z-index: 99">
+                    <div class="SonTitle">简介:</div>
+                    <div class="SonContext">aaa</div>
+                </div>
 
-			<!--左2每日报表-->
-			<div class="col-md-6">
-				<div class="panel panel-primary pnewyqpanel">
-					<div class="panel-heading">
-						<h3 class="panel-title">每日报表</h3>
-					</div>
-					<div class="panel-body">
-						<!--头条-->
-						<div class="art">
-							<img src="image/shili.jpg" id="parg" />
-							<div class="art-title">
-								<h2 id="arthead"></h2>
-								<p class="art-time" id="arthead_time"></p>
-								<p class="art-body" id="arthead_body"></p>
-							</div>
-						</div>
-
-						<!--相关报告-->
-						<div class="rlapaper" id="arthead_rla">
-							<!--ajax加载-->
-
-						</div>
-
-					</div>
-				</div>
-			</div>
+            </div>
 
 
-			<!--右2 舆情总量|媒体信息走势-->
-			<div class="panel panel-default col-md-6">
-				<div class="panel-body pnewyqpanel">
-					<div>
-						<!--Nav tabs-->
-						<ul class="nav nav-tabs" role="tablist">
-							<li role="presentation" class="active"><a href="#yqtotal"
-								aria-controls="yqtotal" role="tab" data-toggle="tab">一周走势图</a></li>
-							<li role="presentation"><a href="#tdyq" aria-controls="tdyq"
-								role="tab" data-toggle="tab">今日舆情</a></li>
-						</ul>
-						<!--Tab panes-->
+            <div class="Ancestor" id="head3">
 
-						<div class="tab-content">
-							<!--舆情总量内容-->
-							<div role="tabpanel" class="tab-pane active" id="yqtotal">
-								<div id="yqto" style="width:500px;height:380px;"></div>
-							</div>
-							<!--媒体信息走势-->
-							<div role="tabpanel" class="tab-pane" id="tdyq">
-								<div id="medtendency" style="width:500px;height:380px;"></div>
-							</div>
-						</div>
-
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                <h1 class="h1Title">全国舆情情况</h1>
+                <div class="Father" style="z-index: 98">
+                    <div id="ChinaPiture" style="width: 800px;height:600px;margin: 0 auto"></div>
+                    <div class="FatherDown"><img src="./image/down.png" style="width: 25px;height: 25px;cursor: pointer" onclick="changeSon('ChinaPitureson')"></div>
+                </div>
+                <div class="Son" id="ChinaPitureson" style="z-index: 97">
+                    <div class="SonTitle">简介:</div>
+                    <div class="SonContext">aaa</div>
+                </div>
+                <div style="clear: both"></div>
+                <!--<h1 class="h1Title">最新舆情</h1>-->
+            </div>
 
 
-  </div>
+            <div class="Ancestor" id="head4">
 
-  
-  <!--foot-->
-  
-	
-	<script type="text/javascript">
-        $(document).ready(function() 
-        {   
-            //地域分布图
-            ChinaPictureChart("./json/ChinaPiture.json",'ChinaPiture',new Date(),new Date(),null,null);
-            //今日舆情图
-            PublicOpinionTodayChart('./servlet/IndexServlet','medtendency',new Date(),new Date(),null,'checkStatus')
-            //一周走势图
-            WeeklyChart("./servlet/IndexServlet",'yqto',new Date(),new Date(),null,'getTendency');
-        });
-    </script>
+                <h1 class="h1Title">媒体倾向度分析</h1>
+                <div class="Father" style="z-index: 96">
+                    <div id="medtendency" style="width: 800px;height:600px;margin: 0 auto"></div>
+                    <div class="FatherDown"><img src="./image/down.png" style="width: 25px;height: 25px;cursor: pointer" onclick="changeSon('medtendencyson')"></div>
+                </div>
+                <div class="Son" id="medtendencyson" style="z-index: 95">
+                    <div class="SonTitle">简介:</div>
+                    <div class="SonContext">aaa</div>
+                </div>
+                <div style="clear: both"></div>
 
+            </div>
+
+        </div>
 
 
-	
+    </div>
 
+
+</div>
+
+
+<!--foot-->
+
+
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        //地域分布图
+        ChinaPictureChart("./json/ChinaPiture.json",'ChinaPiture',new Date(),new Date(),null,null);
+        //今日舆情图
+        PublicOpinionTodayChart('./servlet/IndexServlet','medtendency',new Date(),new Date(),null,'checkStatus')
+        //测试用
+        //PublicOpinionTodayChart('./json/medtendency.json','medtendency',new Date(),new Date(),null,'checkStatus');
+        //一周走势图
+         WeeklyChart("./servlet/IndexServlet",'yqto',new Date(),new Date(),null,'getTendency');
+        //测试用
+        //WeeklyChart("./json/yqto.json",'yqto',new Date(),new Date(),null,'getTendency');
+
+    });
+</script>
 
 
 

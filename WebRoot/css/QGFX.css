@@ -3,28 +3,11 @@
 
 
 html,body
-{ 
-     margin:0px; 
+{
+     margin:0px;
      width:100%;
-     height:100%; 
-} 
-.panel
-{
-	height:450px;
+     height:100%;
 }
-
-
-
-#mainbody
-{
-	margin-top:10px !important;
-}
-
-
-
-
-
-
 
 /*页脚*/
 .foot

@@ -8,9 +8,10 @@
 
     <link rel="stylesheet" type="text/css" href="./css/master.css">
     <script src="js/jquery-3.1.1.js" ></script>
-    <script type="text/javascript" src="./js/master.js"></script> 
+    <script type="text/javascript" src="./js/master.js"></script>
     <script src="js/bootstrap.js" ></script>
     <script src="js/examples.js"></script>
+    <script type="text/javascript" src="./js/smoothscroll.js"></script>
 
 
     <!--加载数据表-->
@@ -19,7 +20,7 @@
         var operate=["查看","导出","邮箱发送"];
         var IMGroot={"weibo":"image/weibo.png"};
         var sum=5;//最大页数5;
-        var barsum=10;//最大条目数2;
+        var barsum=5;//最大条目数2;
         var pagesum;//总共有的页数
         var curpage=1;//当前页
 
@@ -37,9 +38,6 @@
                 success: function (data)
                 {
 
-                    sjk(data[0].all);
-
-
                     //获取ul节点
                     pagesum=parseInt(data[0].sum/barsum);
                     pagesum+=(data[0].sum%barsum?1:0);
@@ -56,7 +54,7 @@
                     // 加入<<节点
                     var son1=document.createElement("li");
                     var son2=document.createElement("a");
-                    son2.setAttribute("href","#");
+                    son2.setAttribute("href","#"+tparent);
                     son2.innerHTML="&laquo;";
                     if((pagesum-curpage+1)<sum)
                     {
@@ -79,7 +77,7 @@
                     {
                         var son1=document.createElement("li");
                         var son2=document.createElement("a");
-                        son2.setAttribute("href","#");
+                        son2.setAttribute("href","#"+tparent);
                         son2.innerText=i;
                         son2.addEventListener("click",function ()
                         {
@@ -92,7 +90,7 @@
                     // 加入>>号
                     son1=document.createElement("li");
                     son2=document.createElement("a");
-                    son2.setAttribute("href","#");
+                    son2.setAttribute("href","#"+tparent);
                     son2.innerHTML="&raquo;";
 
                     if(i<=pagesum)
@@ -107,10 +105,10 @@
                     son1.appendChild(son2);
                     parent.appendChild(son1);
 
-
                     var parent2=document.getElementById(tparent);
                     parent2=parent2.getElementsByTagName("div");
                     parent2=parent2[0];
+
 
 
                     while(parent2.hasChildNodes())parent2.removeChild(parent2.firstChild);
@@ -146,10 +144,10 @@
                         div4.setAttribute("class","panel-footer");
 
                         div4.innerHTML="[相似文章数]"+data[i].relative+"   "+
-                                       "[采集自] "+data[i].comfrom+"<img "+"src='"+IMGroot[data[i].comfrom]+"'"+">"+"</img>"+"    "+
-                                       "[发布时间] "+data[i].time;
+                            "[采集自] "+data[i].comfrom+"<img "+"src='"+IMGroot[data[i].comfrom]+"'"+">"+"</img>"+"    "+
+                            "[发布时间] "+data[i].time;
 
-                        console.log(IMGroot[data[i].comfrom]);
+
 
 
 
@@ -162,8 +160,8 @@
                         div1.appendChild(div3);
                         div1.appendChild(div4);
                         div1.appendChild(div5);
-
                         parent2.appendChild(div1);
+
 
                     }
 
@@ -179,8 +177,6 @@
     <script type="text/javascript">
         function allseleck(papername)
         {
-
-
             var parent=document.getElementById(papername);
             parent=parent.getElementsByTagName("input");
 
@@ -193,150 +189,160 @@
 
     </script>
 
-   
 
-
-    <script type="text/javascript">
-        //写在布告板的函数
-        function sjk(allsum)
-        {
-            var parent=document.getElementById("billboard");
-            parent.innerText="系统数据库实时更新中,当前数据约有"+allsum+"条记录  "+"当前第"+curpage+"页";
-        }
-
-    </script>
+    <style>
+      .tab-content
+      {
+          height: 800px;
+      }
+    </style>
 
 </head>
 
-<body onload="initData(1,'json/MGYQ.json','jryq')">
+<body onload="initData(1,'json/MGYQ.json','mgyq'),initData(1,'json/MGYQ.json','jryq'),initData(1,'json/MGYQ.json','fmgyq')">
 
- <div  id="leftbar">
-         <!--头像-->
-         <div id="leftbarHead">
-             <div style="text-align: right"><img src="./image/timeright.png" style="width: 25px;height:25px;cursor: pointer;" onclick="changeTIME()" ></div>
+<div id="leftbar">
+    <!--头像-->
+    <div id="leftbarHead">
+        <div style="text-align: right"><img src="./image/timeright.png" style="width: 25px;height:25px;cursor: pointer;" title="时间设置显示" onclick="changeTIME()" ></div>
 
-             <div id="leftbarBottom">
-                 <div id="jrzl" class="leftbarBottom_div"><img src="./image/jrzl.PNG"><span class="Number">68754</span></div>
-                 <div id="mg"   class="leftbarBottom_div"><img src="./image/mg.PNG"><span   class="Number">230</span></div>
-                 <div id="fmg"  class="leftbarBottom_div"><img src="./image/fmg.PNG"><span  class="Number">66524</span></div>
-                 <div id="mgbz" class="leftbarBottom_div"><img src="./image/mgbz.PNG"><span class="Number">3.4%</span></div>
-             </div>
-         </div>
-
-         <div id="leftbarBody">
-             <div id="leftbarBody_Menu">
-                 <div class="Menu_fa"><a href="SY.html" class="Menu">首页</a></div>
-                 <div class="Menu_fa" id="flip1" ><img src="./image/right.png" style="width: 20px;height: 20px"><span class="Menu">舆情分析</span></div>
-                 <div id="Menu_panel1">
-                     <div class="Menu_fa"><a href="MTFX.html" class="Menu" style="font-size:15px">媒体分析</a></div>
-                     <div class="Menu_fa"><a href="QGFX.html" class="Menu" style="font-size:15px">情感分析</a></div>
-                     <div class="Menu_fa"><a href="YQYJ.html" class="Menu" style="font-size:15px">舆情预警</a></div>
-                 </div>
-                 <div class="Menu_fa"><a href="#" class="Menu">伪舆情分析</a></div>
-
-                 <div class="Menu_fa" id="flip2" ><img src="./image/right.png" style="width:20px;height: 20px"><span class="Menu">舆情报表</span></div>
-                 <div id="Menu_panel2">
-                     <div class="Menu_fa"><a href="TP.html" class="Menu" style="font-size:15px">时间报表</a></div>
-                     <div class="Menu_fa"><a href="SP.html" class="Menu" style="font-size:15px">事件报表</a></div>
-                 </div>
-
-             </div>
-         </div>
-         <div style="clear: both"></div>
-
+        <div id="leftbarBottom">
+            <div id="jrzl" class="leftbarBottom_div"><img src="./image/jrzl.PNG"><span class="Number">68754</span></div>
+            <div id="mg"   class="leftbarBottom_div"><img src="./image/mg.PNG"><span   class="Number">230</span></div>
+            <div id="fmg"  class="leftbarBottom_div"><img src="./image/fmg.PNG"><span  class="Number">66524</span></div>
+            <div id="mgbz" class="leftbarBottom_div"><img src="./image/mgbz.PNG"><span class="Number">3.4%</span></div>
+        </div>
     </div>
-    <!--右边标题-->
-    <div id="cansetTime">
-         <div class="cansetTimeR"><span>从<span><input type="date" id="starttime" name="starttime" /></div>
-         <div class="cansetTimeR"><span>到<span><input type="date" id="endtime" name="endtime" /></div>
-         <button type="button" class="btn btn-primary .btn-sm" style="float: right;margin-right: 5px">确定</button>
-    </div>
-    <div id="rightbar">
-        <img src="./image/nanhua_logo.png"/>
-    </div>
-    <div  id="rightbody">
-          <!--主体-->
-<div class="container" id="pointnewyq">
-    <div class="row">
-        <!--Nav tabs-->
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#jryq" aria-controls="jryq" role="tab" data-toggle="tab" onclick="initData(1,'json/MGYQ.json','jryq')">今日全部舆情</a></li>
-            <li role="presentation"><a href="#mgyq" aria-controls="mgyq" role="tab" data-toggle="tab" onclick="initData(1,'json/MGYQ.json','mgyq')">今日敏感舆情</a></li>
-            <li role="presentation"><a href="#fmgyq" aria-controls="fmgyq" role="tab" data-toggle="tab" onclick="initData(1,'json/MGYQ.json','fmgyq')">今日非敏感舆情</a></li>
 
-        </ul>
-
-        <!--Tab panes-->
-
-        <div class="tab-content">
-            <!--日报中心-->
-            <div role="tabpanel" class="tab-pane active" id="jryq" style="padding-top:10px" >
-                <div>
-
-                </div>
-
-                <ul class="pagination pagsize">
-
-
-                </ul>
-                <div style="float: right">
-                    <button type="button" class="btn btn-default" onclick="allseleck('jryq')">全选</button>
-                    <button type="button" class="btn btn-default">邮件发送</button>
-                    <button type="button" class="btn btn-default">导出</button>
-                </div>
-
-
+    <div id="leftbarBody">
+        <div id="leftbarBody_Menu">
+            <div class="Menu_fa"><a href="SY.html" class="Menu">首页</a></div>
+            <div class="Menu_fa" id="flip1" ><img src="./image/right.png" style="width: 20px;height: 20px"><span class="Menu">舆情分析</span></div>
+            <div id="Menu_panel1">
+                <div class="Menu_fa"><a href="MTFX.html" class="Menu_son" >媒体分析</a></div>
+                <div class="Menu_fa"><a href="QGFX.html" class="Menu_son" >情感分析</a></div>
+                <div class="Menu_fa"><a href="YQYJ.html" class="Menu_son" >舆情预警</a></div>
             </div>
-            <!--周报中心-->
-            <div role="tabpanel" class="tab-pane" id="mgyq" style="padding-top:10px" >
+            <div class="Menu_fa"><a href="#" class="Menu">伪舆情分析</a></div>
 
-                <div>
-
-                </div>
-
-                <ul class="pagination pagsize">
-
-
-
-                </ul>
-
-                <div style="float: right">
-                    <button type="button" class="btn btn-default" onclick="allseleck('mgyq')">全选</button>
-                    <button type="button" class="btn btn-default">邮件发送</button>
-                    <button type="button" class="btn btn-default">导出</button>
-                </div>
-
-
+            <div class="Menu_fa" id="flip2" ><img src="./image/right.png" style="width:20px;height: 20px"><span class="Menu">舆情报表</span></div>
+            <div id="Menu_panel2">
+                <div class="Menu_fa"><a href="TP.html" class="Menu_son" >时间报表</a></div>
+                <div class="Menu_fa"><a href="SP.html" class="Menu_son" >事件报表</a></div>
             </div>
-            <!--月报中心-->
-            <div role="tabpanel" class="tab-pane" id="fmgyq"  style="padding-top:10px" >
-                <div>
-
-                </div>
-
-                <ul class="pagination pagsize">
-
-                </ul>
-
-                <div style="float: right" onclick="allseleck('fmgyq')">
-                    <button type="button" class="btn btn-default">全选</button>
-                    <button type="button" class="btn btn-default">邮件发送</button>
-                    <button type="button" class="btn btn-default">导出</button>
-                </div>
-
-            </div>
-
 
         </div>
-
     </div>
-
-        <!--公示-->
-        <div style="float:right;" id="billboard">
-
-        </div>
+    <div style="text-align: right"><img src="./image/barleft.png" style="width: 25px;height:25px;cursor: pointer;" title="收缩左边栏" onclick="changeBar()"></div>
+    <div style="clear: both"></div>
 
 </div>
+
+<div id="Catalog">
+    <div style="text-align: left"><img src="./image/barleft.png" style="width: 25px;height:25px;cursor: pointer;" title="时间设置显示" onclick="changeCatalog()"></div>
+    <div><a class="smoothScroll" href="#head1" title="今日全部舆情">今日全部舆情</a></div>
+    <div><a class="smoothScroll" href="#head2" title="今日敏感舆情">今日敏感舆情</a></div>
+    <div><a class="smoothScroll" href="#head3" title="今日非敏感舆情">今日非敏感舆情</a></div>
+</div>
+<!--右边标题-->
+<div id="cansetTime">
+    <div class="cansetTimeR"><span>从</span><input type="date" id="starttime" name="starttime" /></div>
+    <div class="cansetTimeR"><span>到</span><input type="date" id="endtime" name="endtime" /></div>
+    <button type="button" class="btn btn-primary .btn-sm" style="float: right;margin-right: 5px">确定</button>
+</div>
+<div id="rightbar">
+    <img src="./image/nanhua_logo.png"/>
+</div>
+<div  id="rightbody">
+    <!--主体-->
+    <div class="container">
+        <div class="row">
+
+
+
+            <div class="Ancestor" id="head1">
+                <h1 class="h1Title" >今日全部舆情</h1>
+
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="jryq" style="padding-top:10px" >
+                        <div>
+
+                        </div>
+
+                        <ul class="pagination pagsize">
+
+
+                        </ul>
+                        <div style="float: right">
+                            <button type="button" class="btn btn-default" onclick="allseleck('jryq')">全选</button>
+                            <button type="button" class="btn btn-default">邮件发送</button>
+                            <button type="button" class="btn btn-default">导出</button>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div style="clear: both"></div>
+            </div>
+
+
+            <div class="Ancestor" id="head2">
+                <h1 class="h1Title" >今日敏感舆情</h1>
+
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="mgyq" style="padding-top:10px" >
+                        <div>
+
+                        </div>
+
+                        <ul class="pagination pagsize">
+
+
+                        </ul>
+                        <div style="float: right">
+                            <button type="button" class="btn btn-default" onclick="allseleck('mgyq')">全选</button>
+                            <button type="button" class="btn btn-default">邮件发送</button>
+                            <button type="button" class="btn btn-default">导出</button>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div style="clear: both"></div>
+            </div>
+
+
+            <div class="Ancestor" id="head3">
+                <h1 class="h1Title" >今日非敏感舆情</h1>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="fmgyq" style="padding-top:10px" >
+                        <div>
+
+                        </div>
+
+                        <ul class="pagination pagsize">
+
+
+                        </ul>
+                        <div style="float: right">
+                            <button type="button" class="btn btn-default" onclick="allseleck('fmgyq')">全选</button>
+                            <button type="button" class="btn btn-default">邮件发送</button>
+                            <button type="button" class="btn btn-default">导出</button>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div style="clear: both"></div>
+            </div>
+
+
+
+        </div>
+
+
+
+    </div>
 
 
 </div>
