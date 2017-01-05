@@ -21,7 +21,8 @@ public class ArticleTendService implements ServletContextListener {
 	}
 
 	@Override
-	public void contextInitialized(ServletContextEvent arg0) {
+	public void contextInitialized(ServletContextEvent arg0)
+	{
 		// 获取系统上下文
 		ServletContext context = arg0.getServletContext();
 		// 获取配置参数中的倾向性分析的时间间隔

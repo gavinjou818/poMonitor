@@ -1,8 +1,20 @@
 
-<!doctype html>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-<head>
-    <meta charset="utf-8">
+  <head>
+    <base href="<%=basePath%>">
+    
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
     <title>南华大学核电舆情系统</title>
 
     <link href="css/SY.css" rel="stylesheet" type="text/css" />
@@ -21,14 +33,10 @@
     <script type="text/javascript" src="./js/smoothscroll.js"></script>
 
 
-    <style>
-
-
-    </style>
 
     <!--加载数据表-->
     <script type="text/javascript">
-
+       
         var sum = 13;//限制最大条数
 
         var starttime = new Date();
@@ -37,20 +45,23 @@
         //图片指向
         var imgsrc = ["image/nev.jpg", "image/cen.jpg", "image/pos.jpg"];
 
-        function initData() {
-
-
+        function initData() 
+        {
+     
+         
             //最新舆情加载
             $.ajax
             ({
                 type: "GET",
                 dataType: "json",
-                url: "json/newyq.json",
-                data: {
-                    "starttime": starttime,
-                    "endtime": endttime
-
-                },
+                url: "./servlet/IndexServlet",
+                data : 
+				{
+					"start_time" : new Date(),
+					"end_time" : new Date(),
+				    "userId" : 1,
+					"method" : 'getLatestMessage'
+				},
                 success: function (data) {
                     var limit = Math.min(data.length, sum);
 
@@ -63,14 +74,14 @@
                         var span1 = document.createElement("span");
                         //创建图片节点
 
-                        var img1 = document.createElement("img");
-                        img1.setAttribute("class", "Logo");
-                        img1.setAttribute("src", imgsrc[data[i].tendency]);
+                       // var img1 = document.createElement("img");
+                       //img1.setAttribute("class", "Logo");
+                       // img1.setAttribute("src", imgsrc[data[i].tendency]);
 
 
                         //创建链接节点
                         var a1 = document.createElement("a");
-                        a1.setAttribute("href", data[i].alink);
+                        a1.setAttribute("href", data[i].url);
                         a1.innerText = data[i].title;
 
                         //创建时间节点
@@ -80,7 +91,7 @@
 
 
                         //组装
-                        span1.appendChild(img1);
+                        //span1.appendChild(img1);
 
                         div1.appendChild(span1);
                         div1.appendChild(a1);
@@ -99,6 +110,7 @@
                 type: "GET",
                 dataType: "json",
                 url: "json/pointyq.json",
+                
                 data: {
                     "starttime": starttime,
                     "endtime": endttime
@@ -135,7 +147,6 @@
 
 
 
-
     </script>
 
 
@@ -158,23 +169,23 @@
     </div>
 
     <div id="leftbarBody">
-        <div id="leftbarBody_Menu">
-            <div class="Menu_fa"><a href="SY.html" class="Menu">首页</a></div>
-            <div class="Menu_fa" id="flip1" ><img src="./image/right.png" style="width: 20px;height: 20px"><span class="Menu">舆情分析</span></div>
-            <div id="Menu_panel1">
-                <div class="Menu_fa"><a href="MTFX.html" class="Menu_son" >媒体分析</a></div>
-                <div class="Menu_fa"><a href="QGFX.html" class="Menu_son" >情感分析</a></div>
-                <div class="Menu_fa"><a href="YQYJ.html" class="Menu_son" >舆情预警</a></div>
-            </div>
-            <div class="Menu_fa"><a href="#" class="Menu">伪舆情分析</a></div>
+             <div id="leftbarBody_Menu">
+                 <div class="Menu_fa"><a href="SY.jsp" class="Menu">首页</a></div>
+                 <div class="Menu_fa" id="flip1" ><img src="./image/right.png" style="width: 20px;height: 20px"><span class="Menu">舆情分析</span></div>
+                 <div id="Menu_panel1">
+                     <div class="Menu_fa"><a href="MTFX.jsp" class="Menu_son" >媒体分析</a></div>
+                     <div class="Menu_fa"><a href="QGFX.jsp" class="Menu_son" >情感分析</a></div>
+                     <div class="Menu_fa"><a href="YQYJ.jsp" class="Menu_son" >舆情预警</a></div>
+                 </div>
+                 <div class="Menu_fa"><a href="#" class="Menu">伪舆情分析</a></div>
 
-            <div class="Menu_fa" id="flip2" ><img src="./image/right.png" style="width:20px;height: 20px"><span class="Menu">舆情报表</span></div>
-            <div id="Menu_panel2">
-                <div class="Menu_fa"><a href="TP.html" class="Menu_son" >时间报表</a></div>
-                <div class="Menu_fa"><a href="SP.html" class="Menu_son" >事件报表</a></div>
-            </div>
+                 <div class="Menu_fa" id="flip2" ><img src="./image/right.png" style="width:20px;height: 20px"><span class="Menu">舆情报表</span></div>
+                 <div id="Menu_panel2">
+                     <div class="Menu_fa"><a href="TP.jsp" class="Menu_son" >时间报表</a></div>
+                     <div class="Menu_fa"><a href="SP.jsp" class="Menu_son" >事件报表</a></div>
+                 </div>
 
-        </div>
+             </div>
     </div>
     <div style="text-align: right"><img src="./image/barleft.png" style="width: 25px;height:25px;cursor: pointer;" title="收缩左边栏" onclick="changeBar()"></div>
     <div style="clear: both"></div>
@@ -183,10 +194,10 @@
 
 <div id="Catalog">
     <div style="text-align: left"><img src="./image/barleft.png" style="width: 25px;height:25px;cursor: pointer;" title="时间设置显示" onclick="changeCatalog()"></div>
-    <div><a class="smoothScroll" href="#head1" title="最新舆情">最新舆情</a></div>
-    <div><a class="smoothScroll" href="#head2" title="一周走势情况">一周走势情况</a></div>
-    <div><a class="smoothScroll" href="#head3" title="全国舆情情况">全国舆情情况</a></div>
-    <div><a class="smoothScroll" href="#head4" title="媒体倾向度分析">媒体倾向度分析</a></div>
+    <div><a class="smoothScroll" href="<%=basePath%>SY.jsp#head1" title="最新舆情">最新舆情</a></div>
+    <div><a class="smoothScroll" href="<%=basePath%>SY.jsp#head2" title="一周走势情况">一周走势情况</a></div>
+    <div><a class="smoothScroll" href="<%=basePath%>SY.jsp#head3" title="全国舆情情况">全国舆情情况</a></div>
+    <div><a class="smoothScroll" href="<%=basePath%>SY.jsp#head4" title="媒体倾向度分析">媒体倾向度分析</a></div>
 
 </div>
 <!--右边标题-->
@@ -207,7 +218,7 @@
 
             <div class="Ancestor" id="head1">
                 <h1 class="h1Title" >最新舆情
-                    <a href="MGYQ.html" style="float: right;font-size: 15px">more<span
+                    <a href="MGYQ.jsp" style="float: right;font-size: 15px">more<span
                         class="glyphicon glyphicon-chevron-right"></span></a>
                 </h1>
                 <div class="col-md-6 col-xs-6 col-lg-6" >
@@ -287,15 +298,19 @@
         //地域分布图
         ChinaPictureChart("./json/ChinaPiture.json",'ChinaPiture',new Date(),new Date(),null,null);
         //今日舆情图
-        PublicOpinionTodayChart('./servlet/IndexServlet','medtendency',new Date(),new Date(),null,'checkStatus')
+        PublicOpinionTodayChart('./servlet/IndexServlet','medtendency',new Date(),new Date(),null,'checkStatus');
         //测试用
         //PublicOpinionTodayChart('./json/medtendency.json','medtendency',new Date(),new Date(),null,'checkStatus');
         //一周走势图
          WeeklyChart("./servlet/IndexServlet",'yqto',new Date(),new Date(),null,'getTendency');
         //测试用
         //WeeklyChart("./json/yqto.json",'yqto',new Date(),new Date(),null,'getTendency');
-
+ 
     });
+        
+    
+    
+   
 </script>
 
 

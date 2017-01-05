@@ -1,7 +1,19 @@
-<!doctype html>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-<head>
-    <meta charset="utf-8">
+  <head>
+    <base href="<%=basePath%>">
+    
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
     <title>南华大学核电舆情系统</title>
     <link href="css/SP.css" rel="stylesheet" type="text/css"  />
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css"  />
@@ -15,7 +27,12 @@
     <link rel="stylesheet" type="text/css" href="./css/master.css">
     <script type="text/javascript" src="./js/master.js"></script>
     <script type="text/javascript" src="./js/smoothscroll.js"></script>
-
+     
+ <style>
+.pagination {
+	margin: 0px !important;
+}
+</style>
 
     <!--加载数据表-->
     <script type="text/javascript">
@@ -222,24 +239,24 @@
     </div>
 
     <div id="leftbarBody">
-        <div id="leftbarBody_Menu">
-            <div class="Menu_fa"><a href="SY.html" class="Menu">首页</a></div>
-            <div class="Menu_fa" id="flip1" ><img src="./image/right.png" style="width: 20px;height: 20px"><span class="Menu">舆情分析</span></div>
-            <div id="Menu_panel1">
-                <div class="Menu_fa"><a href="MTFX.html" class="Menu_son" >媒体分析</a></div>
-                <div class="Menu_fa"><a href="QGFX.html" class="Menu_son" >情感分析</a></div>
-                <div class="Menu_fa"><a href="YQYJ.html" class="Menu_son" >舆情预警</a></div>
-            </div>
-            <div class="Menu_fa"><a href="#" class="Menu">伪舆情分析</a></div>
+             <div id="leftbarBody_Menu">
+                 <div class="Menu_fa"><a href="SY.jsp" class="Menu">首页</a></div>
+                 <div class="Menu_fa" id="flip1" ><img src="./image/right.png" style="width: 20px;height: 20px"><span class="Menu">舆情分析</span></div>
+                 <div id="Menu_panel1">
+                     <div class="Menu_fa"><a href="MTFX.jsp" class="Menu_son" >媒体分析</a></div>
+                     <div class="Menu_fa"><a href="QGFX.jsp" class="Menu_son" >情感分析</a></div>
+                     <div class="Menu_fa"><a href="YQYJ.jsp" class="Menu_son" >舆情预警</a></div>
+                 </div>
+                 <div class="Menu_fa"><a href="#" class="Menu">伪舆情分析</a></div>
 
-            <div class="Menu_fa" id="flip2" ><img src="./image/right.png" style="width:20px;height: 20px"><span class="Menu">舆情报表</span></div>
-            <div id="Menu_panel2">
-                <div class="Menu_fa"><a href="TP.html" class="Menu_son" >时间报表</a></div>
-                <div class="Menu_fa"><a href="SP.html" class="Menu_son" >事件报表</a></div>
-            </div>
+                 <div class="Menu_fa" id="flip2" ><img src="./image/right.png" style="width:20px;height: 20px"><span class="Menu">舆情报表</span></div>
+                 <div id="Menu_panel2">
+                     <div class="Menu_fa"><a href="TP.jsp" class="Menu_son" >时间报表</a></div>
+                     <div class="Menu_fa"><a href="SP.jsp" class="Menu_son" >事件报表</a></div>
+                 </div>
 
-        </div>
-    </div>
+             </div>
+     </div>
     <div style="text-align: right"><img src="./image/barleft.png" style="width: 25px;height:25px;cursor: pointer;" title="收缩左边栏" onclick="changeBar()"></div>
     <div style="clear: both"></div>
 
@@ -247,7 +264,7 @@
 
 <div id="Catalog">
     <div style="text-align: left"><img src="./image/barleft.png" style="width: 25px;height:25px;cursor: pointer;" title="时间设置显示" onclick="changeCatalog()"></div>
-    <div><a class="smoothScroll" href="#head1" title="事件报表">事件报表</a></div>
+    <div><a class="smoothScroll" href="<%=basePath%>SP.jsp#head1" title="事件报表">事件报表</a></div>
 </div>
 <!--右边标题-->
 <div id="cansetTime">

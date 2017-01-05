@@ -152,6 +152,17 @@
 				legend: {                   //图例
 				 data: ['正面', '负面'],        //图例数据
 				},
+				toolbox: 
+				{
+					 show : true,
+					 orient: 'vertical',
+					 feature : {//启用功能
+					   //dataView数据视图，打开数据视图，可设置更多属性,readOnly 默认数据视图为只读(即值为true)，可指定readOnly为false打开编辑功能
+					   dataView: {show: true, readOnly: true},
+					   restore : {show: true},//restore，还原，复位原始图表
+					   saveAsImage : {show: true}//saveAsImage，保存图片
+					 }
+				},
 				grid: {
 				 left: '0%',
 				 right: '0%',
@@ -275,7 +286,14 @@
 		},
 		toolbox: 
 		{
-		show: true,
+			 show : true,
+			 orient: 'vertical',
+			 feature : {//启用功能
+			   //dataView数据视图，打开数据视图，可设置更多属性,readOnly 默认数据视图为只读(即值为true)，可指定readOnly为false打开编辑功能
+			   dataView: {show: true, readOnly: true},
+			   restore : {show: true},//restore，还原，复位原始图表
+			   saveAsImage : {show: true}//saveAsImage，保存图片
+			 }
 		},
 		xAxis:  {
 		type: 'category',
@@ -353,6 +371,17 @@
 								axisPointer : {            // 坐标轴指示器，坐标轴触发有效
 									type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
 								}
+							},
+							toolbox: 
+							{
+								 show : true,
+								 orient: 'vertical',
+								 feature : {//启用功能
+								   //dataView数据视图，打开数据视图，可设置更多属性,readOnly 默认数据视图为只读(即值为true)，可指定readOnly为false打开编辑功能
+								   dataView: {show: true, readOnly: true},
+								   restore : {show: true},//restore，还原，复位原始图表
+								   saveAsImage : {show: true}//saveAsImage，保存图片
+								 }
 							},
 							legend: {
 								data: datt.lengdata //图例表示
@@ -562,6 +591,17 @@
 					trigger: 'item',
 					formatter: "{a} <br/>{b}: {c} ({d}%)"
 				},
+				toolbox: 
+				{
+					 show : true,
+					 orient: 'vertical',
+					 feature : {//启用功能
+					   //dataView数据视图，打开数据视图，可设置更多属性,readOnly 默认数据视图为只读(即值为true)，可指定readOnly为false打开编辑功能
+					   dataView: {show: true, readOnly: true},
+					   restore : {show: true},//restore，还原，复位原始图表
+					   saveAsImage : {show: true}//saveAsImage，保存图片
+					 }
+				},
 				legend: {
 					orient: 'vertical',
 					x: 'left',
@@ -621,10 +661,16 @@
 							  bottom: '3%',
 							  containLabel: true
 						  },
-						  toolbox: {
-							  feature: {
-								  saveAsImage: {}
-							  }
+						  toolbox: 
+						  {
+								 show : true,
+								 orient: 'vertical',
+								 feature : {//启用功能
+								   //dataView数据视图，打开数据视图，可设置更多属性,readOnly 默认数据视图为只读(即值为true)，可指定readOnly为false打开编辑功能
+								   dataView: {show: true, readOnly: true},
+								   restore : {show: true},//restore，还原，复位原始图表
+								   saveAsImage : {show: true}//saveAsImage，保存图片
+								 }
 						  },
 						  xAxis: {
 							  type: 'category',
@@ -710,6 +756,17 @@
 		text: '南华大学舆情情况分布',     //没有改变，直接是servlet加载的
 		subtext: '数据来自网络'
 		},
+		toolbox: 
+		{
+			 show : true,
+			 orient: 'vertical',
+			 feature : {//启用功能
+			   //dataView数据视图，打开数据视图，可设置更多属性,readOnly 默认数据视图为只读(即值为true)，可指定readOnly为false打开编辑功能
+			   dataView: {show: true, readOnly: true},
+			   restore : {show: true},//restore，还原，复位原始图表
+			   saveAsImage : {show: true}//saveAsImage，保存图片
+			 }
+		},
 		tooltip: {
 		trigger: 'axis',
 		axisPointer: {
@@ -760,7 +817,7 @@
 		    return Chart;
 		}
 		
-		//信息来源图
+		//信息来源类型图
 		function InformationSourcesChart(loadurl,elementId, starttime, endtime,userId,method)
 		{    
 			 var Chart;
@@ -1033,6 +1090,7 @@
 		//工具箱，每个图表最多仅有一个工具箱
 		toolbox: {
 		 show : true,
+		 orient: 'vertical',
 		 feature : {//启用功能
 		   //dataView数据视图，打开数据视图，可设置更多属性,readOnly 默认数据视图为只读(即值为true)，可指定readOnly为false打开编辑功能
 		   dataView: {show: true, readOnly: true},
@@ -1045,7 +1103,9 @@
 		//图例，每个图表最多仅有一个图例
 		legend: [{
 		 x: 'left',//图例位置
-		
+		 data: graph.categories.map(function (a) {
+             return a.name;
+         })
 		}],
 		//sereis的数据: 用于设置图表数据之用
 		series : 

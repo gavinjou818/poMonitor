@@ -64,12 +64,14 @@ public class HotWordsServlet extends HttpServlet {
 	 * @return
 	 */
 	private String getHotWords(String startDateStr, String endDateStr,
-			int userId) {
+			int userId) 
+	  {
 		/******************* 将热词列表处理为JSON格式 *****************************/
 		ArrayList<RetHotWord> retNodes = tdDiscovery.getRetHotWords();
 		double[][] relevanceMat = tdDiscovery.getRelevanceMat();
 		
 		ArrayList<RetLink> retLinks = new ArrayList<RetLink>();
+		//处理好热词关系，然后再化成json格式
 		for (int i = 0; i < relevanceMat.length; i++) {
 			for (int j = i + 1; j < relevanceMat.length; j++) {
 
@@ -101,7 +103,8 @@ public class HotWordsServlet extends HttpServlet {
 	 * @return
 	 */
 	private String getHotWordsList(String startDateStr, String endDateStr,
-			int userId) {
+			int userId) 
+	{
 		List<RetHotWord> hotwords=tdDiscovery.getRetHotWords();
 		HotWordsListResponse hotWordsListResponse = new HotWordsListResponse();
 		hotWordsListResponse.setResults(hotwords);
@@ -118,7 +121,8 @@ public class HotWordsServlet extends HttpServlet {
 	 * 
 	 * @return
 	 */
-	private String getNewsByHotWord(int hotwordid) {
+	private String getNewsByHotWord(int hotwordid) 
+	{
 		List<HotWord> hotwords=tdDiscovery.getHotwords();
 		HotWord res = null;
 		res=hotwords.get(hotwordid);
@@ -151,14 +155,21 @@ public class HotWordsServlet extends HttpServlet {
 			res.setStatus(1);
 			res.setResults(null);
 			resultJson = JSON.toJSONString(res);
-		} else {
+		} 
+		else 
+		{
 			String startDateStr = request.getParameter("startTime");
 			String endDateStr = request.getParameter("endTime");
 			int userId = Integer.parseInt(request.getParameter("userId"));
+			
+			
+			//预存好这个热词集,免得再次加载
 			HttpSession session=request.getSession(true);
 			this.tdDiscovery=(HotWordDiscoveryAnalyse)session.getAttribute(startDateStr+endDateStr+userId);
+			
 			if(this.tdDiscovery==null)
-			{
+			{   
+				
 				this.tdDiscovery = new HotWordDiscoveryAnalyse();
 				tdDiscovery.discoverHotWords(startDateStr, endDateStr, userId);
 				session.setAttribute(startDateStr+endDateStr+userId,this.tdDiscovery);
@@ -188,7 +199,8 @@ public class HotWordsServlet extends HttpServlet {
 		response.getWriter().write(resultJson);
 	}
 
-	public void init() throws ServletException {
+	public void init() throws ServletException 
+	{
 		// Put your code here
 	}
 

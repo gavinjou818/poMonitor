@@ -22,7 +22,8 @@ import pomonitor.util.PropertiesReader;
  * 
  * @author caihengyi 2015年12月14日 下午9:33:43
  */
-public class HotWordDiscovery {
+public class HotWordDiscovery 
+{
 	private List<String> mBaseStrings;
 	private final int k;
 	private final double sensWeight;// 敏感词加权系数
@@ -34,7 +35,8 @@ public class HotWordDiscovery {
 	/**
 	 * 初始化参数信息
 	 */
-	public HotWordDiscovery() {
+	public HotWordDiscovery() 
+	{
 		PropertiesReader propertiesReader = new PropertiesReader();
 		k = Integer.parseInt(propertiesReader.getPropertyByName("k"));
 		sensWeight = Double.parseDouble(propertiesReader
@@ -53,6 +55,8 @@ public class HotWordDiscovery {
 	 */
 	public List<HotWord> getHotWords(List<TDArticle> articleLists,
 			List<Sensword> sensitiveDict) {
+		
+		//以向量表示文本
 		TextVectorBuilder tvb = new TextVectorBuilder();
 		List<TDArticle> tdArticlesWithVector = tvb.buildVectors(articleLists);
 		mBaseStrings = tvb.globalFeatureCollections;

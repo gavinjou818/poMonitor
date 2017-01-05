@@ -1,33 +1,59 @@
-<!doctype html>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-<head>
-    <meta charset="utf-8">
+  <head>
+    <base href="<%=basePath%>">
+    
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+    
     <title>南华大学核电舆情系统</title>
-    <link href="css/YQYJ.css" rel="stylesheet" type="text/css"  />
+    <link href="css/TP.css" rel="stylesheet" type="text/css"  />
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css"  />
-
-
-    <!--在线jq-->
     <script src="js/jquery-3.1.1.js" ></script>
     <script src="js/bootstrap.js" ></script>
     <script src="js/examples.js"></script>
 
-
     <link rel="stylesheet" type="text/css" href="./css/master.css">
     <script type="text/javascript" src="./js/master.js"></script>
     <script type="text/javascript" src="./js/smoothscroll.js"></script>
+    
+    <!-- 内部css -->
+    <style>
+        .tab-content
+        {
+            height: 550px !important;
+        }
+       
+.pagination {
+	margin: 0px !important;
+}
 
+    </style>
+    
+    <script type="text/javascript">
+         //用于存储选择的数据的id;
+         var SelectID=new Array();
+    </script>
+     
 
     <!--加载数据表-->
     <script type="text/javascript">
 
         var operate=["查看","导出","邮箱发送"];
-        //总条数
         var sum=5;//最大页数5;
         var barsum=10;//最大条目数2;
         var pagesum;//总共有的页数
         var curpage=1;//当前页
-
+     
 
         function initData(start,dataroot,tparent)
         {
@@ -41,7 +67,6 @@
                 data:{"curpage":curpage},
                 success: function (data)
                 {
-
 
                     //获取ul节点
                     pagesum=parseInt(data[0].sum/barsum);
@@ -59,7 +84,7 @@
                     // 加入<<节点
                     var son1=document.createElement("li");
                     var son2=document.createElement("a");
-                    son2.setAttribute("href","#");
+                    son2.setAttribute("href","#"+tparent);
                     son2.innerHTML="&laquo;";
                     if((pagesum-curpage+1)<sum)
                     {
@@ -74,6 +99,7 @@
                             initData(start-1,dataroot,tparent);
                         });
                     }
+
                     son1.appendChild(son2);
                     parent.appendChild(son1);
 
@@ -82,7 +108,7 @@
                     {
                         var son1=document.createElement("li");
                         var son2=document.createElement("a");
-                        son2.setAttribute("href","#");
+                        son2.setAttribute("href","#"+tparent);
                         son2.innerText=i;
                         son2.addEventListener("click",function ()
                         {
@@ -95,7 +121,7 @@
                     // 加入>>号
                     son1=document.createElement("li");
                     son2=document.createElement("a");
-                    son2.setAttribute("href","#");
+                    son2.setAttribute("href","#"+tparent);
                     son2.innerHTML="&raquo;";
                     if(i<=pagesum)
                     {
@@ -110,10 +136,12 @@
                     parent.appendChild(son1);
 
 
+
                     //下面是加载数据
 
+
                     var parent2=document.getElementById(tparent);
-                    parent2=parent2.getElementsByTagName("tbody");
+                    var parent2=parent2.getElementsByTagName("tbody");
                     parent2=parent2[0];
 
                     while(parent2.hasChildNodes())parent2.removeChild(parent2.firstChild);
@@ -122,7 +150,8 @@
                     for(i=barsum*(curpage-1)+1,DEF=0;DEF<barsum&&i<=data[0].now;i++,DEF++)
                     {
                         var tr=document.createElement("tr");
-                        //加入编号
+
+                        //加载id
                         var td1=document.createElement("td");
                         var td1input=document.createElement("input");
                         td1input.setAttribute("type","checkbox");
@@ -132,41 +161,34 @@
                         td1.innerHTML+=data[i].id;
                         tr.appendChild(td1);
 
-                        //加入标题
+                        //加载时间
                         var td2=document.createElement("td");
-                        var td2a=document.createElement("a");
-                        td2a.setAttribute("href","#");
-                        td2a.innerText=data[i].title;
-                        td2.appendChild(td2a);
+                        td2.innerText=data[i].time;
                         tr.appendChild(td2);
 
-                        //加入内容
+                        //加标题
                         var td3=document.createElement("td");
-                        td3.innerText=data[i].context;
+                        var td3a=document.createElement("a");
+                        td3a.innerText=data[i].name;
+                        td3a.setAttribute("href","#");
+                        td3.appendChild(td3a);
                         tr.appendChild(td3);
 
-                        //加入时间
+                        //加载链接查看与信息
                         var td4=document.createElement("td");
-                        td4.innerText=data[i].time;
+                        for(var j=0;j<operate.length;j++)
+                        {
+                            if(j!=0)
+                            {
+                                var textnode=document.createTextNode("|");
+                                td4.appendChild(textnode);
+                            }
+                            var a1=document.createElement("a");
+                            a1.setAttribute("href","#");
+                            a1.innerHTML=operate[j];
+                            td4.appendChild(a1);
+                        }
                         tr.appendChild(td4);
-
-                        //加入作者
-                        var td5=document.createElement("td");
-                        td5.innerText=data[i].author;
-                        tr.appendChild(td5);
-
-                        //加入相似文章
-                        var td6=document.createElement("td");
-                        td6.innerText=data[i].relative;
-                        tr.appendChild(td6);
-
-                        //加入等级
-                        var td7=document.createElement("td");
-                        td7.innerText=data[i].grade;
-                        tr.appendChild(td7);
-
-
-                        //加入行
                         parent2.appendChild(tr);
                     }
 
@@ -178,7 +200,6 @@
 
     </script>
 
-    <!--全选事件-->
     <script type="text/javascript">
         function allseleck(papername)
         {
@@ -193,26 +214,22 @@
 
             for(var i=0;i<parent.length;i++)
             {
-
                 var son=parent[i].getElementsByTagName("input");
                 son=son[0];
                 son.checked=true;
             }
         }
-
     </script>
+    
+    
+    
 
 
-    <style>
-        .tab-content
-        {
-            height: 550px !important;
-        }
-    </style>
+  
 
 </head>
 
-<body onload="initData(1,'json/YJZX.json','snewspaper')">
+<body onload="initData(1,'json/test_data.json','dnewspaper'),initData(1,'json/test_data.json','wnewspaper'),initData(1,'json/test_data.json','mnewspaper')">
 <div id="leftbar">
     <!--头像-->
     <div id="leftbarHead">
@@ -227,24 +244,24 @@
     </div>
 
     <div id="leftbarBody">
-        <div id="leftbarBody_Menu">
-            <div class="Menu_fa"><a href="SY.html" class="Menu">首页</a></div>
-            <div class="Menu_fa" id="flip1" ><img src="./image/right.png" style="width: 20px;height: 20px"><span class="Menu">舆情分析</span></div>
-            <div id="Menu_panel1">
-                <div class="Menu_fa"><a href="MTFX.html" class="Menu_son" >媒体分析</a></div>
-                <div class="Menu_fa"><a href="QGFX.html" class="Menu_son" >情感分析</a></div>
-                <div class="Menu_fa"><a href="YQYJ.html" class="Menu_son" >舆情预警</a></div>
-            </div>
-            <div class="Menu_fa"><a href="#" class="Menu">伪舆情分析</a></div>
+             <div id="leftbarBody_Menu">
+                 <div class="Menu_fa"><a href="SY.jsp" class="Menu">首页</a></div>
+                 <div class="Menu_fa" id="flip1" ><img src="./image/right.png" style="width: 20px;height: 20px"><span class="Menu">舆情分析</span></div>
+                 <div id="Menu_panel1">
+                     <div class="Menu_fa"><a href="MTFX.jsp" class="Menu_son" >媒体分析</a></div>
+                     <div class="Menu_fa"><a href="QGFX.jsp" class="Menu_son" >情感分析</a></div>
+                     <div class="Menu_fa"><a href="YQYJ.jsp" class="Menu_son" >舆情预警</a></div>
+                 </div>
+                 <div class="Menu_fa"><a href="#" class="Menu">伪舆情分析</a></div>
 
-            <div class="Menu_fa" id="flip2" ><img src="./image/right.png" style="width:20px;height: 20px"><span class="Menu">舆情报表</span></div>
-            <div id="Menu_panel2">
-                <div class="Menu_fa"><a href="TP.html" class="Menu_son" >时间报表</a></div>
-                <div class="Menu_fa"><a href="SP.html" class="Menu_son" >事件报表</a></div>
-            </div>
+                 <div class="Menu_fa" id="flip2" ><img src="./image/right.png" style="width:20px;height: 20px"><span class="Menu">舆情报表</span></div>
+                 <div id="Menu_panel2">
+                     <div class="Menu_fa"><a href="TP.jsp" class="Menu_son" >时间报表</a></div>
+                     <div class="Menu_fa"><a href="SP.jsp" class="Menu_son" >事件报表</a></div>
+                 </div>
 
-        </div>
-    </div>
+             </div>
+     </div>
     <div style="text-align: right"><img src="./image/barleft.png" style="width: 25px;height:25px;cursor: pointer;" title="收缩左边栏" onclick="changeBar()"></div>
     <div style="clear: both"></div>
 
@@ -252,7 +269,9 @@
 
 <div id="Catalog">
     <div style="text-align: left"><img src="./image/barleft.png" style="width: 25px;height:25px;cursor: pointer;" title="时间设置显示" onclick="changeCatalog()"></div>
-    <div><a class="smoothScroll" href="#head1" title="预警中心">预警中心</a></div>
+    <div><a class="smoothScroll" href="<%=basePath%>TP.jsp#head1" title="日报中心">日报中心</a></div>
+    <div><a class="smoothScroll" href="<%=basePath%>TP.jsp#head2" title="周报中心">周报中心</a></div>
+    <div><a class="smoothScroll" href="<%=basePath%>TP.jsp#head3" title="月报中心">月报中心</a></div>
 </div>
 <!--右边标题-->
 <div id="cansetTime">
@@ -265,46 +284,45 @@
 </div>
 <div  id="rightbody">
 
+
     <!--主体-->
-    <div class="container" id="pointnewyq">
+    <div class="container">
         <div class="row">
 
 
 
-
             <div class="Ancestor" id="head1">
-                <h1 class="h1Title">预警中心</h1>
-
-
+                <h1 class="h1Title">日报中心</h1>
 
                 <div class="tab-content">
-
-                    <!--数据报-->
-                    <div role="tabpanel" class="tab-pane active" id="snewspaper" style="padding-top:10px" >
-                        <table class="table table-hover table-bordered" >
+                    <!--日报中心-->
+                    <div role="tabpanel" class="tab-pane active" id="dnewspaper" style="padding-top:10px" >
+                        <table class="table table-hover " >
                             <thead>
-                            <th style="width:5%;">编号</th>
-                            <th style="width:13%;">标题</th>
-                            <th style="width:50%">内容</th>
-                            <th style="width:10%">时间</th>
-                            <th style="width:10%">作者</th>
-                            <th style="width:7%">相似文章</th>
-                            <th style="width:5%">等级</th>
+                            <th style="width:10%;">编号</th>
+                            <th style="width:20%;">时间</th>
+                            <th style="width:50%">报表名称</th>
+                            <th style="width:20%;">操作</th>
                             </thead>
                             <tbody>
+
+
+
                             </tbody>
                         </table>
 
-                        <ul class="pagination pagsize"> </ul>
+                        <ul class="pagination pagsize">
+
+
+                        </ul>
                         <div style="float: right">
-                            <button type="button" class="btn btn-default" onclick="allseleck('snewspaper')">全选</button>
-                            <button type="button" class="btn btn-default">加入收藏夹</button>
+                            <button type="button" class="btn btn-default" onclick="allseleck('dnewspaper')">全选</button>
                             <button type="button" class="btn btn-default">邮件发送</button>
                             <button type="button" class="btn btn-default">导出</button>
                         </div>
 
-                    </div>
 
+                    </div>
                 </div>
 
                 <div style="clear: both"></div>
@@ -312,13 +330,88 @@
 
 
 
+            <div class="Ancestor" id="head2">
+                <h1 class="h1Title">周报中心</h1>
+
+                <div class="tab-content">
+                    <!--周报中心-->
+                    <div role="tabpanel" class="tab-pane active" id="wnewspaper" style="padding-top:10px" >
+                        <table class="table table-hover " >
+                            <thead>
+                            <th style="width:10%;">编号</th>
+                            <th style="width:20%;">时间</th>
+                            <th style="width:50%">报表名称</th>
+                            <th style="width:20%;">操作</th>
+                            </thead>
+                            <tbody>
+
+
+
+                            </tbody>
+                        </table>
+
+                        <ul class="pagination pagsize">
+
+
+                        </ul>
+                        <div style="float: right">
+                            <button type="button" class="btn btn-default" onclick="allseleck('wnewspaper')">全选</button>
+                            <button type="button" class="btn btn-default">邮件发送</button>
+                            <button type="button" class="btn btn-default">导出</button>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div style="clear: both"></div>
+            </div>
+
+
+
+            <div class="Ancestor" id="head3">
+                <h1 class="h1Title">月报中心</h1>
+
+
+                <div class="tab-content">
+                    <!--月报中心-->
+                    <div role="tabpanel" class="tab-pane active" id="mnewspaper" style="padding-top:10px" >
+                        <table class="table table-hover" >
+                            <thead>
+                            <th style="width:10%;">编号</th>
+                            <th style="width:20%;">时间</th>
+                            <th style="width:50%">报表名称</th>
+                            <th style="width:20%;">操作</th>
+                            </thead>
+                            <tbody>
+
+
+
+                            </tbody>
+                        </table>
+
+                        <ul class="pagination pagsize">
+
+
+                        </ul>
+                        <div style="float: right">
+                            <button type="button" class="btn btn-default" onclick="allseleck('mnewspaper')">全选</button>
+                            <button type="button" class="btn btn-default">邮件发送</button>
+                            <button type="button" class="btn btn-default">导出</button>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
         </div>
 
 
     </div>
 
-
 </div>
+
 
 
 

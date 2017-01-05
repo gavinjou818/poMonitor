@@ -1,97 +1,46 @@
-[
-  {
-    "sum":11,
-    "now":11,
-    "all":915
-  },
-  {
-    "id":1,
-    "title":"南华大学舆情系统",
-    "context":"hallo",
-    "relative":156,
-    "comfrom":"weibo",
-    "time":"今天15:47"
-  },
-  {
-    "id":2,
-    "title":"南华大学舆情系统",
-    "context":"hallo",
-    "relative":156,
-    "comfrom":"weibo",
-    "time":"今天15:47"
-  },
-  {
-    "id":3,
-    "title":"南华大学舆情系统",
-    "context":"hallo",
-    "relative":156,
-    "comfrom":"weibo",
-    "time":"今天15:47"
-  },
-  {
-    "id":4,
-    "title":"南华大学舆情系统",
-    "context":"hallo",
-    "relative":156,
-    "comfrom":"weibo",
-    "time":"今天15:47"
-  },
-  {
-    "id":5,
-    "title":"南华大学舆情系统",
-    "context":"hallo",
-    "relative":156,
-    "comfrom":"weibo",
-    "time":"今天15:47"
-  },
-  {
-    "id":6,
-    "title":"南华大学舆情系统",
-    "context":"hallo",
-    "relative":156,
-    "comfrom":"weibo",
-    "time":"今天15:47"
-  },
-  {
-    "id":7,
-    "title":"南华大学舆情系统",
-    "context":"hallo",
-    "relative":156,
-    "comfrom":"weibo",
-    "time":"今天15:47"
-  },
-  {
-    "id":8,
-    "title":"南华大学舆情系统",
-    "context":"hallo",
-    "relative":156,
-    "comfrom":"weibo",
-    "time":"今天15:47"
-  },
-  {
-    "id":9,
-    "title":"南华大学舆情系统",
-    "context":"hallo",
-    "relative":156,
-    "comfrom":"weibo",
-    "time":"今天15:47"
-  },
-  {
-    "id":10,
-    "title":"南华大学舆情系统",
-    "context":"hallo",
-    "relative":156,
-    "comfrom":"weibo",
-    "time":"今天15:47"
-  },
-  {
-    "id":11,
-    "title":"南华大学舆情系统",
-    "context":"hallo",
-    "relative":156,
-    "comfrom":"weibo",
-    "time":"今天15:47"
-  }
-
-
-]
+{
+    "gAM_Result_Briefings": [
+        {
+            "content": "南华大学分专业靠抓阄 招生后细化专业如何分流？关系到学生就业前景的专业细分，却通过抓阄的方式来决定。近日，南华大学2014级土木工程系采用的专业分流的方式，引发了社会的广泛 ...",
+            "date": 1442160000000,
+            "id": 568,
+            "tendclass": 0,
+            "title": "大学",
+            "web": "新浪"
+        },
+        {
+            "content": "而是在明亮的大学教室里。据报道，位于湖南省衡阳市的南华大学土木工程系2014级有500多名学生，通过大类招生进入学校的他们，进入大二面临细分专业的问题。",
+            "date": 1442160000000,
+            "id": 999,
+            "tendclass": 1,
+            "title": "评抓阄分专业：好阄坏阄都可能找不到工作",
+            "web": "新浪"
+        },
+        {
+            "content": "关系到学生就业前景的专业细分，却通过抓阄的方式来决定。近日，南华大学2014级土木工程系采用的专业分流的方式，引发了社会的广泛质疑和讨论。南华大学称，抓阄分流是一种“无奈 ...",
+            "date": 1442160000000,
+            "id": 1071,
+            "tendclass": 1,
+            "title": "分专业靠抓阄",
+            "web": "新浪"
+        },
+        {
+            "content": "靠抓阄分专业前途岂是儿戏 湖南衡阳南华大学2014级土木工程系有500多名学生，通过大类招生入学的他们面临着细分专业的问题。",
+            "date": 1442160000000,
+            "id": 1563,
+            "tendclass": 1,
+            "title": "燕山快笔",
+            "web": "新浪"
+        },
+        {
+            "content": "关系到学生就业前景的专业细分，却通过抓阄的方式来决定。近日，南华大学2014级土木工程系采用的专业分流的方式，引发了社会的广泛质疑和讨论。",
+            "date": 1442160000000,
+            "id": 2041,
+            "tendclass": 0,
+            "title": "抓阄分专业毁人不倦",
+            "web": "新浪"
+        }
+    ],
+    "now": 5,
+    "sum": 542
+}

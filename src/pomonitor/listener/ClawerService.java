@@ -23,31 +23,36 @@ import pomonitor.clawer.newsanalyse.XinHuaAnalyse;
 import pomonitor.clawer.newsanalyse.ZhongXinAnalyse;
 import pomonitor.util.PropertiesReader;
 
-public class ClawerService implements ServletContextListener {
+public class ClawerService implements ServletContextListener 
+{
 
 	// 用于设置服务定时启动的定时器
 	private Timer timer = new Timer();
 
 	@Override
-	public void contextDestroyed(ServletContextEvent arg0) {
+	public void contextDestroyed(ServletContextEvent arg0) 
+	{
 		System.out.println("系统结束");
 		// 关闭计时
 		timer.cancel();
 	}
 
 	@Override
-	public void contextInitialized(ServletContextEvent arg0) {
+	public void contextInitialized(ServletContextEvent arg0) 
+	{
 		// 获取系统上下文
 		ServletContext context = arg0.getServletContext();
-		// 获取配置参数中的倾向性分析的时间间隔
+		// 获取配置参数中的爬虫的时间间隔
 		String clawerIntervalStr = context.getInitParameter("clawerInterval");
 		int clawerInterval = Integer.parseInt(clawerIntervalStr);
-		// 获取配置参数中倾向性分析的开始时间
+		
+		// 获取配置参数中爬虫的开始时间
 		String clawerStartStr = context.getInitParameter("clawerStartTime");
 		int clawerStart = Integer.parseInt(clawerStartStr);
 		// 将时间改为date形式,从当前时时间的设置点开始
 		Date startDate = new Date(System.currentTimeMillis());
 		startDate.setHours(clawerStart);
+		
 		//
 		System.out.println(startDate.getTime());
 		// 倘若超过当前时间则马上执行一次，以后按照时间间隔定时执行
@@ -57,7 +62,8 @@ public class ClawerService implements ServletContextListener {
 	}
 
 	public void startClawer(boolean isLatest, String filePath,
-			String whatYouWant) {
+			String whatYouWant) 
+	{
 		NewsCrawler clawer = new NewsCrawler(filePath);
 		SinaAnalyse analyse = new SinaAnalyse("新浪", true);
 		RedNetAnalyse redAnalyse = new RedNetAnalyse("红网", true);
@@ -89,12 +95,14 @@ public class ClawerService implements ServletContextListener {
 
 	}
 
-	class MyTask extends java.util.TimerTask {
+	class MyTask extends java.util.TimerTask 
+	{
 		public MyTask() {
 		}
 
 		@Override
-		public void run() {
+		public void run() 
+		{
 			System.out.println("倾向性分析服务开始执行" + new Date().toString());
 			String filePath = new PropertiesReader()
 					.getPropertyByName("clawerDir");

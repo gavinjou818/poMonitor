@@ -1,6 +1,7 @@
 package pomonitor.analyse;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import pomonitor.analyse.entity.Attitude;
@@ -23,7 +24,8 @@ import com.hankcs.hanlp.seg.common.Term;
  * 
  * @author caihengyi 2015年12月15日 下午4:12:07
  */
-public class HotWordDiscoveryAnalyse {
+public class HotWordDiscoveryAnalyse
+{
 	private double[][] relevanceMat;
 	private ArrayList<RetHotWord> retHotWords;
 	private List<HotWord> hotwords;
@@ -37,7 +39,8 @@ public class HotWordDiscoveryAnalyse {
 	 * @return
 	 */
 	public List<HotWord> discoverHotWords(String startDateStr,
-			String endDateStr, int userId) {
+			String endDateStr, int userId) 
+	{
 		// 调用话题发现功能模块，返回话题集合
 		HotWordDiscovery td = new HotWordDiscovery();
 		SenswordDAO sd = new SenswordDAO();
@@ -46,20 +49,26 @@ public class HotWordDiscoveryAnalyse {
 				sd.findByProperty("userid", userId));
 		this.relevanceMat = td.getRelevanceMat();
 		ArrayList<RetHotWord> retHotWordsList = new ArrayList<RetHotWord>();
-		for (int i = 0; i < hotwords.size(); i++) {
+		for (int i = 0; i < hotwords.size(); i++)
+		{
 			HotWord hotWord = hotwords.get(i);
 			RetHotWord _rethw = new RetHotWord();
-			if (hotWord.getAttitude() == Attitude.NEUTRAL)
+			if (hotWord.getAttitude() == Attitude.NEUTRAL)//中性
 				_rethw.setCategory(0);
-			else if (hotWord.getAttitude() == Attitude.DEROGATORY)
+			else if (hotWord.getAttitude() == Attitude.DEROGATORY)//贬义
 				_rethw.setCategory(2);
-			else if (hotWord.getAttitude() == Attitude.PRAISE)
+			else if (hotWord.getAttitude() == Attitude.PRAISE)//表扬
 				_rethw.setCategory(1);
+			
 			_rethw.setIndex(i);
+			//System.out.println(i+"--->"+hotWord.getContent());
+			
+			//判断是否敏感词
 			if (hotWord.isSensitiveWords())
 				_rethw.setLabel(1);
 			else
 				_rethw.setLabel(0);
+			
 			_rethw.setName(hotWord.getContent());
 			_rethw.setValue(hotWord.getWeight());
 			retHotWordsList.add(_rethw);
@@ -67,12 +76,25 @@ public class HotWordDiscoveryAnalyse {
 		this.retHotWords = retHotWordsList;
 		return hotwords;
 	}
-
+    
+	/**
+	 * 
+	 * 解释 zhouzhifeng
+	 * 
+	 * 将startDate->endDate内的所有新闻通过中文分词分词后
+	 * 得到每个部分的倾向的词
+	 *
+	 * @param startDateStr
+	 * @param endDateStr
+	 * @return
+	 */
 	public List<TDArticle> getArticlesBetweenDate(String startDateStr,
-			String endDateStr) {
+			String endDateStr) 
+	{
 		// 根据起止时间获取数据库中的新闻文本
 		NewsDAO nd = new NewsDAO();
 		long start = System.currentTimeMillis();
+		//找出这段时间的新闻
 		List<News> newsList = nd.findBetweenDate(startDateStr, endDateStr);
 		long end = System.currentTimeMillis();
 		ConsoleLog.PrintInfo(HotWordDiscoveryAnalyse.class, "从数据库中取出"
@@ -81,29 +103,43 @@ public class HotWordDiscoveryAnalyse {
 		// 作分词，过滤预处理
 		List<TDArticle> tdArticleList = new ArrayList<TDArticle>();
 		TermsGenerator generateTerms = new TermsGenerator();
-		for (News news : newsList) {
+		
+	
+		
+		for (News news : newsList)
+		{
 			TDArticle tmpArt = new TDArticle();
+			
+			//TDArticleTerm文章上倾向性词语。
 			List<TDArticleTerm> tmpTDArtTerms = new ArrayList<TDArticleTerm>();
-
+ 
+			//获取文章的内容的所有分词
 			List<Term> tmpTermList_allcontent = generateTerms.getTerms(news
 					.getAllContent());
+			//获取新闻关键词
 			List<Term> tmpTermList_keyword = generateTerms.getTerms(news
 					.getKeyWords());
+			//获取新闻题目的分词
 			List<Term> tmpTermList_title = generateTerms.getTerms(news
 					.getTitle());
-			for (Term term : tmpTermList_allcontent) {
+			for (Term term : tmpTermList_allcontent) 
+			{
 				TDArticleTerm tmpArtTerm = new TDArticleTerm();
 				tmpArtTerm.setposition(TDPosition.BODY);
 				tmpArtTerm.setvalue(term.word);
 				tmpTDArtTerms.add(tmpArtTerm);
 			}
-			for (Term term : tmpTermList_keyword) {
+			
+			for (Term term : tmpTermList_keyword) 
+			{
 				TDArticleTerm tmpArtTerm = new TDArticleTerm();
 				tmpArtTerm.setposition(TDPosition.META);
 				tmpArtTerm.setvalue(term.word);
 				tmpTDArtTerms.add(tmpArtTerm);
 			}
-			for (Term term : tmpTermList_title) {
+			
+			for (Term term : tmpTermList_title) 
+			{
 				TDArticleTerm tmpArtTerm = new TDArticleTerm();
 				tmpArtTerm.setposition(TDPosition.TITLE);
 				tmpArtTerm.setvalue(term.word);

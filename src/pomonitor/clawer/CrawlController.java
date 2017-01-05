@@ -24,7 +24,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class CrawlController {
+public class CrawlController 
+{
 
 	/**
 	 * 自定义的，用于存放爬取下来的实体对象
@@ -72,7 +73,8 @@ public class CrawlController {
 	 * 
 	 * /** Wait until this crawling session finishes.
 	 */
-	public void waitUntilFinish() {
+	public void waitUntilFinish()
+	{
 		// 如果没有完成，就一直等，如果完成，就退出向下执行
 		while (!finished) {
 			synchronized (waitingLock) {
@@ -89,8 +91,10 @@ public class CrawlController {
 	}
 
 	// 进程空挡函数
-	protected static void sleep(int seconds) {
-		try {
+	protected static void sleep(int seconds)
+	{
+		try 
+		{
 			Thread.sleep(seconds * 1000);
 		} catch (Exception ignored) {
 			// Do nothing

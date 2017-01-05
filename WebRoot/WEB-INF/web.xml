@@ -63,9 +63,11 @@
     </context-param>
 
     <!-- 用于启动爬虫服务的Listener -->
-    <!--  <listener>
+   <!--
+    <listener>
         <listener-class>pomonitor.listener.ClawerService</listener-class>
-    </listener>-->
+    </listener>
+    -->
 
     <!-- 用于启动文章倾向性分析服务的Listener -->
 <!--      

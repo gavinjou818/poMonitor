@@ -196,7 +196,8 @@ public class NewsTendDAO implements INewsTendDAO {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<NewsTend> findBetweenDate(String startDateStr, String endDateStr) {
+	public List<NewsTend> findBetweenDate(String startDateStr, String endDateStr) 
+	{
 		try {
 			// final String queryString =
 			// "select model from NewsTend model where (model.date between "

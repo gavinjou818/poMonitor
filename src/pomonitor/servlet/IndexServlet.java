@@ -66,12 +66,13 @@ public class IndexServlet extends HttpServlet
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		String startTime = request.getParameter("startTime");
 		String endTime = request.getParameter("endTime");
 		String method = request.getParameter("method");
 		String resJSON = "";
 		
-		System.out.println("----------->"+method);
+		
 		switch (method) 
 		{
 		case "getTendency":
@@ -94,14 +95,28 @@ public class IndexServlet extends HttpServlet
 			break;
 			
 		case "getLatestMessage":
-			try {
-				System.out.println("****");
+			try 
+			{
+				System.out.println("new****");
 				resJSON = getLatestMessage();
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			break;
+		case "getAllMessage_Briefing":
+			//zhouzhifeng
+			try
+			{
+				     int max=Integer.parseInt(request.getParameter("max"));//获取显示条数
+				     int index=Integer.parseInt(request.getParameter("index"));//当前第几页，开头为0
+		             System.out.println("getAllMessage_Briefing***");
+				resJSON=getAllMessage_Briefing(startTime, endTime, max, index);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+  			break;
 		default:
 			break;
 		}
@@ -122,7 +137,8 @@ public class IndexServlet extends HttpServlet
 	}
 
 	private String getTendency(String startTime, String endTime)
-			throws ParseException {
+			throws ParseException 
+	{
 		Summarize summarize = new Summarize();
 		return summarize.getTendency(startTime, endTime);
 	}
@@ -135,5 +151,22 @@ public class IndexServlet extends HttpServlet
 		Summarize summarize = new Summarize();
 		return summarize.getLatestMessage();
 		
+	}
+	
+	/**
+	 * 该方法主要用于获取news和newstend的联结关系的数据库表
+	 * 对应MGYQ.jsp的今日舆情,提供了一个显示接口,
+	 * @author zhouzhifeng
+	 * @param startTime  开始时间
+	 * @param endTime    结束时间
+	 * @param max        每页的数量
+	 * @param index      开始的索引=(每页的数量*当前是第几页) 索引是从0开始的。
+	 * @return
+	 * @throws Exception
+	 */
+	private String  getAllMessage_Briefing(String startTime,String endTime,int max, int index) throws Exception 
+	{
+		Summarize summarize = new Summarize();
+		return summarize.getAllMessage_Briefing(startTime,endTime,max,index);
 	}
 }

@@ -16,9 +16,11 @@ import javax.persistence.Query;
  * @author MyEclipse Persistence Tools
  */
 /*   
- *  zhouzhifeng
+ *  zhouzhifeng 注释
  *  2016年12月2日
  *  设置导入接口,帮助获取实体类
+ *  
+ *  涉及JPQL查询语句和DAO层
  */
 public class NewsDAO implements INewsDAO {
 	// property constants 
@@ -160,7 +162,8 @@ public class NewsDAO implements INewsDAO {
 	 * @return List<News> found by query
 	 */
 	@SuppressWarnings("unchecked")
-	public List<News> findByProperty(String propertyName, final Object value) {
+	public List<News> findByProperty(String propertyName, final Object value) 
+	{
 		EntityManagerHelper.log("finding News instance with property: "
 				+ propertyName + ", value: " + value, Level.INFO, null);
 		try {
@@ -234,10 +237,12 @@ public class NewsDAO implements INewsDAO {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<News> findBetweenDate(String startDateStr, String endDateStr) {
+	public List<News> findBetweenDate(String startDateStr, String endDateStr) 
+	{
 		try {
 			final String queryString = "select model from News model where (model.time between "
-					+ "'" + startDateStr + "' and '" + endDateStr + "')";
+					+ "'" + startDateStr + "' and '" + endDateStr + "') order by model.time desc";//JPQL语句
+			System.out.println(queryString);
 			Query query = getEntityManager().createQuery(queryString);
 			// query.setParameter("startDateStr", startDateStr);
 			// query.setParameter("endDateStr", endDateStr);

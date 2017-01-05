@@ -22,7 +22,8 @@ import javax.persistence.Query;
  */
 
 //用于创建EntityManager并进行增删查改
-public class EntityManagerHelper {
+public class EntityManagerHelper 
+{
 
 	private static final EntityManagerFactory emf;//JPA 实体管理器工厂
 	private static final ThreadLocal<EntityManager> threadLocal;

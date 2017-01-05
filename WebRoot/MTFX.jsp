@@ -1,14 +1,27 @@
-<!doctype html>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-<head>
-    <meta charset="utf-8">
+  <head>
+    <base href="<%=basePath%>">
+    
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
     <title>南华大学核电舆情系统</title>
 
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css"  />
     <link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css"  />
     <script src="js/jquery-3.1.1.js"></script>
-    <script type="text/javascript" src="./js/YQCHART.js"></script>
     <script src="js/echarts.js" ></script>
+    <script type="text/javascript" src="./js/YQCHART.js"></script>
+    
 
     <script src="js/bootstrap.js" ></script>
     <script src="js/d3.js"></script>
@@ -82,24 +95,24 @@
     </div>
 
     <div id="leftbarBody">
-        <div id="leftbarBody_Menu">
-            <div class="Menu_fa"><a href="SY.html" class="Menu">首页</a></div>
-            <div class="Menu_fa" id="flip1" ><img src="./image/right.png" style="width: 20px;height: 20px"><span class="Menu">舆情分析</span></div>
-            <div id="Menu_panel1">
-                <div class="Menu_fa"><a href="MTFX.html" class="Menu_son" >媒体分析</a></div>
-                <div class="Menu_fa"><a href="QGFX.html" class="Menu_son" >情感分析</a></div>
-                <div class="Menu_fa"><a href="YQYJ.html" class="Menu_son" >舆情预警</a></div>
-            </div>
-            <div class="Menu_fa"><a href="#" class="Menu">伪舆情分析</a></div>
+             <div id="leftbarBody_Menu">
+                 <div class="Menu_fa"><a href="SY.jsp" class="Menu">首页</a></div>
+                 <div class="Menu_fa" id="flip1" ><img src="./image/right.png" style="width: 20px;height: 20px"><span class="Menu">舆情分析</span></div>
+                 <div id="Menu_panel1">
+                     <div class="Menu_fa"><a href="MTFX.jsp" class="Menu_son" >媒体分析</a></div>
+                     <div class="Menu_fa"><a href="QGFX.jsp" class="Menu_son" >情感分析</a></div>
+                     <div class="Menu_fa"><a href="YQYJ.jsp" class="Menu_son" >舆情预警</a></div>
+                 </div>
+                 <div class="Menu_fa"><a href="#" class="Menu">伪舆情分析</a></div>
 
-            <div class="Menu_fa" id="flip2" ><img src="./image/right.png" style="width:20px;height: 20px"><span class="Menu">舆情报表</span></div>
-            <div id="Menu_panel2">
-                <div class="Menu_fa"><a href="TP.html" class="Menu_son" >时间报表</a></div>
-                <div class="Menu_fa"><a href="SP.html" class="Menu_son" >事件报表</a></div>
-            </div>
+                 <div class="Menu_fa" id="flip2" ><img src="./image/right.png" style="width:20px;height: 20px"><span class="Menu">舆情报表</span></div>
+                 <div id="Menu_panel2">
+                     <div class="Menu_fa"><a href="TP.jsp" class="Menu_son" >时间报表</a></div>
+                     <div class="Menu_fa"><a href="SP.jsp" class="Menu_son" >事件报表</a></div>
+                 </div>
 
-        </div>
-    </div>
+             </div>
+     </div>
     <div style="text-align: right"><img src="./image/barleft.png" style="width: 25px;height:25px;cursor: pointer;" title="收缩左边栏" onclick="changeBar()"></div>
     <div style="clear: both"></div>
 
@@ -107,11 +120,11 @@
 
 <div id="Catalog">
     <div style="text-align: left"><img src="./image/barleft.png" style="width: 25px;height:25px;cursor: pointer;" title="时间设置显示" onclick="changeCatalog()"></div>
-    <div><a class="smoothScroll" href="#head1" title="媒体来源情况">媒体来源情况</a></div>
-    <div><a class="smoothScroll" href="#head2" title="信息来源类型">信息来源类型</a></div>
-    <div><a class="smoothScroll" href="#head3" title="媒体活跃度">媒体活跃度</a></div>
-    <div><a class="smoothScroll" href="#head4" title="热点关系图">热点关系图</a></div>
-    <div><a class="smoothScroll" href="#head5" title="传播路径图">传播路径图</a></div>
+    <div><a class="smoothScroll" href="<%=basePath%>MTFX.jsp#head1" title="媒体来源情况">媒体来源情况</a></div>
+    <div><a class="smoothScroll" href="<%=basePath%>MTFX.jsp#head2" title="信息来源类型">信息来源类型</a></div>
+    <div><a class="smoothScroll" href="<%=basePath%>MTFX.jsp#head3" title="媒体活跃度">媒体活跃度</a></div>
+    <div><a class="smoothScroll" href="<%=basePath%>MTFX.jsp#head4" title="热点关系图">热点关系图</a></div>
+    <div><a class="smoothScroll" href="<%=basePath%>MTFX.jsp#head5" title="传播路径图">传播路径图</a></div>
 </div>
 <!--右边标题-->
 <div id="cansetTime">
@@ -134,7 +147,6 @@
     <!--主体-->
     <div class="container" >
         <div class="row">
-
 
 
             <div class="Ancestor" id="head1">
@@ -230,8 +242,6 @@
 <!--foot-->
 
 
-
-<!--媒体来源-->
 <script type="text/javascript">
     $(document).ready(function()
     {

@@ -12,7 +12,8 @@ import com.hankcs.hanlp.seg.common.Term;
  * 
  * @author luoxu 2015年12月15日 下午1:44:49 去杂
  */
-public class KeywordExtractor {
+public class KeywordExtractor 
+{
 	/**
 	 * 是否应当将这个term纳入计算，词性属于名词n、动词v、副词d、形容词a
 	 * 
@@ -22,8 +23,12 @@ public class KeywordExtractor {
 	public boolean shouldInclude(Term term) {
 		// 除掉停用词
 		if (term.nature == null)
+		{
+			
 			return false;
+		}
 		String nature = term.nature.toString();
+		//System.out.println("--->"+term.word+"  "+nature);
 		char firstChar = nature.charAt(0);
 		switch (firstChar) {
 		case 'm':
@@ -44,7 +49,8 @@ public class KeywordExtractor {
 		case 'g':
 		case 'h':
 		case 'k':
-		case 'f': {
+		case 'f': 
+		{
 			return false;
 		}
 		default: {
@@ -58,17 +64,25 @@ public class KeywordExtractor {
 		return false;
 	}
 
-	public List<Term> wipeoffWords(List<Term> termList) {
+	public List<Term> wipeoffWords(List<Term> termList) 
+	{    
+		
+		//遍历分词之后的所有单元
 		Iterator<Term> iter = termList.iterator();
-		while (iter.hasNext()) {
+		while (iter.hasNext()) 
+		{
 			Term term = iter.next();
 			Pattern p = Pattern.compile("^[0-9]*$");
 			Matcher m = p.matcher(term.word);
-			if (m.matches() == true) {
+			
+			//将匹配的所有数字取消了
+			if (m.matches() == true) 
+			{   
 				iter.remove();
 				continue;
 			}
-			if (!shouldInclude(term)) {
+			if (!shouldInclude(term))
+			{
 				iter.remove();
 			}
 		}

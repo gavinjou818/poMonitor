@@ -1,8 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
 <head>
-    <meta charset="UTF-8">
+    <base href="<%=basePath%>">
+    
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	
     <title>南华大学舆情核电系统</title>
+    
     <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="./css/index.css">
     <script type="text/javascript" src="./js/jquery-3.1.1.js"></script>
@@ -38,7 +53,7 @@
             <div id="Notice">
                 <div id="Noticetitle"><img src="./image/noticetitle.PNG"></div>
             </div>
-            <a href="SY.html"><img src="./image/title.PNG" /></a>
+            <a href="SY.jsp"><img src="./image/title.PNG" /></a>
         </div>
 
         <div id="Login_Center" role="form">

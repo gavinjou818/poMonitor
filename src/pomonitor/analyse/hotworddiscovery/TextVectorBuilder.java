@@ -19,7 +19,8 @@ import pomonitor.util.PropertiesReader;
  * @author caihengyi 2015年12月14日 下午5:26:03
  */
 
-public class TextVectorBuilder {
+public class TextVectorBuilder 
+{
 
 	// 新闻文本集合
 	public List<TDArticle> globalArticleList;
@@ -39,7 +40,8 @@ public class TextVectorBuilder {
 	/**
 	 * 初始化参数信息
 	 */
-	public TextVectorBuilder() {
+	public TextVectorBuilder() 
+	{
 		PropertiesReader propertiesReader = new PropertiesReader();
 		BODY_WEIGHT = Double.parseDouble(propertiesReader
 				.getPropertyByName("BODY_WEIGHT"));
@@ -58,12 +60,15 @@ public class TextVectorBuilder {
 	 * @param globalFeatureCollections
 	 * @return
 	 */
-	public List<TDArticle> buildVectors(List<TDArticle> topicDisArticleList) {
+	public List<TDArticle> buildVectors(List<TDArticle> topicDisArticleList) 
+	{
 		globalArticleList = topicDisArticleList;
 		//初始化所有的idf值
 		findInverseDocumentFrequency();
+		
 		// 生成每篇文章所有词项的权重信息
-		for (TDArticle article : globalArticleList) {
+		for (TDArticle article : globalArticleList) 
+		{
 			Map<String, Double> map = new HashMap<String, Double>();
 			for (TDArticleTerm _term : article.getArticleAllTerms()) {
 				map.put(_term.getvalue(), getWeight(article, _term));
@@ -86,7 +91,8 @@ public class TextVectorBuilder {
 	 * @return TDArticle
 	 */
 
-	private TDArticle buildArticleVector(TDArticle article) {
+	private TDArticle buildArticleVector(TDArticle article)
+	{
 		TDArticle resTdArticle = article;
 		double[] vec = new double[globalFeatureCollections.size()];
 		double sumVal = 0, avgVal = 0, maxVal, minVal;
@@ -167,12 +173,16 @@ public class TextVectorBuilder {
 	 * @param term
 	 * @return
 	 */
-	private void findInverseDocumentFrequency() {
+	private void findInverseDocumentFrequency() 
+	{
 		this.globalIdf=new HashMap<String, Double>();
-		for (TDArticle article : globalArticleList) {
+		for (TDArticle article : globalArticleList) 
+		{
 			Map<String, Double> tempIdf=new HashMap<String, Double>();
+			
 			for(TDArticleTerm td:article.getArticleAllTerms())
-				if(tempIdf.containsKey(td.getvalue())==false){
+				if(tempIdf.containsKey(td.getvalue())==false)
+				{
 					double count=0.0;
 					if(this.globalIdf.get(td.getvalue())!=null)
 						count=this.globalIdf.get(td.getvalue());
@@ -180,9 +190,9 @@ public class TextVectorBuilder {
 					tempIdf.put(td.getvalue(), 1.0);
 				}
 		}
-		for(Map.Entry<String, Double> m:globalIdf.entrySet()){
-			this.globalIdf.put(m.getKey(),Math.log((globalArticleList.size()) 
-					/ (m.getValue() + 0.001)));
+		for(Map.Entry<String, Double> m:globalIdf.entrySet())
+		{
+			this.globalIdf.put(m.getKey(),Math.log((globalArticleList.size()) / (m.getValue() + 0.001)));
 		}
 		return ;
 	}
@@ -194,7 +204,8 @@ public class TextVectorBuilder {
 	 * @param percentage
 	 * @return 总特征集合，其长度即为向量长度
 	 */
-	private List<String> getFeatureSet() {
+	private List<String> getFeatureSet() 
+	{
 		List<String> tmpGlobalFeatureCollections = new ArrayList<String>();
 
 		for (TDArticle article : globalArticleList) {

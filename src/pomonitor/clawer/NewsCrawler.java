@@ -10,7 +10,8 @@ import pomonitor.clawer.newsanalyse.Ianalyse;
 import pomonitor.entity.NewsEntity;
 import pomonitor.util.MD5Util;
 
-public class NewsCrawler implements ICrawler {
+public class NewsCrawler implements ICrawler 
+{
 
 	// 用于存放新闻的map
 	private Map<String, NewsEntity> newsMap;
@@ -25,7 +26,8 @@ public class NewsCrawler implements ICrawler {
 
 	private Frontier frontier;
 
-	public NewsCrawler(String fileStore) {
+	public NewsCrawler(String fileStore) 
+	{
 		newsMap = new HashMap<String, NewsEntity>();
 		analyseList = new ArrayList<Ianalyse>();
 		this.fileStore = fileStore;
@@ -36,13 +38,15 @@ public class NewsCrawler implements ICrawler {
 	}
 
 	@Override
-	public void addAnalyse(Ianalyse analyse) {
+	public void addAnalyse(Ianalyse analyse)
+	{
 		System.out.println("已添加分析器的网站名：" + analyse.getAnalyseWebName());
 		analyseList.add(analyse);
 	}
 
 	@Override
-	public void clawerAll(String keyWords, boolean isLatest) {
+	public void clawerAll(String keyWords, boolean isLatest)
+	{
 		for (Ianalyse analyse : analyseList) {
 			try {
 				clawerOneWeb(analyse, keyWords, isLatest);
@@ -54,7 +58,8 @@ public class NewsCrawler implements ICrawler {
 	}
 
 	@Override
-	public void clawerOneWeb(Ianalyse analyse, String keyWords, boolean isLatest) {
+	public void clawerOneWeb(Ianalyse analyse, String keyWords, boolean isLatest) 
+	{
 		HashMap map = analyse.analyseAllPage(keyWords, isLatest);
 		String urlPath = fileStore + analyse.getAnalyseWebName() + "/";
 		// this.controller= new CrawlController(urlPath);
@@ -67,12 +72,14 @@ public class NewsCrawler implements ICrawler {
 		// controller.start(Crawl.class, 5,true);
 	}
 
-	public void start(int crawlCount) {
+	public void start(int crawlCount)
+	{
 		System.out.println("正式开始爬取");
 		controller.start(DbSaveCrawl.class, crawlCount, true);
 	}
 
-	private ArrayList change(HashMap<String, Object> map) {
+	private ArrayList change(HashMap<String, Object> map) 
+	{
 
 		ArrayList<NewsEntity> list = new ArrayList<>();
 		// 装载url

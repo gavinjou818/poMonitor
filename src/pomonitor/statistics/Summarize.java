@@ -7,10 +7,21 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TemporalType;
+import javax.persistence.criteria.From;
+
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 
 import com.alibaba.fastjson.JSON;
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 import pomonitor.analyse.ArticleTendAnalyse;
+import pomonitor.briefing.gAM_Result;
 import pomonitor.entity.EntityManagerHelper;
 import pomonitor.entity.News;
 import pomonitor.entity.NewsDAO;
@@ -19,11 +30,14 @@ import pomonitor.entity.NewsTendDAO;
 
 public class Summarize 
 {
-	public String getTendency(String startTime, String endTime)
-			throws ParseException {
-		class Series {
-			public Series(List<Date> dates, HashMap<Date, Integer> allNews,
-					HashMap<Date, Integer> negNews) {
+	public String getTendency(String startTime, String endTime)throws ParseException 
+	{   
+		
+	   
+		class Series 
+		{
+			public Series(List<Date> dates, HashMap<Date, Integer> allNews,HashMap<Date, Integer> negNews) 
+			{
 				all = new ArrayList<>();
 				neg = new ArrayList<>();
 				for (int i = 0; i < dates.size(); i++) {
@@ -37,7 +51,8 @@ public class Summarize
 			public ArrayList<Integer> all;
 		}
 
-		class JSONData {
+		class JSONData 
+		{
 			public Series series;
 			public String message;
 			public int status;
@@ -49,11 +64,15 @@ public class Summarize
 			}
 
 		}
+		
 		NewsTendDAO newsTendDAO = new NewsTendDAO();
 		List<NewsTend> newsTends = new ArrayList<>();
 		EntityManagerHelper.beginTransaction();
 		newsTends = newsTendDAO.findBetweenDate(startTime, endTime);
+		
 		EntityManagerHelper.commit();
+		EntityManagerHelper.closeEntityManager();//zhouzhifeng 加的，完成事务必须关闭
+		
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date start = simpleDateFormat.parse(startTime);
 		Date end = simpleDateFormat.parse(endTime);
@@ -61,21 +80,28 @@ public class Summarize
 		List<Date> dates = new ArrayList<>();
 		HashMap<Date, Integer> allNews = new HashMap<>();
 		HashMap<Date, Integer> negNews = new HashMap<>();
-		while (start.getTime() <= end.getTime()) {
+		while (start.getTime() <= end.getTime())
+		{   
+			
+			
+			//System.out.println("------>time:"+start.getTime());
 			allNews.put(start, 0);
 			negNews.put(start, 0);
 			dates.add(start);
 			calendar.setTime(start);
 			calendar.add(Calendar.DAY_OF_YEAR, 1);
+			//System.out.println("------>time:"+calendar.get(Calendar.YEAR)+" "+calendar.get(Calendar.MONTH)+" "+calendar.get(Calendar.DAY_OF_MONTH));
 			start = calendar.getTime();
 		}
-		for (int i = 0; i < newsTends.size(); i++) {
+		for (int i = 0; i < newsTends.size(); i++) 
+		{
 			Date date = newsTends.get(i).getDate();
 			int allNewsKey = allNews.get(date);
 			allNewsKey++;
 			allNews.put(date, allNewsKey);
 			int tend = newsTends.get(i).getTendclass();
-			if (tend < 0) {
+			if (tend < 0) 
+			{
 				int negNewsKey = negNews.get(date);
 				negNewsKey++;
 				negNews.put(date, negNewsKey);
@@ -87,13 +113,16 @@ public class Summarize
 		return JSON.toJSONString(json);
 	}
 
-	public String checkStatus() throws ParseException {
-		class NewsTendencyClassifyByWeb {
+	public String checkStatus() throws ParseException 
+	{
+		class NewsTendencyClassifyByWeb 
+		{
 			public List<Integer> totalNum;
 			public List<Integer> negativeNum;
 			public List<String> websiteName;
 
-			public NewsTendencyClassifyByWeb(List<NewsTend> newsTendLists) {
+			public NewsTendencyClassifyByWeb(List<NewsTend> newsTendLists) 
+			{
 				totalNum = new ArrayList<>();
 				negativeNum = new ArrayList<>();
 				websiteName = new ArrayList<>();
@@ -141,13 +170,15 @@ public class Summarize
 	 * 最新舆情
 	 * @return
 	 */
-	public String getLatestMessage() throws ParseException {
-		
+	public String getLatestMessage() throws ParseException 
+	{
+		 
+		final int limit=13;//限制获取条数
 		class Result {
 			
 			public String date;//日期，示例：今日，昨日
 			public String source;//来源
-			public String time;//日期，格式：yy-MM-dd
+			public String time;//日期，格式：yyyy-MM-dd
 			public String title;//标题
 			public String url;//网址
 			
@@ -168,7 +199,9 @@ public class Summarize
 	    Calendar cal = Calendar.getInstance(); 
 	    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	    String nowday = simpleDateFormat.format(cal.getTime());
+	    
 	    cal.add(Calendar.DAY_OF_MONTH, -1);
+	    
 	    String yesterday = simpleDateFormat.format(cal.getTime());
 	    
 		NewsDAO newsDAO = new NewsDAO();
@@ -177,8 +210,10 @@ public class Summarize
 		
 		newsList = newsDAO.findBetweenDate("2015-1-1", nowday);
 		EntityManagerHelper.commit();
+		EntityManagerHelper.closeEntityManager();//zhouzhifeng 加的，完成事务必须关闭
 		
-		Result[] results = new Result[5];
+		
+		Result[] results = new Result[limit];
 		
 	    String date = "";
 		String source = "";
@@ -188,15 +223,18 @@ public class Summarize
 		
 		int count = 0;
 		//优先把当天的新闻提取出来
-		for(int i=0, j=0; i<newsList.size() && j<5; i++) 
+		for(int i=0, j=0; i<newsList.size() && j<limit; i++) 
 		{
 			News news = newsList.get(i);
 			Date newsdate = news.getTime();
+			
+		    
 			String dateString = simpleDateFormat.format(newsdate);
+			//System.out.println("========= date"+dateString);
 			if(dateString.equals(nowday)) {
 				date = "今日";
 				source = news.getWeb();
-				SimpleDateFormat sDateFormat = new SimpleDateFormat("yy-MM-dd");
+				SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 				time = sDateFormat.format(newsdate);
 				title = news.getTitle();
 				url = news.getUrl();
@@ -206,15 +244,16 @@ public class Summarize
 		}
 		
 		//若当天的新闻不足五条，再从前一天的新闻中提取
-		if(count < 5) {
-			for(int i=0, j=count; i<newsList.size() && j<5; i++) {
+		if(count < limit) 
+		{
+			for(int i=0, j=count; i<newsList.size() && j<limit; i++) {
 				News news = newsList.get(i);
 				Date newsdate = news.getTime();
 				String dateString = simpleDateFormat.format(newsdate);
 				//if(dateString.equals(yesterday)) {
 					date = "昨日";
 					source = news.getWeb();
-					SimpleDateFormat sDateFormat = new SimpleDateFormat("yy-MM-dd");
+					SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 					time = sDateFormat.format(newsdate);
 					title = news.getTitle();
 					url = news.getUrl();
@@ -223,7 +262,96 @@ public class Summarize
 			}
 		}
 		System.out.println("!!!!"+JSON.toJSONString(results));
+		
 		return JSON.toJSONString(results);
 	}
+	
+	
+    /**
+     * 	 @author zhouzhifeng
+	 *  
+	 *   目的:用来存储报表，待别人选择词条，然后存去session中,然后选择对应词条之后,
+	 *   生成报表，报表会显示对应的词条。
+	 *   待改进:这样的处理方法可能很慢,最好预先缓存。
+	 *   
+     * @param startTime  开始时间
+     * @param endTime    结束时间
+     * @param max        每页多少条数据
+     * @param index      第几页.
+     * @return
+     * @throws Exception
+     */
+	
+	@SuppressWarnings("unchecked")
+	public String getAllMessage_Briefing(String startTime, String endTime,int max,int index) throws Exception 
+	{
+		   
+		
+		class JSONData 
+		{
+			public int sum;//在这个时间段内的总数据条数
+			public int now;//当前有多少条返回
+			public List<gAM_Result> gAM_Result_Briefings;//获取的词条的结果集,对应网页位置
+		
+			
+			public JSONData(int sum,int now,List<gAM_Result> gAM_Result_Briefings) 
+			{
+				 this.sum=sum;
+			     this.gAM_Result_Briefings=gAM_Result_Briefings;
+			     this.now=now;
+			}
+		}
+		
+		 
+		  //获取实体管理者
+		  EntityManager  entityManager=EntityManagerHelper.getEntityManager();
+		  
+		  //JPQL语句,获取数据库表新闻类和新闻倾向类的联合关系中的信息。
+		  final String queryString ="SELECT new pomonitor.briefing.gAM_Result(n.relId,n.title,n.content,n.web,nt.tendclass,nt.date) as t "
+				  +" from News n JOIN NewsTend nt where (n.relId = nt.newsId and (n.time between ?1 and ?2))";
+          //创建查询
+		  Query query = entityManager.createQuery(queryString);
+		  
+		  //格式化时间
+		  Date startDate = null;
+	      Date endDate = null;
+	      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		   try 
+		    {
+				startDate = sdf.parse(startTime);
+				endDate = sdf.parse(endTime);
+			} 
+		   catch (ParseException e) 
+			{
+				e.printStackTrace();
+			}
+		   
+		  //设置对应位置的参数 
+	      query.setParameter(1, startDate, TemporalType.DATE);
+		  query.setParameter(2, endDate, TemporalType.DATE);
+		  //先获取全部数据,得到总条数。
+		  int sum=query.getResultList().size();
+		  //获取分页后的数据。
+		  List<gAM_Result> gAM_Result_Briefings=query.setMaxResults(max).setFirstResult(index).getResultList();
+		  //多少有多少数据返回
+		  int now=gAM_Result_Briefings.size();
+		  //用JSON往前台输出。
+		  JSONData jsonData=new JSONData(sum,now,gAM_Result_Briefings);
+		  //关闭实体管理者
+		  entityManager.close();
+		  
+		
+		  
+		  //返回json
+		  return JSON.toJSONString(jsonData);
+		  
+	}
+	
+
+	
+	
+	
+	
+	
 
 }

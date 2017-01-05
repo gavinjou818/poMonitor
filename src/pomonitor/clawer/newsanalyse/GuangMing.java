@@ -109,7 +109,8 @@ public class GuangMing extends BaseAnalyse {
 			// Elements listEle= doc.getElementsByAttributeValue("class",
 			// "r-info r-info2");
 			// 遍历每一天
-			for (Element e : listEle) {
+			for (Element e : listEle) 
+			{
 				NewsEntity GuangMingEntity = new NewsEntity();
 				Node h2Node = e.childNode(1);
 				Node aNode = h2Node.childNode(1);
