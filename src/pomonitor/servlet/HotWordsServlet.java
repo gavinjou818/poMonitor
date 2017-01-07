@@ -70,9 +70,15 @@ public class HotWordsServlet extends HttpServlet {
 		ArrayList<RetHotWord> retNodes = tdDiscovery.getRetHotWords();
 		double[][] relevanceMat = tdDiscovery.getRelevanceMat();
 		
+		//@zhouzhifeng 当数据都是0的时候这些地方都会报错,所以我加了一条语句让他不执行了。
+		if(relevanceMat==null) return"{\"message\":\"失败\"}";
+		
+		
+		
 		ArrayList<RetLink> retLinks = new ArrayList<RetLink>();
 		//处理好热词关系，然后再化成json格式
-		for (int i = 0; i < relevanceMat.length; i++) {
+		for (int i = 0; i < relevanceMat.length; i++) 
+		{
 			for (int j = i + 1; j < relevanceMat.length; j++) {
 
 				if (relevanceMat[i][j] < 0.25)

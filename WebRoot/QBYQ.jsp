@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
@@ -18,7 +19,7 @@
 <meta http-equiv="description" content="This is my page">
 
 <title>南华大学核电舆情系统</title>
-<link href="css/MGYQ.css" rel="stylesheet" type="text/css" />
+<link href="css/QBYQ.css" rel="stylesheet" type="text/css" />
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
 
 <link rel="stylesheet" type="text/css" href="./css/master.css">
@@ -37,8 +38,10 @@
 	float: right;
 }
 
-.tab-content {
-	height: 800px;
+
+
+.pagination {
+	margin: 0px !important;
 }
 </style>
 
@@ -52,6 +55,8 @@
 <script type="text/javascript">
 	var IMGroot = [ "image/nev.png", "image/cen.png", "image/pos.png" ];
 	var images = new Array();
+	var startTime;
+	var endTime;
 	function preload() {
 		for (var i = 0; i < IMGroot.length; i++) {
 			images[i] = new Image();
@@ -61,9 +66,28 @@
 			images[i].setAttribute("class", "Right");
 		}
 
-		initData(1, './servlet/IndexServlet', 'jryq');
-		initData(1, 'json/MGYQ.json', 'mgyq');
-		initData(1, 'json/MGYQ.json', 'fmgyq');
+		
+		
+		<%if (session.getAttribute("startTime") == null) {
+				Calendar cal = Calendar.getInstance();
+				Date date = cal.getTime();
+				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+				session.setAttribute("startTime", sf.format(date));
+			}
+
+			if (session.getAttribute("endTime") == null) {
+
+				Calendar cal = Calendar.getInstance();
+				Date date = cal.getTime();
+				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+				session.setAttribute("endTime", sf.format(date));
+			}%>
+	  
+        startTime=document.getElementById('startTime').value='<%=session.getAttribute("startTime")%>';
+        endTime=document.getElementById('endTime').value='<%=session.getAttribute("endTime")%>';
+         
+        initData(1, './servlet/IndexServlet', 'qbyq');
+       
 	}
 </script>
 <!--加载数据表-->
@@ -72,7 +96,7 @@
 	var barsum = 5;//最大条目数5;
 	var pagesum;//总共有的页数
 	var curpage = 1;//当前页
-
+    
 	function initData(start, dataroot, tparent) 
 	{
 
@@ -82,9 +106,15 @@
 					dataType : "json",
 					url : dataroot,
 					data : 
-					{
-						"startTime" : '2012-09-10',
+					{   
+					
+					    /*
+					               测试时间
+					    "startTime" : '2012-09-10',
 						"endTime" : '2017-01-10',
+					    */
+						"startTime" : startTime,
+						"endTime" : endTime,
 						"userId" : 1,
 						"method" : 'getAllMessage_Briefing',
 						"max" : barsum,
@@ -239,7 +269,6 @@
 
 					}
 				});
-
 	}
 </script>
 
@@ -311,85 +340,55 @@
 	    //提交表单
 	    temp.submit();
 	}
+	
+	 function setTimeOpera()
+     {
+                   
+                    var data=("startTime="+document.getElementById('startTime').value);
+                    data+=("&endTime="+document.getElementById('endTime').value);
+                    data+=("&method="+"setTimeInteraction");
+                    var xmlhttp;  
+                    if (window.XMLHttpRequest) 
+                    {   
+                        // code for IE7+, Firefox, Chrome, Opera, Safari  
+                        xmlhttp = new XMLHttpRequest();  
+                    }
+                    else 
+                    {   // code for IE6, IE5  
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");  
+                    }  
+                    xmlhttp.open("POST","<%=path%>/servlet/BasicInteractionServlet",true);  
+                    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");  
+                    xmlhttp.onreadystatechange = function() 
+                    {  
+                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+                        {  
+                            location.reload();
+                        }  
+                    };
+                    xmlhttp.send(data);  
+            
+       }
 </script>
 
 
 </head>
 <body onload="preload()">
 
-	<div id="leftbar">
-		<!--头像-->
-		<div id="leftbarHead">
-			<div style="text-align: right">
-				<img src="./image/timeright.png"
-					style="width: 25px;height:25px;cursor: pointer;" title="时间设置显示"
-					onclick="changeTIME()">
-			</div>
-
-			<div id="leftbarBottom">
-				<div id="jrzl" class="leftbarBottom_div">
-					<img src="./image/jrzl.PNG"><span class="Number">68754</span>
-				</div>
-				<div id="mg" class="leftbarBottom_div">
-					<img src="./image/mg.PNG"><span class="Number">230</span>
-				</div>
-				<div id="fmg" class="leftbarBottom_div">
-					<img src="./image/fmg.PNG"><span class="Number">66524</span>
-				</div>
-				<div id="mgbz" class="leftbarBottom_div">
-					<img src="./image/mgbz.PNG"><span class="Number">3.4%</span>
-				</div>
-			</div>
+	
+    <jsp:include page="master.jsp"  flush="true"/>
+    
+    <div id="cansetTime">
+		<div class="cansetTimeR">
+			<span>从</span><input type="date" id="startTime" name="startTime" />
 		</div>
-
-		<div id="leftbarBody">
-			<div id="leftbarBody_Menu">
-				<div class="Menu_fa">
-					<a href="SY.jsp" class="Menu">首页</a>
-				</div>
-				<div class="Menu_fa" id="flip1">
-					<img src="./image/right.png" style="width: 20px;height: 20px"><span
-						class="Menu">舆情分析</span>
-				</div>
-				<div id="Menu_panel1">
-					<div class="Menu_fa">
-						<a href="MTFX.jsp" class="Menu_son">媒体分析</a>
-					</div>
-					<div class="Menu_fa">
-						<a href="QGFX.jsp" class="Menu_son">情感分析</a>
-					</div>
-					<div class="Menu_fa">
-						<a href="YQYJ.jsp" class="Menu_son">舆情预警</a>
-					</div>
-				</div>
-				<div class="Menu_fa">
-					<a href="#" class="Menu">伪舆情分析</a>
-				</div>
-
-				<div class="Menu_fa" id="flip2">
-					<img src="./image/right.png" style="width:20px;height: 20px"><span
-						class="Menu">舆情报表</span>
-				</div>
-				<div id="Menu_panel2">
-					<div class="Menu_fa">
-						<a href="TP.jsp" class="Menu_son">时间报表</a>
-					</div>
-					<div class="Menu_fa">
-						<a href="SP.jsp" class="Menu_son">事件报表</a>
-					</div>
-				</div>
-
-			</div>
+		<div class="cansetTimeR">
+			<span>到</span><input type="date" id="endTime" name="endTime" />
 		</div>
-		<div style="text-align: right">
-			<img src="./image/barleft.png"
-				style="width: 25px;height:25px;cursor: pointer;" title="收缩左边栏"
-				onclick="changeBar()">
-		</div>
-		<div style="clear: both"></div>
-
+		<button type="button" class="btn btn-primary .btn-sm"
+			style="float: right;margin-right: 5px" onclick="setTimeOpera()">确定</button>
 	</div>
-
+	
 	<div id="Catalog">
 		<div style="text-align: left">
 			<img src="./image/barleft.png"
@@ -397,32 +396,14 @@
 				onclick="changeCatalog()">
 		</div>
 		<div>
-			<a class="smoothScroll" href="<%=basePath%>MGYQ.jsp#head1"
-				title="今日全部舆情">今日全部舆情</a>
+			<a class="smoothScroll" href="<%=basePath%>QBYQ.jsp#head1"
+				title="全部舆情">全部舆情</a>
 		</div>
-		<div>
-			<a class="smoothScroll" href="<%=basePath%>MGYQ.jsp#head2"
-				title="今日敏感舆情">今日敏感舆情</a>
-		</div>
-		<div>
-			<a class="smoothScroll" href="<%=basePath%>MGYQ.jsp#head3"
-				title="今日非敏感舆情">今日非敏感舆情</a>
-		</div>
+
 	</div>
-	<!--右边标题-->
-	<div id="cansetTime">
-		<div class="cansetTimeR">
-			<span>从</span><input type="date" id="starttime" name="starttime" />
-		</div>
-		<div class="cansetTimeR">
-			<span>到</span><input type="date" id="endtime" name="endtime" />
-		</div>
-		<button type="button" class="btn btn-primary .btn-sm"
-			style="float: right;margin-right: 5px">确定</button>
-	</div>
-	<div id="rightbar">
-		<img src="./image/nanhua_logo.png" />
-	</div>
+	
+	
+	
 	<div id="rightbody">
 		<!--主体-->
 		<div class="container">
@@ -431,20 +412,20 @@
 
                 <!-- 今日全部舆情 -->
 				<div class="Ancestor" id="head1">
-					<h1 class="h1Title">今日全部舆情</h1>
-
+					<h1 class="h1Title">全部舆情</h1>
+                    <h2 class="h2Title"><%=session.getAttribute("startTime")%> 到 <%=session.getAttribute("endTime")%></h2>
 					<div class="tab-content">
-						<div role="tabpanel" class="tab-pane active" id="jryq"
+						<div role="tabpanel" class="tab-pane active" id="qbyq"
 							style="padding-top:10px">
 							<div></div>
-
-							<ul class="pagination pagsize">
+                            
+							<ul class="pagination pagsize" style="margin-bottom: 50px">
 
 
 							</ul>
-							<div style="float: right">
+							<div style="float: right;margin-bottom: 50px" >
 								<button type="button" class="btn btn-default"
-									onclick="allseleck('jryq')">全选</button>
+									onclick="allseleck('qbyq')">全选</button>
 								<button type="button" class="btn btn-default">邮件发送</button>
 								<button type="button" class="btn btn-default" onclick="Post()">导出</button>
 							</div>
@@ -456,65 +437,11 @@
 				</div>
 
 
-				<div class="Ancestor" id="head2">
-					<h1 class="h1Title">今日敏感舆情</h1>
-
-					<div class="tab-content">
-						<div role="tabpanel" class="tab-pane active" id="mgyq"
-							style="padding-top:10px">
-							<div></div>
-
-							<ul class="pagination pagsize">
-
-
-							</ul>
-							<div style="float: right">
-								<button type="button" class="btn btn-default"
-									onclick="allseleck('mgyq')">全选</button>
-								<button type="button" class="btn btn-default">邮件发送</button>
-								<button type="button" class="btn btn-default" >导出</button>
-							</div>
-
-
-						</div>
-					</div>
-					<div style="clear: both"></div>
-				</div>
-
-
-				<div class="Ancestor" id="head3">
-					<h1 class="h1Title">今日非敏感舆情</h1>
-					<div class="tab-content">
-						<div role="tabpanel" class="tab-pane active" id="fmgyq"
-							style="padding-top:10px">
-							<div></div>
-
-							<ul class="pagination pagsize">
-
-
-							</ul>
-							<div style="float: right">
-								<button type="button" class="btn btn-default"
-									onclick="allseleck('fmgyq')">全选</button>
-								<button type="button" class="btn btn-default">邮件发送</button>
-								<button type="button" class="btn btn-default">导出</button>
-							</div>
-
-
-						</div>
-					</div>
-					<div style="clear: both"></div>
-				</div>
-
+				
 
 
 			</div>
-
-
-
 		</div>
-     
-
 	</div>
 
 

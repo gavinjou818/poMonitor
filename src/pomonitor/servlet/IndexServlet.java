@@ -86,8 +86,10 @@ public class IndexServlet extends HttpServlet
 			}
 			break;
 		case "checkStatus":
-			try {
-				resJSON = checkStatus();
+			try 
+			{    
+				
+				resJSON = checkStatus(endTime);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -143,9 +145,9 @@ public class IndexServlet extends HttpServlet
 		return summarize.getTendency(startTime, endTime);
 	}
 
-	private String checkStatus() throws ParseException {
+	private String checkStatus(String endTime) throws ParseException {
 		Summarize summarize = new Summarize();
-		return summarize.checkStatus();
+		return summarize.checkStatus(endTime);
 	}
 	private String getLatestMessage() throws ParseException {
 		Summarize summarize = new Summarize();

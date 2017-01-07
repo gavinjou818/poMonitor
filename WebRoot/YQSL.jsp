@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
@@ -37,9 +38,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	float: right;
 }
 
-.tab-content {
-	height: 800px;
-}
 
 .pagination {
 	margin: 0px !important;
@@ -64,12 +62,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          images[i].setAttribute("class","Right"); 
        }
        initData(1,'./servlet/sImageAndcTemplateServlet','bbyl');
+        <%if (session.getAttribute("startTime") == null) {
+				Calendar cal = Calendar.getInstance();
+				Date date = cal.getTime();
+				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+				session.setAttribute("startTime", sf.format(date));
+			}
+			if (session.getAttribute("endTime") == null) {
+
+				Calendar cal = Calendar.getInstance();
+				Date date = cal.getTime();
+				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+				session.setAttribute("endTime", sf.format(date));
+		}%>
+
+       document.getElementById('startTime').value='<%=session.getAttribute("startTime")%>';
+       document.getElementById('endTime').value='<%=session.getAttribute("endTime")%>';
+        
     }
     
-    function exportImage(templateName)
+    function exportImage(servletMethod)
     {     
          
-          var data=("method="+templateName);
+          var data=("method="+servletMethod);
           data+=("&length=2");//有多少个图表
           data+=("&requestString="+requestString);
           for(var i=0;i<Charts.length;i++)
@@ -97,7 +112,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         }  
                     };
                   xmlhttp.send(data);  
-    }  
+    }
+    
+    function setTimeOpera()
+    {
+                   
+                    var data=("startTime="+document.getElementById('startTime').value);
+                    data+=("&endTime="+document.getElementById('endTime').value);
+                    data+=("&method="+"setTimeInteraction");
+                    var xmlhttp;  
+                    if (window.XMLHttpRequest) 
+                    {   
+                        // code for IE7+, Firefox, Chrome, Opera, Safari  
+                        xmlhttp = new XMLHttpRequest();  
+                    } 
+                    else 
+                    {   // code for IE6, IE5  
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");  
+                    }  
+                    xmlhttp.open("POST","<%=path%>/servlet/BasicInteractionServlet",true);  
+                    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");  
+                    xmlhttp.onreadystatechange = function() 
+                    {  
+                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+                        {  
+                            
+                        }  
+                    };
+                    xmlhttp.send(data);  
+            
+      }
 </script>
 <!--加载数据表-->
 <script type="text/javascript">
@@ -269,79 +313,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body onload="preload()">
 
-	<div id="leftbar">
-		<!--头像-->
-		<div id="leftbarHead">
-			<div style="text-align: right">
-				<img src="./image/timeright.png"
-					style="width: 25px;height:25px;cursor: pointer;" title="时间设置显示"
-					onclick="changeTIME()">
-			</div>
-
-			<div id="leftbarBottom">
-				<div id="jrzl" class="leftbarBottom_div">
-					<img src="./image/jrzl.PNG"><span class="Number">68754</span>
-				</div>
-				<div id="mg" class="leftbarBottom_div">
-					<img src="./image/mg.PNG"><span class="Number">230</span>
-				</div>
-				<div id="fmg" class="leftbarBottom_div">
-					<img src="./image/fmg.PNG"><span class="Number">66524</span>
-				</div>
-				<div id="mgbz" class="leftbarBottom_div">
-					<img src="./image/mgbz.PNG"><span class="Number">3.4%</span>
-				</div>
-			</div>
+	
+    
+    <jsp:include page="master.jsp"  flush="true"/>
+    
+    <div id="cansetTime">
+		<div class="cansetTimeR">
+			<span>从</span><input type="date" id="startTime" name="startTime" />
 		</div>
-
-		<div id="leftbarBody">
-			<div id="leftbarBody_Menu">
-				<div class="Menu_fa">
-					<a href="SY.jsp" class="Menu">首页</a>
-				</div>
-				<div class="Menu_fa" id="flip1">
-					<img src="./image/right.png" style="width: 20px;height: 20px"><span
-						class="Menu">舆情分析</span>
-				</div>
-				<div id="Menu_panel1">
-					<div class="Menu_fa">
-						<a href="MTFX.jsp" class="Menu_son">媒体分析</a>
-					</div>
-					<div class="Menu_fa">
-						<a href="QGFX.jsp" class="Menu_son">情感分析</a>
-					</div>
-					<div class="Menu_fa">
-						<a href="YQYJ.jsp" class="Menu_son">舆情预警</a>
-					</div>
-				</div>
-				<div class="Menu_fa">
-					<a href="#" class="Menu">伪舆情分析</a>
-				</div>
-
-				<div class="Menu_fa" id="flip2">
-					<img src="./image/right.png" style="width:20px;height: 20px"><span
-						class="Menu">舆情报表</span>
-				</div>
-				<div id="Menu_panel2">
-					<div class="Menu_fa">
-						<a href="TP.jsp" class="Menu_son">时间报表</a>
-					</div>
-					<div class="Menu_fa">
-						<a href="SP.jsp" class="Menu_son">事件报表</a>
-					</div>
-				</div>
-
-			</div>
+		<div class="cansetTimeR">
+			<span>到</span><input type="date" id="endTime" name="endTime" />
 		</div>
-		<div style="text-align: right">
-			<img src="./image/barleft.png"
-				style="width: 25px;height:25px;cursor: pointer;" title="收缩左边栏"
-				onclick="changeBar()">
-		</div>
-		<div style="clear: both"></div>
-
+		<button type="button" class="btn btn-primary .btn-sm"
+			style="float: right;margin-right: 5px" onclick="setTimeOpera()">确定</button>
 	</div>
-
+    
 	<div id="Catalog">
 		<div style="text-align: left">
 			<img src="./image/barleft.png"
@@ -352,22 +338,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<a class="smoothScroll" href="<%=basePath%>YQSL.jsp#head1"
 				title="报表预览">报表预览</a>
 		</div>
-
 	</div>
-	<!--右边标题-->
-	<div id="cansetTime">
-		<div class="cansetTimeR">
-			<span>从</span><input type="date" id="starttime" name="starttime" />
-		</div>
-		<div class="cansetTimeR">
-			<span>到</span><input type="date" id="endtime" name="endtime" />
-		</div>
-		<button type="button" class="btn btn-primary .btn-sm"
-			style="float: right;margin-right: 5px">确定</button>
-	</div>
-	<div id="rightbar">
-		<img src="./image/nanhua_logo.png" />
-	</div>
+	
 
 	<div id="rightbody">
 		<!--主体-->
@@ -384,11 +356,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<div role="tabpanel" class="tab-pane active" id="bbyl"
 							style="padding-top:10px">
 							<div></div>
-							<ul class="pagination pagsize">
+							<ul class="pagination pagsize" style="margin-bottom: 50px">
 
 
 							</ul>
-							<div style="float: right">
+							<div style="float: right;margin-bottom: 50px" >     
+							    <!--createTemplate1 是暂时的参数,换多模板需要更换  -->
 								<button type="button" class="btn btn-default" onclick="exportImage('createTemplate1')">生成报表</button>
 							</div>
 
@@ -436,7 +409,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		         data: 
 		 		 {      
 		        	    "requestString":'<%=request.getParameter("requestString")%>',
-		 				"method":'getPreviewChart'
+		 				"method":'getPreviewChart',
+		 				"templateName":'template1' //当要做多模板的时候则需要,将该名称去掉,这是个暂时的参数
 		 		 },
 		         success: function(datt) 
 		         {

@@ -1,4 +1,4 @@
-
+<%@ page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
@@ -7,66 +7,273 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head>
-    <base href="<%=basePath%>">
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-    <title>南华大学核电舆情系统</title>
+<head>
+<base href="<%=basePath%>">
 
-    <link href="css/SY.css" rel="stylesheet" type="text/css" />
-    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-    <link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
-    <!--在线jq-->
-    <script src="js/jquery-3.1.1.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/echarts.js"></script>
-    <script src="js/china.js"></script>
-    <script src="js/d3.js"></script>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<title>南华大学核电舆情系统</title>
 
-    <script type="text/javascript" src="./js/YQCHART.js"></script>
-    <link rel="stylesheet" type="text/css" href="./css/master.css">
-    <script type="text/javascript" src="./js/master.js"></script>
-    <script type="text/javascript" src="./js/smoothscroll.js"></script>
+<link href="css/SY.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
+<!--在线jq-->
+<script src="js/jquery-3.1.1.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/echarts.js"></script>
+<script src="js/china.js"></script>
+<script src="js/d3.js"></script>
+
+<script type="text/javascript" src="./js/YQCHART.js"></script>
+<link rel="stylesheet" type="text/css" href="./css/master.css">
+<script type="text/javascript" src="./js/master.js"></script>
+<script type="text/javascript" src="./js/smoothscroll.js"></script>
 
 
 
-    <!--加载数据表-->
-    <script type="text/javascript">
-       
+<!--加载数据表-->
+<script type="text/javascript">
+        
         var sum = 13;//限制最大条数
 
         var starttime = new Date();
         var endttime = new Date();
-
+        
         //图片指向
         var imgsrc = ["image/nev.jpg", "image/cen.jpg", "image/pos.jpg"];
 
-        function initData() 
+        function preload() 
         {
-     
-         
-            //最新舆情加载
-            $.ajax
-            ({
+             <%if (session.getAttribute("startTime") == null) {
+				Calendar cal = Calendar.getInstance();
+				Date date = cal.getTime();
+				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+				session.setAttribute("startTime", sf.format(date));
+			}
+			if (session.getAttribute("endTime") == null) {
+
+				Calendar cal = Calendar.getInstance();
+				Date date = cal.getTime();
+				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+				session.setAttribute("endTime", sf.format(date));
+			}
+			%>
+			
+			var startTime='<%=session.getAttribute("startTime")%>';
+			var endTime='<%=session.getAttribute("endTime")%>';
+			
+		
+            document.getElementById('startTime').value=startTime;
+            document.getElementById('endTime').value=endTime;
+             
+            
+             //最新舆情加载
+            getLatestMessage(startTime,endTime);
+             //热点舆情加载
+            getPointMessage(startTime,endTime);
+             //数据图表加载
+            getChart(startTime,endTime);
+ 
+         } 
+            
+         function setTimeOpera()
+         {
+                   
+                    var data=("startTime="+document.getElementById('startTime').value);
+                    data+=("&endTime="+document.getElementById('endTime').value);
+                    data+=("&method="+"setTimeInteraction");
+                    var xmlhttp;  
+                    if (window.XMLHttpRequest) 
+                    {   
+                        // code for IE7+, Firefox, Chrome, Opera, Safari  
+                        xmlhttp = new XMLHttpRequest();  
+                    } 
+                    else 
+                    {   // code for IE6, IE5  
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");  
+                    }  
+                    xmlhttp.open("POST","<%=path%>/servlet/BasicInteractionServlet",true);  
+                    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");  
+                    xmlhttp.onreadystatechange = function() 
+                    {  
+                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+                        {  
+                            
+                            location.reload();
+                        }  
+                    };
+                    xmlhttp.send(data);  
+            
+         }
+ 
+    </script>
+
+</head>
+
+<body onload="preload()">
+
+	<jsp:include page="master.jsp" flush="true" />
+
+
+	<div id="cansetTime">
+		<div class="cansetTimeR">
+			<span>从</span><input type="date" id="startTime" name="startTime" />
+		</div>
+		<div class="cansetTimeR">
+			<span>到</span><input type="date" id="endTime" name="endTime" />
+		</div>
+		<button type="button" class="btn btn-primary .btn-sm"
+			style="float: right;margin-right: 5px" onclick="setTimeOpera()">确定</button>
+	</div>
+
+	<div id="Catalog">
+		<div style="text-align: left">
+			<img src="./image/barleft.png"
+				style="width: 25px;height:25px;cursor: pointer;" title="时间设置显示"
+				onclick="changeCatalog()">
+		</div>
+		<div>
+			<a class="smoothScroll" href="<%=basePath%>SY.jsp#head1" title="最新舆情">最新舆情</a>
+		</div>
+		<div>
+			<a class="smoothScroll" href="<%=basePath%>SY.jsp#head2"
+				title="一周走势情况">一周走势情况</a>
+		</div>
+		<div>
+			<a class="smoothScroll" href="<%=basePath%>SY.jsp#head3"
+				title="全国舆情情况">全国舆情情况</a>
+		</div>
+		<div>
+			<a class="smoothScroll" href="<%=basePath%>SY.jsp#head4"
+				title="媒体倾向度分析">媒体倾向度分析</a>
+		</div>
+
+	</div>
+	
+
+
+	<div id="rightbody">
+
+		<!--主体-->
+		<div class="container">
+			<div class="row">
+
+				<div class="Ancestor" id="head1">
+					<h1 class="h1Title">
+						最新舆情 <a href="QBYQ.jsp" style="float: right;font-size: 15px">more<span
+							class="glyphicon glyphicon-chevron-right"></span></a>
+					</h1>
+					<div class="col-md-6 col-xs-6 col-lg-6">
+						<h2 class="h2Title">最新舆情</h2>
+						<div id="newyq"></div>
+					</div>
+					<div class="col-md-6 col-xs-6 col-lg-6">
+						<h2 class="h2Title">热点舆情</h2>
+						<div id="pointyq"></div>
+					</div>
+					<div style="clear: both"></div>
+				</div>
+
+
+				<!--一周舆情走势+最新舆情-->
+				<div class="Ancestor" id="head2">
+					<h1 class="h1Title">一周走势情况</h1>
+					<div class="Father" style="z-index: 100">
+						<div id="yqto" style="width: 800px;height:600px;margin: 0 auto"></div>
+						<div class="FatherDown">
+							<img src="./image/down.png"
+								style="width: 25px;height: 25px;cursor: pointer"
+								onclick="changeSon('yqtoson')">
+						</div>
+					</div>
+
+					<div class="Son" id="yqtoson" style="z-index: 99">
+						<div class="SonTitle">简介:</div>
+						<div class="SonContext">aaa</div>
+					</div>
+
+				</div>
+
+
+				<div class="Ancestor" id="head3">
+
+					<h1 class="h1Title">全国舆情情况</h1>
+					<div class="Father" style="z-index: 98">
+						<div id="ChinaPiture"
+							style="width: 800px;height:600px;margin: 0 auto"></div>
+						<div class="FatherDown">
+							<img src="./image/down.png"
+								style="width: 25px;height: 25px;cursor: pointer"
+								onclick="changeSon('ChinaPitureson')">
+						</div>
+					</div>
+					<div class="Son" id="ChinaPitureson" style="z-index: 97">
+						<div class="SonTitle">简介:</div>
+						<div class="SonContext">aaa</div>
+					</div>
+					<div style="clear: both"></div>
+					<!--<h1 class="h1Title">最新舆情</h1>-->
+				</div>
+
+
+				<div class="Ancestor" id="head4">
+
+					<h1 class="h1Title"><%=session.getAttribute("endTime") %>&nbsp;&nbsp;媒体倾向度分析</h1>
+					<div class="Father" style="z-index: 96">
+						<div id="medtendency"
+							style="width: 800px;height:600px;margin: 0 auto"></div>
+						<div class="FatherDown">
+							<img src="./image/down.png"
+								style="width: 25px;height: 25px;cursor: pointer"
+								onclick="changeSon('medtendencyson')">
+						</div>
+					</div>
+					<div class="Son" id="medtendencyson" style="z-index: 95">
+						<div class="SonTitle">简介:</div>
+						<div class="SonContext">aaa</div>
+					</div>
+					<div style="clear: both"></div>
+
+				</div>
+
+			</div>
+
+
+		</div>
+
+
+	</div>
+
+
+	<!--foot-->
+
+
+	<script type="text/javascript">
+    function getLatestMessage(startTime,endTime)
+    {
+       //最新舆情加载
+        $.ajax
+         ({
                 type: "GET",
                 dataType: "json",
                 url: "./servlet/IndexServlet",
                 data : 
 				{
-					"start_time" : new Date(),
-					"end_time" : new Date(),
+					"startTime" : startTime,
+					"endTime" : endTime,
 				    "userId" : 1,
 					"method" : 'getLatestMessage'
 				},
-                success: function (data) {
+                success: function (data) 
+                {
                     var limit = Math.min(data.length, sum);
 
 
                     var parent = document.getElementById('newyq');
+                    while (parent.hasChildNodes())parent.removeChild(parent.firstChild);
                     for (var i = 0; i < limit; i++) {
                         //创建div节点
                         var div1 = document.createElement("div");
@@ -103,23 +310,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
                 }
             });
-
-            //热点舆情加载
-            $.ajax
-            ({
+    
+    };
+    
+    function getPointMessage(startTime,endTime)
+    {  
+      
+      $.ajax
+      ({
                 type: "GET",
                 dataType: "json",
                 url: "json/pointyq.json",
                 
-                data: {
-                    "starttime": starttime,
-                    "endtime": endttime
+                data: 
+                {
+                    "starttime": startTime,
+                    "endtime": endTime
                 },
-                success: function (data) {
+                success: function (data) 
+                {
                     var limit = Math.min(data.length, sum);
 
-
                     var parent = document.getElementById('pointyq');
+                    while (parent.hasChildNodes())parent.removeChild(parent.firstChild);
                     for (var i = 0; i < limit; i++) {
                         //创建div节点
                         var div1 = document.createElement("div");
@@ -139,178 +352,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         div1.appendChild(span2);
                         parent.appendChild(div1);
                     }
-
-
                 }
             });
-        }
 
-
-
-    </script>
-
-
-
-
-</head>
-
-<body onload="initData()">
-<div id="leftbar">
-    <!--头像-->
-    <div id="leftbarHead">
-        <div style="text-align: right"><img src="./image/timeright.png" style="width: 25px;height:25px;cursor: pointer;" title="时间设置显示" onclick="changeTIME()" ></div>
-
-        <div id="leftbarBottom">
-            <div id="jrzl" class="leftbarBottom_div"><img src="./image/jrzl.PNG"><span class="Number">68754</span></div>
-            <div id="mg"   class="leftbarBottom_div"><img src="./image/mg.PNG"><span   class="Number">230</span></div>
-            <div id="fmg"  class="leftbarBottom_div"><img src="./image/fmg.PNG"><span  class="Number">66524</span></div>
-            <div id="mgbz" class="leftbarBottom_div"><img src="./image/mgbz.PNG"><span class="Number">3.4%</span></div>
-        </div>
-    </div>
-
-    <div id="leftbarBody">
-             <div id="leftbarBody_Menu">
-                 <div class="Menu_fa"><a href="SY.jsp" class="Menu">首页</a></div>
-                 <div class="Menu_fa" id="flip1" ><img src="./image/right.png" style="width: 20px;height: 20px"><span class="Menu">舆情分析</span></div>
-                 <div id="Menu_panel1">
-                     <div class="Menu_fa"><a href="MTFX.jsp" class="Menu_son" >媒体分析</a></div>
-                     <div class="Menu_fa"><a href="QGFX.jsp" class="Menu_son" >情感分析</a></div>
-                     <div class="Menu_fa"><a href="YQYJ.jsp" class="Menu_son" >舆情预警</a></div>
-                 </div>
-                 <div class="Menu_fa"><a href="#" class="Menu">伪舆情分析</a></div>
-
-                 <div class="Menu_fa" id="flip2" ><img src="./image/right.png" style="width:20px;height: 20px"><span class="Menu">舆情报表</span></div>
-                 <div id="Menu_panel2">
-                     <div class="Menu_fa"><a href="TP.jsp" class="Menu_son" >时间报表</a></div>
-                     <div class="Menu_fa"><a href="SP.jsp" class="Menu_son" >事件报表</a></div>
-                 </div>
-
-             </div>
-    </div>
-    <div style="text-align: right"><img src="./image/barleft.png" style="width: 25px;height:25px;cursor: pointer;" title="收缩左边栏" onclick="changeBar()"></div>
-    <div style="clear: both"></div>
-
-</div>
-
-<div id="Catalog">
-    <div style="text-align: left"><img src="./image/barleft.png" style="width: 25px;height:25px;cursor: pointer;" title="时间设置显示" onclick="changeCatalog()"></div>
-    <div><a class="smoothScroll" href="<%=basePath%>SY.jsp#head1" title="最新舆情">最新舆情</a></div>
-    <div><a class="smoothScroll" href="<%=basePath%>SY.jsp#head2" title="一周走势情况">一周走势情况</a></div>
-    <div><a class="smoothScroll" href="<%=basePath%>SY.jsp#head3" title="全国舆情情况">全国舆情情况</a></div>
-    <div><a class="smoothScroll" href="<%=basePath%>SY.jsp#head4" title="媒体倾向度分析">媒体倾向度分析</a></div>
-
-</div>
-<!--右边标题-->
-<div id="cansetTime">
-    <div class="cansetTimeR"><span>从<span><input type="date" id="starttime" name="starttime" /></div>
-    <div class="cansetTimeR"><span>到<span><input type="date" id="endtime" name="endtime" /></div>
-    <button type="button" class="btn btn-primary .btn-sm" style="float: right;margin-right: 5px">确定</button>
-</div>
-<div id="rightbar">
-    <img src="./image/nanhua_logo.png"/>
-</div>
-
-<div  id="rightbody">
-
-    <!--主体-->
-    <div class="container">
-        <div class="row">
-
-            <div class="Ancestor" id="head1">
-                <h1 class="h1Title" >最新舆情
-                    <a href="MGYQ.jsp" style="float: right;font-size: 15px">more<span
-                        class="glyphicon glyphicon-chevron-right"></span></a>
-                </h1>
-                <div class="col-md-6 col-xs-6 col-lg-6" >
-                    <h2 class="h2Title">最新舆情</h2>
-                    <div id="newyq"></div>
-                </div>
-                <div class="col-md-6 col-xs-6 col-lg-6">
-                    <h2 class="h2Title">热点舆情</h2>
-                    <div id="pointyq" ></div>
-                </div>
-                <div style="clear: both"></div>
-            </div>
-
-
-            <!--一周舆情走势+最新舆情-->
-            <div class="Ancestor" id="head2">
-                <h1 class="h1Title">一周走势情况</h1>
-                <div class="Father" style="z-index: 100">
-                    <div id="yqto" style="width: 800px;height:600px;margin: 0 auto" ></div>
-                    <div class="FatherDown"><img src="./image/down.png" style="width: 25px;height: 25px;cursor: pointer" onclick="changeSon('yqtoson')"></div>
-                </div>
-
-                <div class="Son" id="yqtoson" style="z-index: 99">
-                    <div class="SonTitle">简介:</div>
-                    <div class="SonContext">aaa</div>
-                </div>
-
-            </div>
-
-
-            <div class="Ancestor" id="head3">
-
-                <h1 class="h1Title">全国舆情情况</h1>
-                <div class="Father" style="z-index: 98">
-                    <div id="ChinaPiture" style="width: 800px;height:600px;margin: 0 auto"></div>
-                    <div class="FatherDown"><img src="./image/down.png" style="width: 25px;height: 25px;cursor: pointer" onclick="changeSon('ChinaPitureson')"></div>
-                </div>
-                <div class="Son" id="ChinaPitureson" style="z-index: 97">
-                    <div class="SonTitle">简介:</div>
-                    <div class="SonContext">aaa</div>
-                </div>
-                <div style="clear: both"></div>
-                <!--<h1 class="h1Title">最新舆情</h1>-->
-            </div>
-
-
-            <div class="Ancestor" id="head4">
-
-                <h1 class="h1Title">媒体倾向度分析</h1>
-                <div class="Father" style="z-index: 96">
-                    <div id="medtendency" style="width: 800px;height:600px;margin: 0 auto"></div>
-                    <div class="FatherDown"><img src="./image/down.png" style="width: 25px;height: 25px;cursor: pointer" onclick="changeSon('medtendencyson')"></div>
-                </div>
-                <div class="Son" id="medtendencyson" style="z-index: 95">
-                    <div class="SonTitle">简介:</div>
-                    <div class="SonContext">aaa</div>
-                </div>
-                <div style="clear: both"></div>
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-
-</div>
-
-
-<!--foot-->
-
-
-<script type="text/javascript">
-    $(document).ready(function()
+    }
+    
+    function getChart(startTime,endTime)
     {
+        
         //地域分布图
-        ChinaPictureChart("./json/ChinaPiture.json",'ChinaPiture',new Date(),new Date(),null,null);
+        ChinaPictureChart("./json/ChinaPiture.json",'ChinaPiture',startTime,endTime,null,null);
         //今日舆情图
-        PublicOpinionTodayChart('./servlet/IndexServlet','medtendency',new Date(),new Date(),null,'checkStatus');
+        PublicOpinionTodayChart('./servlet/IndexServlet','medtendency',startTime,endTime,null,'checkStatus');
         //测试用
         //PublicOpinionTodayChart('./json/medtendency.json','medtendency',new Date(),new Date(),null,'checkStatus');
         //一周走势图
-         WeeklyChart("./servlet/IndexServlet",'yqto',new Date(),new Date(),null,'getTendency');
+         WeeklyChart("./servlet/IndexServlet",'yqto',startTime,endTime,null,'getTendency');
         //测试用
         //WeeklyChart("./json/yqto.json",'yqto',new Date(),new Date(),null,'getTendency');
- 
-    });
         
-    
-    
+    }
    
+
 </script>
 
 

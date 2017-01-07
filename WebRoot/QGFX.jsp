@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
@@ -15,67 +16,100 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
     <title>南华大学核电舆情系统</title>
+    
+    <script src="js/jquery-3.1.1.js" ></script>
     <link href="css/QGFX.css" rel="stylesheet" type="text/css"  />
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css"  />
     <link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
     <link href="css/bootstrap-table.css" rel="stylesheet" type="text/css" />
+    <script src="js/bootstrap-table.js"></script>
 
-    <!--在线jq-->
-    <script src="js/jquery-3.1.1.js" ></script>
+    
     <script src="js/bootstrap.js" ></script>
     <script src="js/echarts.js" ></script>
     <script src="js/china.js"></script>
     <script src="js/d3.js"></script>
     <script src="js/docs.js"></script>
     <script src="js/examples.js"></script>
-    <script src="js/bootstrap-table.js"></script>
+   
 
 
     <link rel="stylesheet" type="text/css" href="./css/master.css">
     <script type="text/javascript" src="./js/master.js"></script>
     <script type="text/javascript" src="./js/YQCHART.js"></script>
     <script type="text/javascript" src="./js/smoothscroll.js"></script>
+    
+    
+    
+    <script type="text/javascript">
+        function preload()
+        {   
+            <%if (session.getAttribute("startTime") == null) {
+				Calendar cal = Calendar.getInstance();
+				Date date = cal.getTime();
+				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+				session.setAttribute("startTime", sf.format(date));
+			}
+
+			if (session.getAttribute("endTime") == null) {
+
+				Calendar cal = Calendar.getInstance();
+				Date date = cal.getTime();
+				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+				session.setAttribute("endTime", sf.format(date));
+			}%>
+           var startTime=document.getElementById('startTime').value='<%=session.getAttribute("startTime")%>';
+           var endTime=document.getElementById('endTime').value='<%=session.getAttribute("endTime")%>';
+           
+           getChart(startTime,endTime);
+        }
+        
+        function setTimeOpera()
+        {
+                   
+                    var data=("startTime="+document.getElementById('startTime').value);
+                    data+=("&endTime="+document.getElementById('endTime').value);
+                    data+=("&method="+"setTimeInteraction");
+                    var xmlhttp;  
+                    if (window.XMLHttpRequest) 
+                    {   
+                        // code for IE7+, Firefox, Chrome, Opera, Safari  
+                        xmlhttp = new XMLHttpRequest();  
+                    }
+                    else 
+                    {   // code for IE6, IE5  
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");  
+                    }  
+                    xmlhttp.open("POST","<%=path%>/servlet/BasicInteractionServlet",true);  
+                    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");  
+                    xmlhttp.onreadystatechange = function() 
+                    {  
+                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+                        {  
+                            location.reload();
+                        }  
+                    };
+                    xmlhttp.send(data);  
+            
+        }
+    </script>
 
 </head>
 
-<body>
+<body onload="preload()">
 
-<div id="leftbar">
-    <!--头像-->
-    <div id="leftbarHead">
-        <div style="text-align: right"><img src="./image/timeright.png" style="width: 25px;height:25px;cursor: pointer;" title="时间设置显示" onclick="changeTIME()" ></div>
+<jsp:include page="master.jsp"  flush="true"/>
 
-        <div id="leftbarBottom">
-            <div id="jrzl" class="leftbarBottom_div"><img src="./image/jrzl.PNG"><span class="Number">68754</span></div>
-            <div id="mg"   class="leftbarBottom_div"><img src="./image/mg.PNG"><span   class="Number">230</span></div>
-            <div id="fmg"  class="leftbarBottom_div"><img src="./image/fmg.PNG"><span  class="Number">66524</span></div>
-            <div id="mgbz" class="leftbarBottom_div"><img src="./image/mgbz.PNG"><span class="Number">3.4%</span></div>
-        </div>
-    </div>
-
-    <div id="leftbarBody">
-             <div id="leftbarBody_Menu">
-                 <div class="Menu_fa"><a href="SY.jsp" class="Menu">首页</a></div>
-                 <div class="Menu_fa" id="flip1" ><img src="./image/right.png" style="width: 20px;height: 20px"><span class="Menu">舆情分析</span></div>
-                 <div id="Menu_panel1">
-                     <div class="Menu_fa"><a href="MTFX.jsp" class="Menu_son" >媒体分析</a></div>
-                     <div class="Menu_fa"><a href="QGFX.jsp" class="Menu_son" >情感分析</a></div>
-                     <div class="Menu_fa"><a href="YQYJ.jsp" class="Menu_son" >舆情预警</a></div>
-                 </div>
-                 <div class="Menu_fa"><a href="#" class="Menu">伪舆情分析</a></div>
-
-                 <div class="Menu_fa" id="flip2" ><img src="./image/right.png" style="width:20px;height: 20px"><span class="Menu">舆情报表</span></div>
-                 <div id="Menu_panel2">
-                     <div class="Menu_fa"><a href="TP.jsp" class="Menu_son" >时间报表</a></div>
-                     <div class="Menu_fa"><a href="SP.jsp" class="Menu_son" >事件报表</a></div>
-                 </div>
-
-             </div>
-     </div>
-    <div style="text-align: right"><img src="./image/barleft.png" style="width: 25px;height:25px;cursor: pointer;" title="收缩左边栏" onclick="changeBar()"></div>
-    <div style="clear: both"></div>
-
-</div>
+	<div id="cansetTime">
+		<div class="cansetTimeR">
+			<span>从</span><input type="date" id="startTime" name="startTime" />
+		</div>
+		<div class="cansetTimeR">
+			<span>到</span><input type="date" id="endTime" name="endTime" />
+		</div>
+		<button type="button" class="btn btn-primary .btn-sm"
+			style="float: right;margin-right: 5px" onclick="setTimeOpera()")>确定</button>
+	</div>
 
 <div id="Catalog">
     <div style="text-align: left"><img src="./image/barleft.png" style="width: 25px;height:25px;cursor: pointer;" title="时间设置显示" onclick="changeCatalog()"></div>
@@ -86,15 +120,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div><a class="smoothScroll" href="<%=basePath%>QGFX.jsp#head5" title="信息敏感分类情况">信息敏感分类情况</a></div>
 
 </div>
-<!--右边标题-->
-<div id="cansetTime">
-    <div class="cansetTimeR"><span>从<span><input type="date" id="starttime" name="starttime" /></div>
-    <div class="cansetTimeR"><span>到<span><input type="date" id="endtime" name="endtime" /></div>
-    <button type="button" class="btn btn-primary .btn-sm" style="float: right;margin-right: 5px">确定</button>
-</div>
-<div id="rightbar">
-    <img src="./image/nanhua_logo.png"/>
-</div>
+
 
 
 <div  id="rightbody">
@@ -180,6 +206,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </div>
             </div>
 
+            
             <div class="Ancestor" id="head5">
                 <h1 class="h1Title">信息敏感分类情况</h1>
                 <div class="Father" style="z-index: 94">
@@ -203,17 +230,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!--foot-->
 
     <script type="text/javascript">
-        $(document).ready(function()
+        function getChart(startTime,endTime)
         {
             //媒体分析
-            MediaAnalysisChart("json/MediaAnalysis.json",'MediaAnalysis',new Date(),new Date(),null,null);
+            MediaAnalysisChart("json/MediaAnalysis.json",'MediaAnalysis',startTime,endTime,null,null);
             //整体走势分析
-            OverallTrendChart("json/otrendAnalysis.json",'otrendAnalysis',new Date(),new Date(),null,null);
+            OverallTrendChart("json/otrendAnalysis.json",'otrendAnalysis',startTime,endTime,null,null);
             //信息敏感分类图
-            InformationSensitiveClassificationChart("json/SensitiveInfo.json",'SensitiveInfo',new Date(),new Date(),null,null);
+            InformationSensitiveClassificationChart("json/SensitiveInfo.json",'SensitiveInfo',startTime,endTime,null,null);
             //媒体负面倾向性走势图
-            MediaNegativeTendencyChart("json/NegativeBias.json",'NegativeBias',new Date(),new Date(),null,null);
-        });
+            MediaNegativeTendencyChart("json/NegativeBias.json",'NegativeBias',startTime,endTime,null,null);
+        }
     </script>
 
 

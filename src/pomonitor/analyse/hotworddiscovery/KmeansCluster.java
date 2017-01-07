@@ -107,8 +107,9 @@ public class KmeansCluster {
 			c.GroupedArticle = new ArrayList<TDArticle>();
 			// 第一个中心点由随机数决定
 			if (centroidCollection.size() == 0) {
-				int theFirstCent = new Random().nextInt(articleCollection
-						.size());
+				
+		
+				int  theFirstCent = new Random().nextInt(articleCollection.size());	
 				c.GroupedArticle.add(articleCollection.get(theFirstCent));
 			}
 			// 计算哪篇文章距离中心点最远

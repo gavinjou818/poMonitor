@@ -60,10 +60,11 @@ public class HotWordDiscovery
 		TextVectorBuilder tvb = new TextVectorBuilder();
 		List<TDArticle> tdArticlesWithVector = tvb.buildVectors(articleLists);
 		mBaseStrings = tvb.globalFeatureCollections;
+		
+	
 		// 对文本向量进行聚类
-		List<TDCentroid> resTDCentroid = KmeansCluster.ArticleCluster(k,
-				tdArticlesWithVector);
-
+		List<TDCentroid> resTDCentroid = KmeansCluster.ArticleCluster(k,tdArticlesWithVector); 
+	    
 		// 得到两两TDCentroid之间的相似度
 		int num = resTDCentroid.size();
 		globalTDCentroidDist = new double[num][num];

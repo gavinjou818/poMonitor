@@ -107,6 +107,7 @@
      <description>This is the description of my J2EE component</description>
      <servlet-class>pomonitor.servlet.IndexServlet</servlet-class>
    </servlet>
+   
 
 
 
@@ -131,12 +132,26 @@
   <servlet>  
     <servlet-name>sImageAndcTemplateServlet</servlet-name>  
     <servlet-class>pomonitor.servlet.sImageAndcTemplateServlet</servlet-class>  
-  </servlet> 
+  </servlet>
+ 
   <servlet-mapping>
     <servlet-name>sImageAndcTemplateServlet</servlet-name>
     <url-pattern>/servlet/sImageAndcTemplateServlet</url-pattern>
   </servlet-mapping>
-  <!-- 用于生成报表的servlet接口 -->
+
+  <!-- 基本页面的一些交互的接口 zhouzhifeng -->
+  <servlet>
+    <servlet-name>BasicInteractionServlet</servlet-name>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <description>This is the description of my J2EE component</description>
+    <servlet-class>pomonitor.servlet.BasicInteractionServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>BasicInteractionServlet</servlet-name>
+    <url-pattern>/servlet/BasicInteractionServlet</url-pattern>
+  </servlet-mapping>
+  
   
   
   

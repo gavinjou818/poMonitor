@@ -84,14 +84,12 @@ public class Summarize
 		{   
 			
 			
-			//System.out.println("------>time:"+start.getTime());
 			allNews.put(start, 0);
 			negNews.put(start, 0);
 			dates.add(start);
 			calendar.setTime(start);
 			calendar.add(Calendar.DAY_OF_YEAR, 1);
-			//System.out.println("------>time:"+calendar.get(Calendar.YEAR)+" "+calendar.get(Calendar.MONTH)+" "+calendar.get(Calendar.DAY_OF_MONTH));
-			start = calendar.getTime();
+		    start = calendar.getTime();
 		}
 		for (int i = 0; i < newsTends.size(); i++) 
 		{
@@ -112,8 +110,8 @@ public class Summarize
 
 		return JSON.toJSONString(json);
 	}
-
-	public String checkStatus() throws ParseException 
+    //原来没数据状态 @zhouzhifeng,修改了接口
+	public String checkStatus(String endTime) throws ParseException 
 	{
 		class NewsTendencyClassifyByWeb 
 		{
@@ -151,8 +149,9 @@ public class Summarize
 				}
 			}
 		}
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = sdf.parse("2015-09-14");
+		Date date = sdf.parse(endTime);//2015-09-14;
 		// date = new Date(System.currentTimeMillis());
 		NewsTendDAO newsTendDAO = new NewsTendDAO();
 		List<NewsTend> newsTendLists = new ArrayList<>();
@@ -186,7 +185,8 @@ public class Summarize
 				
 			}
 			
-			public Result(String date, String source, String time, String title, String url) {
+			public Result(String date, String source, String time, String title, String url) 
+			{
 				this.date = date;
 				this.source = source;
 				this.time = time;

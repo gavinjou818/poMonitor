@@ -125,6 +125,7 @@ public class DocumentHandler
     	 InputStream in=null;
     	 byte[] data=null;
     	 in =new FileInputStream(filePath);
+    	 
     	 data=new byte[in.available()];
     	 in.read(data);
     	 in.close();

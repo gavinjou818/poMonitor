@@ -44,9 +44,23 @@ public class HotWordDiscoveryAnalyse
 		// 调用话题发现功能模块，返回话题集合
 		HotWordDiscovery td = new HotWordDiscovery();
 		SenswordDAO sd = new SenswordDAO();
-		this.hotwords = td.getHotWords(
+		
+		
+		//--------------------------@zhouzhifeng修改
+		
+		  List<TDArticle> tdArticles=getArticlesBetweenDate(startDateStr, endDateStr);
+		  if(tdArticles.size()==0) return null;
+		  
+		  this.hotwords = td.getHotWords(
+				    tdArticles,
+					sd.findByProperty("userid", userId));
+		
+		/*
+		 * @zhouzhifeng  原来本这句话是这样的,但是一旦数据为0的时候会直接报错,所以我加了一点附加条件
+		   this.hotwords = td.getHotWords(
 				getArticlesBetweenDate(startDateStr, endDateStr),
 				sd.findByProperty("userid", userId));
+		*/
 		this.relevanceMat = td.getRelevanceMat();
 		ArrayList<RetHotWord> retHotWordsList = new ArrayList<RetHotWord>();
 		for (int i = 0; i < hotwords.size(); i++)

@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
@@ -212,6 +213,59 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 son.checked=true;
             }
         }
+        
+        function preload()
+        {  
+           initData(1,'json/test_data.json','snewspaper');
+           
+           <%if (session.getAttribute("startTime") == null) {
+				Calendar cal = Calendar.getInstance();
+				Date date = cal.getTime();
+				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+				session.setAttribute("startTime", sf.format(date));
+			}
+
+			if (session.getAttribute("endTime") == null) {
+
+				Calendar cal = Calendar.getInstance();
+				Date date = cal.getTime();
+				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+				session.setAttribute("endTime", sf.format(date));
+			}%>
+           document.getElementById('startTime').value='<%=session.getAttribute("startTime")%>';
+           document.getElementById('endTime').value='<%=session.getAttribute("endTime")%>';
+           
+           
+        }
+        
+        function setTimeOpera()
+        {
+                   
+                    var data=("startTime="+document.getElementById('startTime').value);
+                    data+=("&endTime="+document.getElementById('endTime').value);
+                    data+=("&method="+"setTimeInteraction");
+                    var xmlhttp;  
+                    if (window.XMLHttpRequest) 
+                    {   
+                        // code for IE7+, Firefox, Chrome, Opera, Safari  
+                        xmlhttp = new XMLHttpRequest();  
+                    }
+                    else 
+                    {   // code for IE6, IE5  
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");  
+                    }  
+                    xmlhttp.open("POST","<%=path%>/servlet/BasicInteractionServlet",true);  
+                    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");  
+                    xmlhttp.onreadystatechange = function() 
+                    {  
+                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+                        {  
+                            location.reload();
+                        }  
+                    };
+                    xmlhttp.send(data);  
+            
+        }
 
     </script>
     <style>
@@ -223,58 +277,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 </head>
 
-<body onload="initData(1,'json/test_data.json','snewspaper')">
+<body onload="preload()">
 
-<div id="leftbar">
-    <!--头像-->
-    <div id="leftbarHead">
-        <div style="text-align: right"><img src="./image/timeright.png" style="width: 25px;height:25px;cursor: pointer;" title="时间设置显示" onclick="changeTIME()" ></div>
+<jsp:include page="master.jsp"  flush="true"/>
 
-        <div id="leftbarBottom">
-            <div id="jrzl" class="leftbarBottom_div"><img src="./image/jrzl.PNG"><span class="Number">68754</span></div>
-            <div id="mg"   class="leftbarBottom_div"><img src="./image/mg.PNG"><span   class="Number">230</span></div>
-            <div id="fmg"  class="leftbarBottom_div"><img src="./image/fmg.PNG"><span  class="Number">66524</span></div>
-            <div id="mgbz" class="leftbarBottom_div"><img src="./image/mgbz.PNG"><span class="Number">3.4%</span></div>
-        </div>
-    </div>
-
-    <div id="leftbarBody">
-             <div id="leftbarBody_Menu">
-                 <div class="Menu_fa"><a href="SY.jsp" class="Menu">首页</a></div>
-                 <div class="Menu_fa" id="flip1" ><img src="./image/right.png" style="width: 20px;height: 20px"><span class="Menu">舆情分析</span></div>
-                 <div id="Menu_panel1">
-                     <div class="Menu_fa"><a href="MTFX.jsp" class="Menu_son" >媒体分析</a></div>
-                     <div class="Menu_fa"><a href="QGFX.jsp" class="Menu_son" >情感分析</a></div>
-                     <div class="Menu_fa"><a href="YQYJ.jsp" class="Menu_son" >舆情预警</a></div>
-                 </div>
-                 <div class="Menu_fa"><a href="#" class="Menu">伪舆情分析</a></div>
-
-                 <div class="Menu_fa" id="flip2" ><img src="./image/right.png" style="width:20px;height: 20px"><span class="Menu">舆情报表</span></div>
-                 <div id="Menu_panel2">
-                     <div class="Menu_fa"><a href="TP.jsp" class="Menu_son" >时间报表</a></div>
-                     <div class="Menu_fa"><a href="SP.jsp" class="Menu_son" >事件报表</a></div>
-                 </div>
-
-             </div>
-     </div>
-    <div style="text-align: right"><img src="./image/barleft.png" style="width: 25px;height:25px;cursor: pointer;" title="收缩左边栏" onclick="changeBar()"></div>
-    <div style="clear: both"></div>
-
-</div>
+	<div id="cansetTime">
+		<div class="cansetTimeR">
+			<span>从</span><input type="date" id="startTime" name="startTime" />
+		</div>
+		<div class="cansetTimeR">
+			<span>到</span><input type="date" id="endTime" name="endTime" />
+		</div>
+		<button type="button" class="btn btn-primary .btn-sm"
+			style="float: right;margin-right: 5px" onclick="setTimeOpera()">确定</button>
+	</div>
 
 <div id="Catalog">
     <div style="text-align: left"><img src="./image/barleft.png" style="width: 25px;height:25px;cursor: pointer;" title="时间设置显示" onclick="changeCatalog()"></div>
     <div><a class="smoothScroll" href="<%=basePath%>SP.jsp#head1" title="事件报表">事件报表</a></div>
 </div>
-<!--右边标题-->
-<div id="cansetTime">
-    <div class="cansetTimeR"><span>从<span><input type="date" id="starttime" name="starttime" /></div>
-    <div class="cansetTimeR"><span>到<span><input type="date" id="endtime" name="endtime" /></div>
-    <button type="button" class="btn btn-primary .btn-sm" style="float: right;margin-right: 5px">确定</button>
-</div>
-<div id="rightbar">
-    <img src="./image/nanhua_logo.png"/>
-</div>
+
+
 
 
 <div  id="rightbody">

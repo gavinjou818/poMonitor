@@ -83,8 +83,9 @@ public class BriefingSummarize
 	 *        传值过来
 	 * @return 完整的json到前端,于新闻相关的类都写在这,
 	 *         主要服务于YQSL.jsp
+	 * 第一个图表所需要获取的信息.        
 	 */
-	public String getPreviewChart(String requestString)
+	public String getPreviewChart1(String requestString)
 	{    
 		
 		String[] obj=requestString.split(",");
@@ -205,13 +206,14 @@ public class BriefingSummarize
 			else {countWeb.put(tmpNews.getWeb(),
 				  countWeb.get(tmpNews.getWeb())+1);}
 			
-			if(countTendClass.get(state[newsTend.getTendclass()])==null)
+			if(countTendClass.get(state[newsTend.getTendclass()+1])==null)
 			{
-				countTendClass.put(state[newsTend.getTendclass()], 1);
+				countTendClass.put(state[newsTend.getTendclass()+1], 1);
 			}
 			else 
-			{      countTendClass.put(state[newsTend.getTendclass()],
-				   countTendClass.get(state[newsTend.getTendclass()])+1);
+			{      
+				   countTendClass.put(state[newsTend.getTendclass()+1],
+				   countTendClass.get(state[newsTend.getTendclass()+1])+1);
 			}
 			
 		}

@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
@@ -39,11 +40,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 state=true;
             }
       }
+      
+      
+       
 
     </script>
 
 </head>
 <body >
+
+     <%
+         if(session.getAttribute("startTime")==null)
+         {   
+            Calendar cal=Calendar.getInstance();
+            Date date=cal.getTime();
+            SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd");
+            session.setAttribute("startTime", sf.format(date));
+         }
+         
+         if(session.getAttribute("endTime")==null)
+         {
+            
+            Calendar cal=Calendar.getInstance();
+            Date date=cal.getTime();
+            SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd");
+            session.setAttribute("endTime", sf.format(date));
+         }
+     %>
     <div id="Login_Container">
 
         <div id="Login_Top">

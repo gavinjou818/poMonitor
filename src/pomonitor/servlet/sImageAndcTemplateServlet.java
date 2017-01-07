@@ -29,18 +29,14 @@ import pomonitor.util.PropertiesReader;
 import sun.misc.BASE64Decoder;
 
 /**
- * 
+ * 理解前先要理解freemarket+echarts
  * @author zhouzhifeng 2016/12/19 本Servlet用于接收前端发界面发来的png,并且用于生成相应模板报表,
  *         前提一定要每个一模板位置都要有对应的输入.相应数据传输在briefing.html中
  */
 public class sImageAndcTemplateServlet extends HttpServlet {
 	private static String filePath;
 
-	// 获取图片保存路径
-	static {
-		PropertiesReader propertiesReader = new PropertiesReader();
-		filePath = propertiesReader.getPropertyByName("IMG_savePath");
-	}
+	
 
 	/**
 	 * Constructor of the object.
@@ -73,7 +69,6 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		doPost(request, response);
 	}
 
@@ -94,11 +89,13 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+	
 		String method = request.getParameter("method");
 		String requestString = request.getParameter("requestString");
 		String resJSON = "";
 
-		System.out.println("---->" + method);
+
 		switch (method) {
 		case "getPreviewBriefing":
 
@@ -109,13 +106,11 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 			resJSON = getPreviewBriefing(requestString, max, index);
 			break;
 		case "getPreviewChart":
-			// 获取最大字条
-
-			resJSON = getPreviewChart(requestString);
+			// 获取最图表
+			resJSON = getPreviewChart(requestString,request.getParameter("templateName"));
 			System.out.println("--->" + resJSON);
 			break;
 		case "createTemplate1":
-			// 获取最大字条
 			resJSON = "{\"message\":\"成功生成报表\"}";
 			createTemplate1(request);
 			break;
@@ -136,7 +131,13 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 	 *             if an error occurs
 	 */
 	public void init() throws ServletException {
-		// Put your code here
+		PropertiesReader propertiesReader = new PropertiesReader();
+		filePath =this.getServletContext().getRealPath("/")+propertiesReader.getPropertyByName("BEF_savePath");
+		File file=new File(filePath);
+		if(!(file.exists()&&file.isDirectory()))
+		{
+			file.mkdirs();
+		}
 	}
 
 	/**
@@ -166,10 +167,24 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 		String u = url[1];
 
 		byte[] b = new BASE64Decoder().decodeBuffer(u);
-		OutputStream out = new FileOutputStream(new File(filePath + fileName));
+		File flie=new File(filePath + fileName);
+		OutputStream out = new FileOutputStream(flie);
 		out.write(b);
 		out.flush();
 		out.close();
+	}
+	
+	private String createTimestr()//唯一字符串
+	{
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(Calendar.YEAR);//获取年份
+        int month=cal.get(Calendar.MONTH)+1;//获取月份
+        int day=cal.get(Calendar.DAY_OF_MONTH);//获取日
+        int hour=cal.get(Calendar.HOUR_OF_DAY);//小时
+        int minute=cal.get(Calendar.MINUTE);//分           
+        int second=cal.get(Calendar.SECOND);//秒
+        
+        return ""+year+month+day+hour+minute+second;
 	}
 
 	/**
@@ -177,7 +192,8 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 	 * 
 	 * @return
 	 */
-	private String getPreviewBriefing(String requestString, int max, int index) {
+	private String getPreviewBriefing(String requestString, int max, int index) 
+	{
 		BriefingSummarize briefingSummarize = new BriefingSummarize();
 		return briefingSummarize.getPreviewMessage(requestString, max, index);
 	}
@@ -190,9 +206,19 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 	 * @return
 	 */
 
-	private String getPreviewChart(String requestString) {
-		BriefingSummarize briefingSummarize = new BriefingSummarize();
-		return briefingSummarize.getPreviewChart(requestString);
+	private String getPreviewChart(String requestString,String templaterName) 
+	{  
+		String resJSON="";
+		switch (templaterName) 
+		{
+		case "template1":
+			BriefingSummarize briefingSummarize = new BriefingSummarize();
+			resJSON=briefingSummarize.getPreviewChart1(requestString);
+			break;
+		default:
+			break;
+		}
+		return resJSON;
 	}
 
 	/**
@@ -203,58 +229,83 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 	 * @param request
 	 *            这是存在servlet中的一些信息
 	 */
-	private void createTemplate1(HttpServletRequest request) {
-
+	private void createTemplate1(HttpServletRequest request) 
+	{    
+        //倾向性的趋势.分别对应NewsTend表下tendClass类型
 		String[] state = { "负", "中", "正" };
+		//template1.ftl 的对应图表
 		String[] chartName = { "mtcome", "gTofmedia" };
-
+       
+		//创建模板文件小助手
 		DocumentHandler documentHandler = new DocumentHandler();
+		//freemarker映射数据
 		Map<String, Object> dataMap = new HashMap<String, Object>();
-
+        //创建日历
 		Calendar cal = Calendar.getInstance();
 		// 创建基本报表模型,主要填入数据
 		Briefing briefing = new Briefing();
+		//写入要所要存入的文件夹,filePath默认为当前servlet定义的filepath
+		briefing.setFilePath(filePath);
+		//获取所选择的新闻的id请求串，其中“requestString为”：“id1,id2,id3,id4,...idn";
 		String requestString = request.getParameter("requestString");
-		// 使用的对应模板
+		//使用的对应模板
 		briefing.setTemplateName("template1.ftl");
-		briefing.setFileName("a.doc");
-
+		//设置要创建的文件名
+		briefing.setFileName("briefing"+createTimestr()+".doc");
+        
+		//获取有几个图片
 		int limited = Integer.parseInt(request.getParameter("length"));
-		for (int i = 0; i < limited; i++) {
-			try {
+		
+		//储存上传过来的图片
+		for(int i = 0; i < limited; i++) 
+		{
+			try 
+			{  
+				//从request中获取对应的base64码,其中我以ci来命名的
 				SaveImage(request, "c" + i, filePath, "c" + i + ".png");
+				//获取对应的刚刚存储好的图片加入到映射类中
 				dataMap.put(chartName[i], documentHandler.getImageStr(filePath
 						+ "c" + i + ".png"));
-			} catch (IOException e) {
+			} catch (IOException e) 
+			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (Exception e) {
+			} catch (Exception e) 
+			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-
+        //这些属性可以看template1.doc一个个对。
 		dataMap.put("theme", "南华大学");
-
 		dataMap.put("year", cal.get(Calendar.YEAR));
 		dataMap.put("month", cal.get(Calendar.MONTH) + 1);
 		dataMap.put("day", cal.get(Calendar.DAY_OF_MONTH));
 
 		System.out.println(cal.get(Calendar.YEAR) + " "
 				+ cal.get(Calendar.MONTH) + cal.get(Calendar.DAY_OF_MONTH));
+		
+		//将刚刚的request的requeString拆分
 		String[] obj = requestString.split(",");
-
+        
 		dataMap.put("NumberOfNews", obj.length);
 
-		NewsDAO newsDAO = new NewsDAO();
-		NewsTendDAO newsTendDAO = new NewsTendDAO();
-
-		Map<String, Integer> countWeb = new HashMap<>();
-		Map<String, Integer> countTendClass = new HashMap<>();
-
-		List<Map<String, Object>> newsList = new ArrayList<Map<String, Object>>();
-		List<Map<String, Object>> allnewsList = new ArrayList<Map<String, Object>>();//
 		
+		//打开新闻DAO获取实体
+		NewsDAO newsDAO = new NewsDAO();
+		//打开新闻倾向DAO获取实体
+		NewsTendDAO newsTendDAO = new NewsTendDAO();
+        
+		//用来统计来源个数
+		Map<String, Integer> countWeb = new HashMap<>();
+		//用来统计倾向个数
+		Map<String, Integer> countTendClass = new HashMap<>();
+        
+		//打开template1.doc可以查看,都是对应名称的关键
+		List<Map<String, Object>> newsList = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> allnewsList = new ArrayList<Map<String, Object>>();
+		 
+		//计算
 		for (int i = 0; i < obj.length; i++) 
 		{
 			News tmpNews = newsDAO.findById(Integer.parseInt(obj[i]));
@@ -290,7 +341,7 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 			alllistKey.put("web", tmpNews.getWeb());
 			String  timestr=tmpNews.getTime().toString();
 			alllistKey.put("TTime",timestr);
-			alllistKey.put("tendclass", newsTend.getTendclass());
+			alllistKey.put("tendclass", state[newsTend.getTendclass()+1]);
 			alllistKey.put("tendscore", newsTend.getTendscore());
 			alllistKey.put("allContent", tmpNews.getAllContent());
 			alllistKey.put("url", tmpNews.getUrl());
@@ -298,7 +349,8 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 			allnewsList.add(alllistKey);
 
 		}
-
+		
+		//打开template1.doc可以查看
 		dataMap.put("newsList", newsList);
 		dataMap.put("allnewsList", allnewsList);
 
@@ -314,6 +366,7 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 				MaxOfWeb = entry.getKey();
 			}
 		}
+		//打开template1.doc可以查看
 		dataMap.put("DetailOfNews", DetailOfNews);
 		dataMap.put("MaxOfWeb", MaxOfWeb);
 		dataMap.put("vMaxOfWeb", vMaxOfWeb);
@@ -341,7 +394,8 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 				vPosOfNews = (int)((double)entry.getValue() / obj.length * 100.0) + "%";
 			}
 		}
-
+        
+		//打开template1.doc可以查看
 		dataMap.put("NevOfNews", NevOfNews);
 		dataMap.put("vNevOfNews", vNevOfNews);
 
@@ -353,8 +407,7 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 
 		briefing.setDataMap(dataMap);
 
-		System.out.println(briefing.getFilePath() + "  "
-				+ briefing.getFileName() + " " + briefing.getTemplateName());
+		System.out.println("报表生成成功-----"+briefing.getFilePath() + "  "+ briefing.getFileName() );
 		documentHandler.createWord(briefing);
 	}
 
