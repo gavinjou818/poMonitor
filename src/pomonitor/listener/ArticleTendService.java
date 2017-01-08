@@ -39,6 +39,7 @@ public class ArticleTendService implements ServletContextListener {
 		// 倘若超过当前时间则马上执行一次，以后按照时间间隔定时执行
 		// 倘若没有超过时间间隔则等到开始点时准时执行
 		timer.schedule(new MyTask(), startDate, tendInterval * 60 * 60 * 1000);
+		
 
 	}
 

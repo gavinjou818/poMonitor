@@ -41,13 +41,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             }
       }
       
-      
-       
-
     </script>
 
 </head>
-<body >
+<body>
 
      <%
          if(session.getAttribute("startTime")==null)
@@ -82,19 +79,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div id="Login_Center" role="form">
             <div id="upload"><img src="./image/Login.PNG"></div>
             <div id="body">
-                <form method="post">
+                <form method="post" action="./servlet/BasicInteractionServlet">
                     <div class="body_input"><img src="./image/UserName.PNG"></div>
-                    <div class="body_up"><input type="text" class="form-control" id="username"  placeholder="请输入账号"/></div>
+                    <div class="body_up"><input type="text" class="form-control" id="username" name="username" placeholder="请输入账号"/></div>
                     <div class="body_input"><img src="./image/password.PNG"></div>
-                    <div class="body_up"><input type="password" class="form-control" id="password"  placeholder="请输入密码"/></div>
+                    <div class="body_up"><input type="password" class="form-control" id="userpwd" name="userpwd"  placeholder="请输入密码"/></div>
                     <div id="body_botton">
                         <input type="button" id="register"/>
                         <input type="reset" id="reset" value=""/>
                         <input type="submit" value="" id="submit"/>
                     </div>
+                    <div style="display:none;"><input type="text" id="method" name="method" value="verifyUserInteraction"/></div>
                 </form>
             </div>
+            <div id="Login_Foot">
+                     <%
+                        if(session.getAttribute("errorMessage")!=null)
+                        {
+                            
+                     %>
+                        <%=session.getAttribute("errorMessage") %>
+                     <%
+                           session.setAttribute("errorMessage","");
+                        }
+                     %>
+            </div>
         </div>
+
     </div>
 </body>
 </html>

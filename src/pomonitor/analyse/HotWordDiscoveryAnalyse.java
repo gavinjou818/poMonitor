@@ -45,22 +45,11 @@ public class HotWordDiscoveryAnalyse
 		HotWordDiscovery td = new HotWordDiscovery();
 		SenswordDAO sd = new SenswordDAO();
 		
-		
-		//--------------------------@zhouzhifeng修改
-		
-		  List<TDArticle> tdArticles=getArticlesBetweenDate(startDateStr, endDateStr);
-		  if(tdArticles.size()==0) return null;
-		  
-		  this.hotwords = td.getHotWords(
-				    tdArticles,
-					sd.findByProperty("userid", userId));
-		
-		/*
-		 * @zhouzhifeng  原来本这句话是这样的,但是一旦数据为0的时候会直接报错,所以我加了一点附加条件
-		   this.hotwords = td.getHotWords(
+	
+	    this.hotwords = td.getHotWords(
 				getArticlesBetweenDate(startDateStr, endDateStr),
 				sd.findByProperty("userid", userId));
-		*/
+		
 		this.relevanceMat = td.getRelevanceMat();
 		ArrayList<RetHotWord> retHotWordsList = new ArrayList<RetHotWord>();
 		for (int i = 0; i < hotwords.size(); i++)
@@ -126,7 +115,9 @@ public class HotWordDiscoveryAnalyse
 			
 			//TDArticleTerm文章上倾向性词语。
 			List<TDArticleTerm> tmpTDArtTerms = new ArrayList<TDArticleTerm>();
- 
+            
+			//@zhouzhifeng添加的语句,在这里可能会有空语句
+			if(news.getAllContent()==null) continue;
 			//获取文章的内容的所有分词
 			List<Term> tmpTermList_allcontent = generateTerms.getTerms(news
 					.getAllContent());

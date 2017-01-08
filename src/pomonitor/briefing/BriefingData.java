@@ -25,7 +25,7 @@ import pomonitor.util.PropertiesReader;
  * 
  */
 
-public class Briefing 
+public class BriefingData 
 {
     private String filePath;//文件路径名,已经定好了,可以自行修改
     private String fileName;//文件名称

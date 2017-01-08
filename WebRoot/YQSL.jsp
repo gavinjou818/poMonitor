@@ -163,7 +163,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					{
 						
 						"requestString":requestString,
-						"userId" : 1,
+						"userId" : '<%=session.getAttribute("userId")%>',
 						"method" : 'getPreviewBriefing',
 						"max" : barsum,
 						"index" : (curpage - 1)*barsum
@@ -202,17 +202,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								start = 1;
 							}
 						}
-
+                        
+                        
+                        var halfsum=parseInt(sum/2)+1;
 						//确定开始标号范围.
-						if (parseInt(start) - 3 > 0) {
+						if (parseInt(start) - halfsum > 0) {
 							son2.addEventListener("click", function() {
-								initData(start - 3, dataroot, tparent);
+								initData(start - halfsum, dataroot, tparent);
 							});
 						}
 						son1.appendChild(son2);
 						parent.appendChild(son1);
 
-						var i = start - 2;
+						var i = start - halfsum+1;
 						if (i <= 0) {
 							i = 1;
 						}
@@ -239,11 +241,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						son2.innerHTML = "&raquo;";
 
 						//确定开始标号范围.
-						var End = parseInt(start) + 3;
-						if (start == 1 && (parseInt(start) + 5) < pagesum) {
-							End = parseInt(start) + 5;
+						var End = parseInt(start) + halfsum;
+						if (start == 1 && (parseInt(start) + sum) < pagesum) 
+						{
+							End = parseInt(start) + sum;
 						}
-
 						//如果右标签的最后一个超出了page的最大值,那么就不添加事件了。
 						if (End <= pagesum) {
 							son2.addEventListener("click", function() {

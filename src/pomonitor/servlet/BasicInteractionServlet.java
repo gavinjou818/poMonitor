@@ -2,6 +2,7 @@ package pomonitor.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.jms.Session;
 import javax.json.Json;
@@ -10,6 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.alibaba.fastjson.JSON;
+
+import pomonitor.entity.User;
+import pomonitor.entity.UserDAO;
 
 
 /**
@@ -20,7 +26,15 @@ import javax.servlet.http.HttpSession;
  * 只能通过请求的方式来设置,所以我设置了基本交互Servlet来处理这些基本交互,这不属于任何特性的Servlet
  *
  */
-public class BasicInteractionServlet extends HttpServlet {
+
+
+/**
+ * 
+ * @author Gavinjou
+ *
+ */
+public class BasicInteractionServlet extends HttpServlet 
+{
 
 	/**
 	 * Constructor of the object.
@@ -64,22 +78,44 @@ public class BasicInteractionServlet extends HttpServlet {
 	 * @throws IOException if an error occurred
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException 
+	{
 		
 		String method=request.getParameter("method");
-	
+		boolean VerificationFlag=false;
 
-		switch (method) {
+		switch (method) 
+		{
+		//设置时间交互
 		case "setTimeInteraction":
 			  setTimeInteraction(request);
-	
-			  
 			  break;
+	    //用户登录验证交互
+		case "verifyUserInteraction":
+			VerificationFlag=verifyUserInteraction(request);
+			  break;			  
 		default:
 			break;
 		}
         
-
+		if(method.equals("verifyUserInteraction"))
+		{   
+			
+			String basePath = request.getScheme()+"://"+request.getServerName()+":"+
+	                request.getServerPort()+request.getContextPath()+"/";
+		
+			if(VerificationFlag==true)
+			{   
+				response.sendRedirect(basePath+"SY.jsp");
+			}
+			else 
+			{    
+				HttpSession session=request.getSession();
+				session.setAttribute("errorMessage", "账号或者密码错误");
+				response.sendRedirect(basePath+"index.jsp");	
+			}
+		}
+		
 	}
 
 	/**
@@ -97,5 +133,35 @@ public class BasicInteractionServlet extends HttpServlet {
 		session.setAttribute("startTime", request.getParameter("startTime"));
 		session.setAttribute("endTime", request.getParameter("endTime"));
 	}
+    /**
+     * 简单的登录验证,没做防护措施,待修改.
+     * @author zhouzhifeng
+     * @param request
+     * @return
+     */
+	public boolean verifyUserInteraction(HttpServletRequest request)
+	{  
+		HttpSession session=request.getSession();
+		String username=request.getParameter("username");
+		String userpwd=request.getParameter("userpwd");
+		
+	
+		UserDAO userDAO=new UserDAO();
+		List<User> users=userDAO.findByUsername(username);
+		
+		
+		if(users.size()==0){return false;}
+	    
+		User user=users.get(0);
+		if(!user.getUserpwd().equals(userpwd))
+		{    
+			return false;
+		}
+		
+		session.setAttribute("username",user.getUsername());
+		session.setAttribute("userlevel",user.getUserlevel());
+		session.setAttribute("userId", user.getUserid());
 
+		return true;
+	}
 }

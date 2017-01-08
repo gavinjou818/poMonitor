@@ -64,6 +64,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 			var startTime='<%=session.getAttribute("startTime")%>';
 			var endTime='<%=session.getAttribute("endTime")%>';
+			var userId='<%=session.getAttribute("userId")%>';
 			
 		
             document.getElementById('startTime').value=startTime;
@@ -75,7 +76,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
              //热点舆情加载
             getPointMessage(startTime,endTime);
              //数据图表加载
-            getChart(startTime,endTime);
+            getChart(startTime,endTime,userId);
  
          } 
             
@@ -357,17 +358,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     }
     
-    function getChart(startTime,endTime)
+    function getChart(startTime,endTime,userId)
     {
         
         //地域分布图
-        ChinaPictureChart("./json/ChinaPiture.json",'ChinaPiture',startTime,endTime,null,null);
+        ChinaPictureChart("./json/ChinaPiture.json",'ChinaPiture',startTime,endTime,userId,null);
         //今日舆情图
-        PublicOpinionTodayChart('./servlet/IndexServlet','medtendency',startTime,endTime,null,'checkStatus');
+        PublicOpinionTodayChart('./servlet/IndexServlet','medtendency',startTime,endTime,userId,'checkStatus');
         //测试用
         //PublicOpinionTodayChart('./json/medtendency.json','medtendency',new Date(),new Date(),null,'checkStatus');
         //一周走势图
-         WeeklyChart("./servlet/IndexServlet",'yqto',startTime,endTime,null,'getTendency');
+         WeeklyChart("./servlet/IndexServlet",'yqto',startTime,endTime,userId,'getTendency');
         //测试用
         //WeeklyChart("./json/yqto.json",'yqto',new Date(),new Date(),null,'getTendency');
         

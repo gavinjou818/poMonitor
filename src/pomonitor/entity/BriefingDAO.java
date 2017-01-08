@@ -1,5 +1,6 @@
 package pomonitor.entity;
 
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import javax.persistence.EntityManager;
@@ -7,26 +8,30 @@ import javax.persistence.Query;
 
 /**
  * A data access object (DAO) providing persistence and search support for
- * Sensword entities. Transaction control of the save(), update() and delete()
+ * Briefing entities. Transaction control of the save(), update() and delete()
  * operations must be handled externally by senders of these methods or must be
  * manually added to each of these methods for data to be persisted to the JPA
  * datastore.
  * 
- * @see pomonitor.entity.Sensword
+ * @see pomonitor.entity.Briefing
  * @author MyEclipse Persistence Tools
  */
-public class SenswordDAO implements ISenswordDAO {
+public class BriefingDAO implements IBriefingDAO {
 	// property constants
-	public static final String SENSLEVEL = "senslevel";
-	public static final String SENSVALUE = "sensvalue";
-	public static final String USERID = "userid";
+	public static final String BASEPATH = "basepath";
+	public static final String NAME = "name";
+	public static final String ENTITYURL = "entityurl";
+	public static final String DOCPATH = "docpath";
+	public static final String PDFPATH = "pdfpath";
+	public static final String USERID="userid";
+	public static final String VIRTUALNAME="virtualname";
 
 	private EntityManager getEntityManager() {
 		return EntityManagerHelper.getEntityManager();
 	}
 
 	/**
-	 * Perform an initial save of a previously unsaved Sensword entity. All
+	 * Perform an initial save of a previously unsaved Briefing entity. All
 	 * subsequent persist actions of this entity should use the #update()
 	 * method. This operation must be performed within the a database
 	 * transaction context for the entity's data to be permanently saved to the
@@ -36,19 +41,23 @@ public class SenswordDAO implements ISenswordDAO {
 	 * 
 	 * <pre>
 	 * EntityManagerHelper.beginTransaction();
-	 * SenswordDAO.save(entity);
+	 * BriefingDAO.save(entity);
 	 * EntityManagerHelper.commit();
 	 * </pre>
 	 * 
 	 * @param entity
-	 *            Sensword entity to persist
+	 *            Briefing entity to persist
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(Sensword entity) {
-		EntityManagerHelper.log("saving Sensword instance", Level.INFO, null);
+	public void save(Briefing entity) {
+		EntityManagerHelper.log("saving Briefing instance", Level.INFO, null);
 		try {
-			getEntityManager().persist(entity);
+			EntityManager em=getEntityManager();
+			em.getTransaction().begin();
+			em.persist(entity);
+			em.getTransaction().commit();
+			em.close();
 			EntityManagerHelper.log("save successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			EntityManagerHelper.log("save failed", Level.SEVERE, re);
@@ -57,7 +66,7 @@ public class SenswordDAO implements ISenswordDAO {
 	}
 
 	/**
-	 * Delete a persistent Sensword entity. This operation must be performed
+	 * Delete a persistent Briefing entity. This operation must be performed
 	 * within the a database transaction context for the entity's data to be
 	 * permanently deleted from the persistence store, i.e., database. This
 	 * method uses the {@link javax.persistence.EntityManager#remove(Object)
@@ -65,22 +74,29 @@ public class SenswordDAO implements ISenswordDAO {
 	 * 
 	 * <pre>
 	 * EntityManagerHelper.beginTransaction();
-	 * SenswordDAO.delete(entity);
+	 * BriefingDAO.delete(entity);
 	 * EntityManagerHelper.commit();
 	 * entity = null;
 	 * </pre>
 	 * 
 	 * @param entity
-	 *            Sensword entity to delete
+	 *            Briefing entity to delete
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void delete(Sensword entity) {
-		EntityManagerHelper.log("deleting Sensword instance", Level.INFO, null);
+	public void delete(Briefing entity) {
+		EntityManagerHelper.log("deleting Briefing instance", Level.INFO, null);
 		try {
-			entity = getEntityManager().getReference(Sensword.class,
-					entity.getSensid());
-			getEntityManager().remove(entity);
+			
+			
+			EntityManager em=getEntityManager();
+			em.getTransaction().begin();
+			entity = em.getReference(Briefing.class,
+					entity.getId());
+			em.remove(entity);
+			em.getTransaction().commit();
+			em.close();
+
 			EntityManagerHelper.log("delete successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			EntityManagerHelper.log("delete failed", Level.SEVERE, re);
@@ -89,8 +105,8 @@ public class SenswordDAO implements ISenswordDAO {
 	}
 
 	/**
-	 * Persist a previously saved Sensword entity and return it or a copy of it
-	 * to the sender. A copy of the Sensword entity parameter is returned when
+	 * Persist a previously saved Briefing entity and return it or a copy of it
+	 * to the sender. A copy of the Briefing entity parameter is returned when
 	 * the JPA persistence mechanism has not previously been tracking the
 	 * updated entity. This operation must be performed within the a database
 	 * transaction context for the entity's data to be permanently saved to the
@@ -100,21 +116,27 @@ public class SenswordDAO implements ISenswordDAO {
 	 * 
 	 * <pre>
 	 * EntityManagerHelper.beginTransaction();
-	 * entity = SenswordDAO.update(entity);
+	 * entity = BriefingDAO.update(entity);
 	 * EntityManagerHelper.commit();
 	 * </pre>
 	 * 
 	 * @param entity
-	 *            Sensword entity to update
-	 * @return Sensword the persisted Sensword entity instance, may not be the
+	 *            Briefing entity to update
+	 * @return Briefing the persisted Briefing entity instance, may not be the
 	 *         same
 	 * @throws RuntimeException
 	 *             if the operation fails
 	 */
-	public Sensword update(Sensword entity) {
-		EntityManagerHelper.log("updating Sensword instance", Level.INFO, null);
+	public Briefing update(Briefing entity) {
+		EntityManagerHelper.log("updating Briefing instance", Level.INFO, null);
 		try {
-			Sensword result = getEntityManager().merge(entity);
+			
+			EntityManager em=getEntityManager();
+			em.getTransaction().begin();
+			Briefing result = getEntityManager().merge(entity);
+			em.getTransaction().commit();
+			em.close();
+			
 			EntityManagerHelper.log("update successful", Level.INFO, null);
 			return result;
 		} catch (RuntimeException re) {
@@ -123,11 +145,11 @@ public class SenswordDAO implements ISenswordDAO {
 		}
 	}
 
-	public Sensword findById(Integer id) {
-		EntityManagerHelper.log("finding Sensword instance with id: " + id,
+	public Briefing findById(Integer id) {
+		EntityManagerHelper.log("finding Briefing instance with id: " + id,
 				Level.INFO, null);
 		try {
-			Sensword instance = getEntityManager().find(Sensword.class, id);
+			Briefing instance = getEntityManager().find(Briefing.class, id);
 			return instance;
 		} catch (RuntimeException re) {
 			EntityManagerHelper.log("find failed", Level.SEVERE, re);
@@ -136,20 +158,20 @@ public class SenswordDAO implements ISenswordDAO {
 	}
 
 	/**
-	 * Find all Sensword entities with a specific property value.
+	 * Find all Briefing entities with a specific property value.
 	 * 
 	 * @param propertyName
-	 *            the name of the Sensword property to query
+	 *            the name of the Briefing property to query
 	 * @param value
 	 *            the property value to match
-	 * @return List<Sensword> found by query
+	 * @return List<Briefing> found by query
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Sensword> findByProperty(String propertyName, final Object value) {
-		EntityManagerHelper.log("finding Sensword instance with property: "
+	public List<Briefing> findByProperty(String propertyName, final Object value) {
+		EntityManagerHelper.log("finding Briefing instance with property: "
 				+ propertyName + ", value: " + value, Level.INFO, null);
 		try {
-			final String queryString = "select model from Sensword model where model."
+			final String queryString = "select model from Briefing model where model."
 					+ propertyName + "= :propertyValue";
 			Query query = getEntityManager().createQuery(queryString);
 			query.setParameter("propertyValue", value);
@@ -161,29 +183,43 @@ public class SenswordDAO implements ISenswordDAO {
 		}
 	}
 
-	public List<Sensword> findBySenslevel(Object senslevel) {
-		return findByProperty(SENSLEVEL, senslevel);
+	public List<Briefing> findByBasepath(Object basepath) {
+		return findByProperty(BASEPATH, basepath);
 	}
 
-	public List<Sensword> findBySensvalue(Object sensvalue) {
-		return findByProperty(SENSVALUE, sensvalue);
+	public List<Briefing> findByName(Object name) {
+		return findByProperty(NAME, name);
 	}
 
-	public List<Sensword> findByUserid(Object userid) {
+	public List<Briefing> findByEntityurl(Object entityurl) {
+		return findByProperty(ENTITYURL, entityurl);
+	}
+
+	public List<Briefing> findByDocpath(Object docpath) {
+		return findByProperty(DOCPATH, docpath);
+	}
+
+	public List<Briefing> findByPdfpath(Object pdfpath) {
+		return findByProperty(PDFPATH, pdfpath);
+	}
+   
+	public List<Briefing> findByUserid(Object userid) {
 		return findByProperty(USERID, userid);
 	}
-
+	public List<Briefing> findByVirtualname(Object virtualname) {
+		return findByProperty(VIRTUALNAME, virtualname);
+	}
 	/**
-	 * Find all Sensword entities.
+	 * Find all Briefing entities.
 	 * 
-	 * @return List<Sensword> all Sensword entities
+	 * @return List<Briefing> all Briefing entities
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Sensword> findAll() {
-		EntityManagerHelper.log("finding all Sensword instances", Level.INFO,
+	public List<Briefing> findAll() {
+		EntityManagerHelper.log("finding all Briefing instances", Level.INFO,
 				null);
 		try {
-			final String queryString = "select model from Sensword model";
+			final String queryString = "select model from Briefing model";
 			Query query = getEntityManager().createQuery(queryString);
 			return query.getResultList();
 		} catch (RuntimeException re) {

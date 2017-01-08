@@ -107,7 +107,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <body>
 
-   
+   <!--测试专用语句  -->
+   <% session.setAttribute("userId", "1"); %> 
    
    <div id="leftbar">
 		<!--头像-->
@@ -143,6 +144,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<img src="./image/right.png" style="width: 20px;height: 20px"><span
 						class="Menu">舆情分析</span>
 				</div>
+				
 				<div id="Menu_panel1">
 					<div class="Menu_fa">
 						<a href="MTFX.jsp" class="Menu_son">媒体分析</a>
@@ -170,7 +172,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="Menu_fa">
 						<a href="SP.jsp" class="Menu_son">事件报表</a>
 					</div>
+					
+					 <%
+				         if(session.getAttribute("userId")!=null)
+				          {
+				     %>
+				    <div class="Menu_fa">
+					      <a href="MYBF.jsp" class="Menu_son">个人报表</a>
+				    </div>
+				    
+				    <%
+				          }
+				     %>
 				</div>
+	
+				
 
 			</div>
 		</div>

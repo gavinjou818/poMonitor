@@ -7,40 +7,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head>
-    <base href="<%=basePath%>">
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-    
-    <title>南华大学核电舆情系统</title>
-    <link href="css/TP.css" rel="stylesheet" type="text/css"  />
-    <link href="css/bootstrap.css" rel="stylesheet" type="text/css"  />
-    <script src="js/jquery-3.1.1.js" ></script>
-    <script src="js/bootstrap.js" ></script>
-    <script src="js/examples.js"></script>
+<head>
+<base href="<%=basePath%>">
 
-    <link rel="stylesheet" type="text/css" href="./css/master.css">
-    <script type="text/javascript" src="./js/master.js"></script>
-    <script type="text/javascript" src="./js/smoothscroll.js"></script>
-    
-    <!-- 内部css -->
-    <style>
-        .tab-content
-        {
-            height: 550px !important;
-        }
-       
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+
+<title>南华大学核电舆情系统</title>
+<link href="css/TP.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery-3.1.1.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/examples.js"></script>
+
+<link rel="stylesheet" type="text/css" href="./css/master.css">
+<script type="text/javascript" src="./js/master.js"></script>
+<script type="text/javascript" src="./js/smoothscroll.js"></script>
+
+<!-- 内部css -->
+<style>
+.tab-content {
+	height: 550px !important;
+}
+
 .pagination {
 	margin: 0px !important;
 }
+</style>
 
-    </style>
-    
-    <script type="text/javascript">
+<script type="text/javascript">
          //用于存储选择的数据的id;
          var SelectID=new Array();
          
@@ -101,10 +99,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          }
          
     </script>
-     
 
-    <!--加载数据表-->
-    <script type="text/javascript">
+
+<!--加载数据表-->
+<script type="text/javascript">
 
         var operate=["查看","导出","邮箱发送"];
         var sum=5;//最大页数5;
@@ -258,7 +256,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     </script>
 
-    <script type="text/javascript">
+<script type="text/javascript">
         function allseleck(papername)
         {
 
@@ -278,18 +276,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             }
         }
     </script>
-    
-    
-    
 
 
-  
+
+
+
+
 
 </head>
 
 <body onload="preload()">
 
-<jsp:include page="master.jsp"  flush="true"/>
+	<jsp:include page="master.jsp" flush="true" />
 
 	<div id="cansetTime">
 		<div class="cansetTimeR">
@@ -302,159 +300,178 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			style="float: right;margin-right: 5px" onclick="setTimeOpera()">确定</button>
 	</div>
 
-<div id="Catalog">
-    <div style="text-align: left"><img src="./image/barleft.png" style="width: 25px;height:25px;cursor: pointer;" title="时间设置显示" onclick="changeCatalog()"></div>
-    <div><a class="smoothScroll" href="<%=basePath%>TP.jsp#head1" title="日报中心">日报中心</a></div>
-    <div><a class="smoothScroll" href="<%=basePath%>TP.jsp#head2" title="周报中心">周报中心</a></div>
-    <div><a class="smoothScroll" href="<%=basePath%>TP.jsp#head3" title="月报中心">月报中心</a></div>
-</div>
-<!--右边标题-->
-<div id="cansetTime">
-    <div class="cansetTimeR"><span>从<span><input type="date" id="starttime" name="starttime" /></div>
-    <div class="cansetTimeR"><span>到<span><input type="date" id="endtime" name="endtime" /></div>
-    <button type="button" class="btn btn-primary .btn-sm" style="float: right;margin-right: 5px">确定</button>
-</div>
+	<div id="Catalog">
+		<div style="text-align: left">
+			<img src="./image/barleft.png"
+				style="width: 25px;height:25px;cursor: pointer;" title="时间设置显示"
+				onclick="changeCatalog()">
+		</div>
+		<div>
+			<a class="smoothScroll" href="<%=basePath%>TP.jsp#head1" title="日报中心">日报中心</a>
+		</div>
+		<div>
+			<a class="smoothScroll" href="<%=basePath%>TP.jsp#head2" title="周报中心">周报中心</a>
+		</div>
+		<div>
+			<a class="smoothScroll" href="<%=basePath%>TP.jsp#head3" title="月报中心">月报中心</a>
+		</div>
+	</div>
+	<!--右边标题-->
+	<div id="cansetTime">
+		<div class="cansetTimeR">
+			<span>从<span><input type="date" id="starttime"
+					name="starttime" />
+		</div>
+		<div class="cansetTimeR">
+			<span>到<span><input type="date" id="endtime"
+					name="endtime" />
+		</div>
+		<button type="button" class="btn btn-primary .btn-sm"
+			style="float: right;margin-right: 5px">确定</button>
+	</div>
 
 
-<div  id="rightbody">
+	<div id="rightbody">
 
 
-    <!--主体-->
-    <div class="container">
-        <div class="row">
-
-
-
-            <div class="Ancestor" id="head1">
-                <h1 class="h1Title">日报中心</h1>
-
-                <div class="tab-content">
-                    <!--日报中心-->
-                    <div role="tabpanel" class="tab-pane active" id="dnewspaper" style="padding-top:10px" >
-                        <table class="table table-hover " >
-                            <thead>
-                            <th style="width:10%;">编号</th>
-                            <th style="width:20%;">时间</th>
-                            <th style="width:50%">报表名称</th>
-                            <th style="width:20%;">操作</th>
-                            </thead>
-                            <tbody>
-
-
-
-                            </tbody>
-                        </table>
-
-                        <ul class="pagination pagsize">
-
-
-                        </ul>
-                        <div style="float: right">
-                            <button type="button" class="btn btn-default" onclick="allseleck('dnewspaper')">全选</button>
-                            <button type="button" class="btn btn-default">邮件发送</button>
-                            <button type="button" class="btn btn-default">导出</button>
-                        </div>
-
-
-                    </div>
-                </div>
-
-                <div style="clear: both"></div>
-            </div>
+		<!--主体-->
+		<div class="container">
+			<div class="row">
 
 
 
-            <div class="Ancestor" id="head2">
-                <h1 class="h1Title">周报中心</h1>
+				<div class="Ancestor" id="head1">
+					<h1 class="h1Title">日报中心</h1>
 
-                <div class="tab-content">
-                    <!--周报中心-->
-                    <div role="tabpanel" class="tab-pane active" id="wnewspaper" style="padding-top:10px" >
-                        <table class="table table-hover " >
-                            <thead>
-                            <th style="width:10%;">编号</th>
-                            <th style="width:20%;">时间</th>
-                            <th style="width:50%">报表名称</th>
-                            <th style="width:20%;">操作</th>
-                            </thead>
-                            <tbody>
-
-
-
-                            </tbody>
-                        </table>
-
-                        <ul class="pagination pagsize">
-
-
-                        </ul>
-                        <div style="float: right">
-                            <button type="button" class="btn btn-default" onclick="allseleck('wnewspaper')">全选</button>
-                            <button type="button" class="btn btn-default">邮件发送</button>
-                            <button type="button" class="btn btn-default">导出</button>
-                        </div>
-
-
-                    </div>
-                </div>
-
-                <div style="clear: both"></div>
-            </div>
+					<div class="tab-content">
+						<!--日报中心-->
+						<div role="tabpanel" class="tab-pane active" id="dnewspaper"
+							style="padding-top:10px">
+							<table class="table table-hover ">
+								<thead>
+									<th style="width:10%;">编号</th>
+									<th style="width:20%;">时间</th>
+									<th style="width:50%">报表名称</th>
+									<th style="width:20%;">操作</th>
+								</thead>
+								<tbody>
 
 
 
-            <div class="Ancestor" id="head3">
-                <h1 class="h1Title">月报中心</h1>
+								</tbody>
+							</table>
+
+							<ul class="pagination pagsize">
 
 
-                <div class="tab-content">
-                    <!--月报中心-->
-                    <div role="tabpanel" class="tab-pane active" id="mnewspaper" style="padding-top:10px" >
-                        <table class="table table-hover" >
-                            <thead>
-                            <th style="width:10%;">编号</th>
-                            <th style="width:20%;">时间</th>
-                            <th style="width:50%">报表名称</th>
-                            <th style="width:20%;">操作</th>
-                            </thead>
-                            <tbody>
+							</ul>
+							<div style="float: right">
+								<button type="button" class="btn btn-default"
+									onclick="allseleck('dnewspaper')">全选</button>
+								<button type="button" class="btn btn-default">邮件发送</button>
+								<button type="button" class="btn btn-default">导出</button>
+							</div>
 
 
+						</div>
+					</div>
 
-                            </tbody>
-                        </table>
-
-                        <ul class="pagination pagsize">
-
-
-                        </ul>
-                        <div style="float: right">
-                            <button type="button" class="btn btn-default" onclick="allseleck('mnewspaper')">全选</button>
-                            <button type="button" class="btn btn-default">邮件发送</button>
-                            <button type="button" class="btn btn-default">导出</button>
-                        </div>
-
-
-                    </div>
-                </div>
-
-
-        </div>
-
-
-    </div>
-
-</div>
+					<div style="clear: both"></div>
+				</div>
 
 
 
+				<div class="Ancestor" id="head2">
+					<h1 class="h1Title">周报中心</h1>
+
+					<div class="tab-content">
+						<!--周报中心-->
+						<div role="tabpanel" class="tab-pane active" id="wnewspaper"
+							style="padding-top:10px">
+							<table class="table table-hover ">
+								<thead>
+									<th style="width:10%;">编号</th>
+									<th style="width:20%;">时间</th>
+									<th style="width:50%">报表名称</th>
+									<th style="width:20%;">操作</th>
+								</thead>
+								<tbody>
 
 
 
-<!--foot-->
+								</tbody>
+							</table>
+
+							<ul class="pagination pagsize">
+
+
+							</ul>
+							<div style="float: right">
+								<button type="button" class="btn btn-default"
+									onclick="allseleck('wnewspaper')">全选</button>
+								<button type="button" class="btn btn-default">邮件发送</button>
+								<button type="button" class="btn btn-default">导出</button>
+							</div>
+
+
+						</div>
+					</div>
+
+					<div style="clear: both"></div>
+				</div>
+
+
+
+				<div class="Ancestor" id="head3">
+					<h1 class="h1Title">月报中心</h1>
+
+
+					<div class="tab-content">
+						<!--月报中心-->
+						<div role="tabpanel" class="tab-pane active" id="mnewspaper"
+							style="padding-top:10px">
+							<table class="table table-hover">
+								<thead>
+									<th style="width:10%;">编号</th>
+									<th style="width:20%;">时间</th>
+									<th style="width:50%">报表名称</th>
+									<th style="width:20%;">操作</th>
+								</thead>
+								<tbody>
+
+
+
+								</tbody>
+							</table>
+
+							<ul class="pagination pagsize">
+
+
+							</ul>
+							<div style="float: right">
+								<button type="button" class="btn btn-default"
+									onclick="allseleck('mnewspaper')">全选</button>
+								<button type="button" class="btn btn-default">邮件发送</button>
+								<button type="button" class="btn btn-default">导出</button>
+							</div>
+
+
+						</div>
+					</div>
+
+
+				</div>
+
+
+			</div>
+
+		</div>
 
 
 
 
+
+
+		<!--foot-->
 </body>
 </html>

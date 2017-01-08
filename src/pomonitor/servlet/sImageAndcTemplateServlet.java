@@ -13,13 +13,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import pomonitor.briefing.Briefing;
+import org.apache.pdfbox.pdfparser.BaseParser;
+import org.omg.CORBA.PRIVATE_MEMBER;
+
+import pomonitor.briefing.BriefingData;
 import pomonitor.briefing.DocumentHandler;
+import pomonitor.entity.Briefing;
+import pomonitor.entity.BriefingDAO;
+import pomonitor.entity.EntityManagerHelper;
 import pomonitor.entity.News;
 import pomonitor.entity.NewsDAO;
 import pomonitor.entity.NewsTend;
@@ -33,8 +41,22 @@ import sun.misc.BASE64Decoder;
  * @author zhouzhifeng 2016/12/19 本Servlet用于接收前端发界面发来的png,并且用于生成相应模板报表,
  *         前提一定要每个一模板位置都要有对应的输入.相应数据传输在briefing.html中
  */
-public class sImageAndcTemplateServlet extends HttpServlet {
-	private static String filePath;
+public class sImageAndcTemplateServlet extends HttpServlet
+{
+	private static String filePath;//文件在系统中的真实路径
+	private static String basePath;//文件在访问地址中的相对路径
+	private static String BEF_savePath;//所在保存的包
+	
+	private  int year; 
+	private  int month;
+	private  int day;
+	private  int hour;
+	private  int minute;
+	private  int second;
+	private  int userid;
+	
+	
+	
 
 	
 
@@ -90,29 +112,45 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-	
+		int max;
+		int index;
 		String method = request.getParameter("method");
 		String requestString = request.getParameter("requestString");
 		String resJSON = "";
+	    basePath = request.getScheme()+"://"+request.getServerName()+":"+
+                request.getServerPort()+request.getContextPath()+"/";
+	    HttpSession session=request.getSession();
+	    session.setAttribute("BEF_savePath", BEF_savePath);
+	    String tmp=session.getAttribute("userId").toString();
+	    userid = Integer.parseInt(tmp);
+	   
 
 
 		switch (method) {
-		case "getPreviewBriefing":
+		case "getPreviewBriefing"://获取预览所选择的词条信息
 
 			// 获取最大字条
-			int max = Integer.parseInt(request.getParameter("max"));
+			max = Integer.parseInt(request.getParameter("max"));
 			// 获取开始序列
-			int index = Integer.parseInt(request.getParameter("index"));
+			index = Integer.parseInt(request.getParameter("index"));
 			resJSON = getPreviewBriefing(requestString, max, index);
 			break;
-		case "getPreviewChart":
+		case "getPreviewChart"://根据所选择的词条信息,创建所需要的图表
 			// 获取最图表
 			resJSON = getPreviewChart(requestString,request.getParameter("templateName"));
-			System.out.println("--->" + resJSON);
+			System.out.println("getPreviewChart--->" + resJSON);
 			break;
 		case "createTemplate1":
 			resJSON = "{\"message\":\"成功生成报表\"}";
 			createTemplate1(request);
+			break;
+		case "getIntimateBriefing":	//得到私人生成的图表,这是不公开的,自己生成的便是自己的报表.
+			// 获取最大字条
+			max = Integer.parseInt(request.getParameter("max"));
+			// 获取开始序列
+			index = Integer.parseInt(request.getParameter("index"));
+			resJSON=getIntimateBriefing(max,index,userid,basePath);
+			System.out.println("getIntimateBriefing--->" + resJSON);
 			break;
 		default:
 			break;
@@ -130,9 +168,11 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 	 * @throws ServletException
 	 *             if an error occurs
 	 */
-	public void init() throws ServletException {
+	public void init() throws ServletException 
+	{   
 		PropertiesReader propertiesReader = new PropertiesReader();
-		filePath =this.getServletContext().getRealPath("/")+propertiesReader.getPropertyByName("BEF_savePath");
+		BEF_savePath=propertiesReader.getPropertyByName("BEF_savePath");
+		filePath =this.getServletContext().getRealPath("/")+BEF_savePath;
 		File file=new File(filePath);
 		if(!(file.exists()&&file.isDirectory()))
 		{
@@ -173,21 +213,26 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 		out.flush();
 		out.close();
 	}
-	
+	/**
+	 * 用于创建报表名称的唯一标识,根据年月日时分秒来定。
+	 * @author zhouzhifeng
+	 * @return 
+	 */
 	private String createTimestr()//唯一字符串
 	{
 		Calendar cal = Calendar.getInstance();
-		int year = cal.get(Calendar.YEAR);//获取年份
-        int month=cal.get(Calendar.MONTH)+1;//获取月份
-        int day=cal.get(Calendar.DAY_OF_MONTH);//获取日
-        int hour=cal.get(Calendar.HOUR_OF_DAY);//小时
-        int minute=cal.get(Calendar.MINUTE);//分           
-        int second=cal.get(Calendar.SECOND);//秒
+		year = cal.get(Calendar.YEAR);//获取年份
+        month=cal.get(Calendar.MONTH)+1;//获取月份
+        day=cal.get(Calendar.DAY_OF_MONTH);//获取日
+        hour=cal.get(Calendar.HOUR_OF_DAY);//小时
+        minute=cal.get(Calendar.MINUTE);//分           
+        second=cal.get(Calendar.SECOND);//秒
         
         return ""+year+month+day+hour+minute+second;
 	}
 
 	/**
+	 * @author zhouzhifeng
 	 * 该类用于建立预览报表示意图,任何与报表相关的都应该填写在这个servlet中 对应网页YSQL.jsp 前提是已经把数据获取
 	 * 
 	 * @return
@@ -197,8 +242,24 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 		BriefingSummarize briefingSummarize = new BriefingSummarize();
 		return briefingSummarize.getPreviewMessage(requestString, max, index);
 	}
-
+    /**
+      * @author zhouzhifeng
+      * @param max 获取的报表的最大条数
+      * @param index 索引=(第几页*max),索引也从0开始
+      * @param userid 用户登录的id
+      * @param basePath当前访问的目录地址
+      * @return
+     */
+	private String getIntimateBriefing(int max,int index,int userid,String basePath)
+	{
+		BriefingSummarize briefingSummarize=new BriefingSummarize();
+		return briefingSummarize.getIntimateBriefing(max, index, userid,basePath);
+	}
+	
+	
+	
 	/**
+	 * @author zhouzhifeng
 	 * 获取选择的词条之后的预览的图表
 	 * 
 	 * @param requestString
@@ -207,7 +268,8 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 	 */
 
 	private String getPreviewChart(String requestString,String templaterName) 
-	{  
+	{   
+		
 		String resJSON="";
 		switch (templaterName) 
 		{
@@ -229,13 +291,14 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 	 * @param request
 	 *            这是存在servlet中的一些信息
 	 */
+	@SuppressWarnings("deprecation")
 	private void createTemplate1(HttpServletRequest request) 
-	{    
+	{     
         //倾向性的趋势.分别对应NewsTend表下tendClass类型
 		String[] state = { "负", "中", "正" };
 		//template1.ftl 的对应图表
 		String[] chartName = { "mtcome", "gTofmedia" };
-       
+        
 		//创建模板文件小助手
 		DocumentHandler documentHandler = new DocumentHandler();
 		//freemarker映射数据
@@ -243,7 +306,7 @@ public class sImageAndcTemplateServlet extends HttpServlet {
         //创建日历
 		Calendar cal = Calendar.getInstance();
 		// 创建基本报表模型,主要填入数据
-		Briefing briefing = new Briefing();
+		BriefingData briefing = new BriefingData();
 		//写入要所要存入的文件夹,filePath默认为当前servlet定义的filepath
 		briefing.setFilePath(filePath);
 		//获取所选择的新闻的id请求串，其中“requestString为”：“id1,id2,id3,id4,...idn";
@@ -251,7 +314,8 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 		//使用的对应模板
 		briefing.setTemplateName("template1.ftl");
 		//设置要创建的文件名
-		briefing.setFileName("briefing"+createTimestr()+".doc");
+		String uniqueName=createTimestr();
+		briefing.setFileName("BEF"+uniqueName+".doc");
         
 		//获取有几个图片
 		int limited = Integer.parseInt(request.getParameter("length"));
@@ -320,18 +384,18 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 						countWeb.get(tmpNews.getWeb()) + 1);
 			}
 
-			if (countTendClass.get(state[newsTend.getTendclass()]) == null) {
-				countTendClass.put(state[newsTend.getTendclass()], 1);
+			if (countTendClass.get(state[checkstate(newsTend.getTendclass())]) == null) {
+				countTendClass.put(state[checkstate(newsTend.getTendclass())], 1);
 			} else {
-				countTendClass.put(state[newsTend.getTendclass()],
-						countTendClass.get(state[newsTend.getTendclass()]) + 1);
+				countTendClass.put(state[checkstate(newsTend.getTendclass())],
+						countTendClass.get(state[checkstate(newsTend.getTendclass())]) + 1);
 			}
 
 			Map<String, Object> listKey = new HashMap<String, Object>();
 			listKey.put("id", i+1);
 			listKey.put("title", tmpNews.getTitle());
 			listKey.put("web", tmpNews.getWeb());
-			listKey.put("tendClass", state[newsTend.getTendclass()+1]);
+			listKey.put("tendClass", state[checkstate(newsTend.getTendclass())]);
 			newsList.add(listKey);
 			
 			
@@ -341,7 +405,7 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 			alllistKey.put("web", tmpNews.getWeb());
 			String  timestr=tmpNews.getTime().toString();
 			alllistKey.put("TTime",timestr);
-			alllistKey.put("tendclass", state[newsTend.getTendclass()+1]);
+			alllistKey.put("tendclass", state[checkstate(newsTend.getTendclass())]);
 			alllistKey.put("tendscore", newsTend.getTendscore());
 			alllistKey.put("allContent", tmpNews.getAllContent());
 			alllistKey.put("url", tmpNews.getUrl());
@@ -407,8 +471,37 @@ public class sImageAndcTemplateServlet extends HttpServlet {
 
 		briefing.setDataMap(dataMap);
 
-		System.out.println("报表生成成功-----"+briefing.getFilePath() + "  "+ briefing.getFileName() );
-		documentHandler.createWord(briefing);
+		String userPath=(userid+"/");//为每个用户独立建立一个文件夹以减少索引
+		
+		documentHandler.createWord(briefing,userPath);
+		documentHandler.wordToPDF(briefing.getFilePath()+userPath+briefing.getFileName()
+				                 ,briefing.getFilePath()+userPath+"BEF"+uniqueName+".pdf");//多生成一份pdf用于在网站上预览
+		
+		//保存实体进数据库
+	    BriefingDAO briefingDAO=new BriefingDAO();
+		Briefing briefingEntity=new Briefing();
+		briefingEntity.setName(briefing.getFileName());
+		cal.set(year, month, day);
+		Date date=cal.getTime();		
+		briefingEntity.setTime(date);
+		briefingEntity.setBasepath(basePath);
+		briefingEntity.setDocpath(userPath+briefing.getFileName());
+		briefingEntity.setPdfpath(userPath+"BEF"+uniqueName+".pdf");
+		briefingEntity.setUserid(userid);
+		briefingEntity.setEntityurl(briefing.getFilePath()+userPath+briefing.getFileName());
+		briefingEntity.setVirtualname("经典版"+year+"-"+month+"-"+day);
+		briefingDAO.save(briefingEntity);
+		
+		System.out.println("报表生成成功-----"+briefing.getFilePath()+userPath + briefing.getFileName());
+		
+	}
+	
+	private int checkstate(int val)
+	{
+		if(val==0) return 1;//中
+		else if(val>0) return 2;//正
+		
+		return 0;//负
 	}
 
 }

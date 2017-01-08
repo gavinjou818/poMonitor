@@ -86,10 +86,10 @@
 				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 				session.setAttribute("endTime", sf.format(date));
 			}%>
-            document.getElementById('startTime').value='<%=session.getAttribute("startTime")%>';
-            document.getElementById('endTime').value='<%=session.getAttribute("endTime")%>';
-            
-            getChart('<%=session.getAttribute("startTime")%>','<%=session.getAttribute("endTime")%>'); 
+            var startTime=document.getElementById('startTime').value='<%=session.getAttribute("startTime")%>';
+            var endTime=document.getElementById('endTime').value='<%=session.getAttribute("endTime")%>';
+            var userId='<%=session.getAttribute("userId")%>';
+            getChart(startTime,endTime,userId); 
             
 	  }
 	  
@@ -288,14 +288,7 @@
 			</div>
 
 
-
-
-
-
-
 		</div>
-
-
 	</div>
 
 
@@ -308,29 +301,29 @@
 		        
 		        
 		        
-				function getChart(startTime,endTime)
+				function getChart(startTime,endTime,userId)
 				{
 					//媒体来源图
 					
 					
 					MediaSourcesChart("./servlet/SiteEvaluationServlet",
-							'MTorigin', startTime, endTime, '1',
+							'MTorigin', startTime, endTime, userId,
 							'getWebTend');
 					//测试专用
 					//MediaSourcesChart("json/MTorigin.json",'MTorigin',"2012-09-10","2016-12-21",'1','getWebTend');
 					
 					//信息来源类型
 					InformationSourcesChart("json/MTcome.json", "MTcome",
-							startTime, endTime, null, null);
+							startTime, endTime, userId, null);
 					//媒体活跃度
 					MediaActivityChart("json/MTactive.json", 'MTactive',
-							startTime, endTime, null, null);
+							startTime, endTime, userId, null);
 					//传播路径图
 					PropagationPathChart("json/city_tree.json", 'Transpath',
-							startTime, endTime, null, null);
+							startTime, endTime, userId, null);
 					//舆情热点  数据返回仍然有问题
 					HotPublicOpinion("./servlet/HotWordsServlet", 'hotpoint',
-							startTime, endTime, '1', 'getHotWords');
+							startTime, endTime, userId, 'getHotWords');
 					
 					//测试专用		
 					

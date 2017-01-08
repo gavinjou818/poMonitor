@@ -1,5 +1,6 @@
 package pomonitor.statistics;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,15 +8,20 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.alibaba.fastjson.JSON;
+import com.sun.org.apache.xml.internal.security.Init;
 
 import pomonitor.briefing.gAM_Result;
+import pomonitor.entity.Briefing;
+import pomonitor.entity.BriefingDAO;
 import pomonitor.entity.News;
 import pomonitor.entity.NewsDAO;
 import pomonitor.entity.NewsTend;
 import pomonitor.entity.NewsTendDAO;
 
 public class BriefingSummarize 
-{
+{  
+	
+	
 	
 	/**这个方法是这样用的,
 	 * 当选择了词条之后,就要显示对应的选择之后的词条,
@@ -74,6 +80,60 @@ public class BriefingSummarize
 	}
 	
 	
+	public String getIntimateBriefing(int max,int index,int userid,String basepath)
+	{   
+		class JSONData
+		{
+			public int sum;//在这个时间段内的总数据条数
+			public int now;//当前有多少条返回
+			public List<Briefing> Briefings;//得到自己生成的一些报表
+			
+			public JSONData(int sum,int now,List<Briefing> Briefings)
+			{
+				this.sum=sum;
+				this.now=now;
+				this.Briefings=Briefings;
+			}
+			
+		}
+		
+		BriefingDAO briefingDAO=new BriefingDAO();
+		
+		List<Briefing> getbriefings=briefingDAO.findByUserid(userid);
+		List<Briefing> Briefings=new ArrayList<>();
+		
+		
+	    
+		int DEF=0;
+		int sum=getbriefings.size();
+		for(int i=index;i<getbriefings.size()&&DEF<max;i++,DEF++)
+		{
+			Briefing briefing=getbriefings.get(i);
+			
+			//查看实体路径是否存在这个这个文件,不存在,就删除这个记录
+			File file=new File(briefing.getEntityurl());
+			if(!file.exists())
+			{   			
+				briefingDAO.delete(briefing);
+				DEF--;
+				sum--;
+				continue;
+			}
+			//若根目录更换了,例如服务器更换接口,或者更换了apache的位置。需更新一次
+			if(!briefing.getBasepath().equals(basepath))
+			{
+				briefing.setBasepath(basepath);
+				briefing=briefingDAO.update(briefing);
+			}
+			
+			Briefings.add(briefing);
+		}
+		
+       JSONData jsonData=new JSONData(sum, DEF,Briefings);
+       return JSON.toJSONString(jsonData);
+	}
+	
+	
 	
 	
 	
@@ -83,7 +143,7 @@ public class BriefingSummarize
 	 *        传值过来
 	 * @return 完整的json到前端,于新闻相关的类都写在这,
 	 *         主要服务于YQSL.jsp
-	 * 第一个图表所需要获取的信息.        
+	 * template1.ftl 第一个图表所需要获取的信息.        
 	 */
 	public String getPreviewChart1(String requestString)
 	{    
@@ -206,14 +266,14 @@ public class BriefingSummarize
 			else {countWeb.put(tmpNews.getWeb(),
 				  countWeb.get(tmpNews.getWeb())+1);}
 			
-			if(countTendClass.get(state[newsTend.getTendclass()+1])==null)
+			if(countTendClass.get(state[checkstate(newsTend.getTendclass())])==null)
 			{
-				countTendClass.put(state[newsTend.getTendclass()+1], 1);
+				countTendClass.put(state[checkstate(newsTend.getTendclass())], 1);
 			}
 			else 
 			{      
-				   countTendClass.put(state[newsTend.getTendclass()+1],
-				   countTendClass.get(state[newsTend.getTendclass()+1])+1);
+				   countTendClass.put(state[checkstate(newsTend.getTendclass())],
+				   countTendClass.get(state[checkstate(newsTend.getTendclass())])+1);
 			}
 			
 		}
@@ -256,5 +316,12 @@ public class BriefingSummarize
 		JSONData jsonData=new JSONData(mtCome,gTofmedia);
 		return JSON.toJSONString(jsonData);
 		
+	}
+	
+	private int checkstate(int val)
+	{
+		if(val==0) return 1;//中
+		else if(val>0) return 2;//正
+		return 0;//负
 	}
 }

@@ -60,8 +60,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}%>
            var startTime=document.getElementById('startTime').value='<%=session.getAttribute("startTime")%>';
            var endTime=document.getElementById('endTime').value='<%=session.getAttribute("endTime")%>';
+           var userId='<%=session.getAttribute("userId")%>';
            
-           getChart(startTime,endTime);
+           getChart(startTime,endTime,userId);
         }
         
         function setTimeOpera()
@@ -230,16 +231,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!--foot-->
 
     <script type="text/javascript">
-        function getChart(startTime,endTime)
+        function getChart(startTime,endTime,userId)
         {
             //媒体分析
-            MediaAnalysisChart("json/MediaAnalysis.json",'MediaAnalysis',startTime,endTime,null,null);
+            MediaAnalysisChart("json/MediaAnalysis.json",'MediaAnalysis',startTime,endTime,userId,null);
             //整体走势分析
-            OverallTrendChart("json/otrendAnalysis.json",'otrendAnalysis',startTime,endTime,null,null);
+            OverallTrendChart("json/otrendAnalysis.json",'otrendAnalysis',startTime,endTime,userId,null);
             //信息敏感分类图
-            InformationSensitiveClassificationChart("json/SensitiveInfo.json",'SensitiveInfo',startTime,endTime,null,null);
+            InformationSensitiveClassificationChart("json/SensitiveInfo.json",'SensitiveInfo',startTime,endTime,userId,null);
             //媒体负面倾向性走势图
-            MediaNegativeTendencyChart("json/NegativeBias.json",'NegativeBias',startTime,endTime,null,null);
+            MediaNegativeTendencyChart("json/NegativeBias.json",'NegativeBias',startTime,endTime,userId,null);
         }
     </script>
 

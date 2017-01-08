@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import pomonitor.briefing.Briefing;
+import pomonitor.briefing.BriefingData;
 import pomonitor.briefing.DocumentHandler;
 
 

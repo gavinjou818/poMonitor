@@ -17,8 +17,6 @@ public class TermsGenerator
 	public List<Term> getTerms(String Content) 
 	{   
 		 
-		
-	
 	    
 		//基于CRF的分词器
 		Segment segment = new CRFSegment();
@@ -40,11 +38,9 @@ public class TermsGenerator
 		 */
 		segment.enableAllNamedEntityRecognize(true);
 		
+	   
 		List<Term> termList = segment.seg(Content);
-		
-		
-		
-		
+
 		termList = keywordExtractor.wipeoffWords(termList);
 		
 		return termList;

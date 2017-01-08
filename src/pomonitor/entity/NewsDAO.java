@@ -66,7 +66,9 @@ public class NewsDAO implements INewsDAO {
 	public void save(News entity) {
 		EntityManagerHelper.log("saving News instance", Level.INFO, null);
 		try {
+			
 			getEntityManager().persist(entity);
+			
 			EntityManagerHelper.log("save successful", Level.INFO, null);
 		} catch (RuntimeException re) {
 			EntityManagerHelper.log("save failed", Level.SEVERE, re);

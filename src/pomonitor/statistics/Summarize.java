@@ -277,7 +277,7 @@ public class Summarize
      * @param startTime  开始时间
      * @param endTime    结束时间
      * @param max        每页多少条数据
-     * @param index      第几页.
+     * @param index      指引=(第几页*max), 以0索引开始
      * @return
      * @throws Exception
      */
@@ -339,9 +339,7 @@ public class Summarize
 		  JSONData jsonData=new JSONData(sum,now,gAM_Result_Briefings);
 		  //关闭实体管理者
 		  entityManager.close();
-		  
-		
-		  
+
 		  //返回json
 		  return JSON.toJSONString(jsonData);
 		  

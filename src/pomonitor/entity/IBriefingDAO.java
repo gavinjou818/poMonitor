@@ -1,16 +1,17 @@
 package pomonitor.entity;
 
+import java.util.Date;
 import java.util.List;
 
 /**
- * Interface for SenswordDAO.
+ * Interface for BriefingDAO.
  * 
  * @author MyEclipse Persistence Tools
  */
 
-public interface ISenswordDAO {
+public interface IBriefingDAO {
 	/**
-	 * Perform an initial save of a previously unsaved Sensword entity. All
+	 * Perform an initial save of a previously unsaved Briefing entity. All
 	 * subsequent persist actions of this entity should use the #update()
 	 * method. This operation must be performed within the a database
 	 * transaction context for the entity's data to be permanently saved to the
@@ -20,19 +21,19 @@ public interface ISenswordDAO {
 	 * 
 	 * <pre>
 	 * EntityManagerHelper.beginTransaction();
-	 * ISenswordDAO.save(entity);
+	 * IBriefingDAO.save(entity);
 	 * EntityManagerHelper.commit();
 	 * </pre>
 	 * 
 	 * @param entity
-	 *            Sensword entity to persist
+	 *            Briefing entity to persist
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void save(Sensword entity);
+	public void save(Briefing entity);
 
 	/**
-	 * Delete a persistent Sensword entity. This operation must be performed
+	 * Delete a persistent Briefing entity. This operation must be performed
 	 * within the a database transaction context for the entity's data to be
 	 * permanently deleted from the persistence store, i.e., database. This
 	 * method uses the {@link javax.persistence.EntityManager#remove(Object)
@@ -40,21 +41,21 @@ public interface ISenswordDAO {
 	 * 
 	 * <pre>
 	 * EntityManagerHelper.beginTransaction();
-	 * ISenswordDAO.delete(entity);
+	 * IBriefingDAO.delete(entity);
 	 * EntityManagerHelper.commit();
 	 * entity = null;
 	 * </pre>
 	 * 
 	 * @param entity
-	 *            Sensword entity to delete
+	 *            Briefing entity to delete
 	 * @throws RuntimeException
 	 *             when the operation fails
 	 */
-	public void delete(Sensword entity);
+	public void delete(Briefing entity);
 
 	/**
-	 * Persist a previously saved Sensword entity and return it or a copy of it
-	 * to the sender. A copy of the Sensword entity parameter is returned when
+	 * Persist a previously saved Briefing entity and return it or a copy of it
+	 * to the sender. A copy of the Briefing entity parameter is returned when
 	 * the JPA persistence mechanism has not previously been tracking the
 	 * updated entity. This operation must be performed within the a database
 	 * transaction context for the entity's data to be permanently saved to the
@@ -64,42 +65,46 @@ public interface ISenswordDAO {
 	 * 
 	 * <pre>
 	 * EntityManagerHelper.beginTransaction();
-	 * entity = ISenswordDAO.update(entity);
+	 * entity = IBriefingDAO.update(entity);
 	 * EntityManagerHelper.commit();
 	 * </pre>
 	 * 
 	 * @param entity
-	 *            Sensword entity to update
-	 * @return Sensword the persisted Sensword entity instance, may not be the
+	 *            Briefing entity to update
+	 * @return Briefing the persisted Briefing entity instance, may not be the
 	 *         same
 	 * @throws RuntimeException
 	 *             if the operation fails
 	 */
-	public Sensword update(Sensword entity);
+	public Briefing update(Briefing entity);
 
-	public Sensword findById(Integer id);
+	public Briefing findById(Integer id);
 
 	/**
-	 * Find all Sensword entities with a specific property value.
+	 * Find all Briefing entities with a specific property value.
 	 * 
 	 * @param propertyName
-	 *            the name of the Sensword property to query
+	 *            the name of the Briefing property to query
 	 * @param value
 	 *            the property value to match
-	 * @return List<Sensword> found by query
+	 * @return List<Briefing> found by query
 	 */
-	public List<Sensword> findByProperty(String propertyName, Object value);
+	public List<Briefing> findByProperty(String propertyName, Object value);
 
-	public List<Sensword> findBySenslevel(Object senslevel);
+	public List<Briefing> findByBasepath(Object basepath);
 
-	public List<Sensword> findBySensvalue(Object sensvalue);
+	public List<Briefing> findByName(Object name);
 
-	public List<Sensword> findByUserid(Object userid);
+	public List<Briefing> findByEntityurl(Object entityurl);
+
+	public List<Briefing> findByDocpath(Object docpath);
+
+	public List<Briefing> findByPdfpath(Object pdfpath);
 
 	/**
-	 * Find all Sensword entities.
+	 * Find all Briefing entities.
 	 * 
-	 * @return List<Sensword> all Sensword entities
+	 * @return List<Briefing> all Briefing entities
 	 */
-	public List<Sensword> findAll();
+	public List<Briefing> findAll();
 }

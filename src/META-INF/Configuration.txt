@@ -20,4 +20,4 @@
 
 
 //生成报表功能配置
-5.在src目录下的pomonitor.properties的IMG_savePath和BEF_savePath下配置
+5.在src目录下的pomonitor.properties的BEF_savePath下配置
