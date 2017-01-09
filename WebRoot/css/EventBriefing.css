@@ -1,0 +1,20 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+.tab-content
+{
+    height: 550px !important;
+}
+.pagination{
+    margin: 0px !important;
+}
+
+
+/*主体*/
+
+.pagsize
+{
+    width:30%;
+}
+

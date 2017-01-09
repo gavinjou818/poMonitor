@@ -18,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>南华大学核电舆情系统</title>
     
     <script src="js/jquery-3.1.1.js" ></script>
-    <link href="css/QGFX.css" rel="stylesheet" type="text/css"  />
+    <link href="css/EmotionAnalysis.css" rel="stylesheet" type="text/css"  />
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css"  />
     <link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
     <link href="css/bootstrap-table.css" rel="stylesheet" type="text/css" />
@@ -114,11 +114,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <div id="Catalog">
     <div style="text-align: left"><img src="./image/barleft.png" style="width: 25px;height:25px;cursor: pointer;" title="时间设置显示" onclick="changeCatalog()"></div>
-    <div><a class="smoothScroll" href="<%=basePath%>QGFX.jsp#head1" title="媒体来源情况">地域舆情数据</a></div>
-    <div><a class="smoothScroll" href="<%=basePath%>QGFX.jsp#head2" title="媒体分析情况">媒体分析情况</a></div>
-    <div><a class="smoothScroll" href="<%=basePath%>QGFX.jsp#head3" title="整体走势分析情况">整体走势分析情况</a></div>
-    <div><a class="smoothScroll" href="<%=basePath%>QGFX.jsp#head4" title="媒体负面倾向性走势情况">媒体负面倾向性走势情况</a></div>
-    <div><a class="smoothScroll" href="<%=basePath%>QGFX.jsp#head5" title="信息敏感分类情况">信息敏感分类情况</a></div>
+    <div><a class="smoothScroll" href="<%=basePath%>EmotionAnalysis.jsp#head1" title="媒体来源情况">地域舆情数据</a></div>
+    <div><a class="smoothScroll" href="<%=basePath%>EmotionAnalysis.jsp#head2" title="媒体情感分析">媒体情感分析</a></div>
+    <div><a class="smoothScroll" href="<%=basePath%>EmotionAnalysis.jsp#head3" title="整体信息走势分析">整体信息走势分析</a></div>
+    <div><a class="smoothScroll" href="<%=basePath%>EmotionAnalysis.jsp#head4" title="媒体负面倾向性走势">媒体负面倾向性走势</a></div>
+    <div><a class="smoothScroll" href="<%=basePath%>EmotionAnalysis.jsp#head5" title="信息敏感分类情况">信息敏感分类情况</a></div>
 
 </div>
 
@@ -167,7 +167,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
             <div class="Ancestor" id="head2">
-                <h1 class="h1Title">媒体分析情况</h1>
+                <h1 class="h1Title">媒体情感分析</h1>
                 <div class="Father" style="z-index: 100">
                     <div id="MediaAnalysis" style="width: 800px;height:600px;margin: 0 auto" ></div>
                     <div class="FatherDown"><img src="./image/down.png" style="width: 25px;height: 25px;cursor: pointer" onclick="changeSon('MediaAnalysisson')"></div>
@@ -181,7 +181,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
             <div class="Ancestor" id="head3">
-                <h1 class="h1Title">整体走势分析情况</h1>
+                <h1 class="h1Title">整体信息走势分析</h1>
                 <div class="Father" style="z-index: 98">
                     <div id="otrendAnalysis" style="width: 800px;height:600px;margin: 0 auto" ></div>
                     <div class="FatherDown"><img src="./image/down.png" style="width: 25px;height: 25px;cursor: pointer" onclick="changeSon('otrendAnalysisson')"></div>
@@ -195,7 +195,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
             <div class="Ancestor" id="head4">
-                <h1 class="h1Title">媒体负面倾向性走势情况</h1>
+                <h1 class="h1Title">媒体负面倾向性走势</h1>
                 <div class="Father" style="z-index: 96">
                     <div id="NegativeBias" style="width: 800px;height:600px;margin: 0 auto" ></div>
                     <div class="FatherDown"><img src="./image/down.png" style="width: 25px;height: 25px;cursor: pointer" onclick="changeSon('NegativeBiasson')"></div>

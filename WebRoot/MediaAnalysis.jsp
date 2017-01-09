@@ -28,7 +28,7 @@
 <script src="js/bootstrap.js"></script>
 <script src="js/d3.js"></script>
 
-<link href="./css/MTFX.css" rel="stylesheet" type="text/css" />
+<link href="./css/MediaAnalysis.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="./css/master.css">
 <script type="text/javascript" src="./js/master.js"></script>
 <script type="text/javascript" src="./js/smoothscroll.js"></script>
@@ -68,10 +68,10 @@
                 ballstate=true;
             }
         }
-        
+
         function preload()
         {
-        
+
             <%if (session.getAttribute("startTime") == null) {
 				Calendar cal = Calendar.getInstance();
 				Date date = cal.getTime();
@@ -89,37 +89,37 @@
             var startTime=document.getElementById('startTime').value='<%=session.getAttribute("startTime")%>';
             var endTime=document.getElementById('endTime').value='<%=session.getAttribute("endTime")%>';
             var userId='<%=session.getAttribute("userId")%>';
-            getChart(startTime,endTime,userId); 
-            
+            getChart(startTime,endTime,userId);
+
 	  }
-	  
+
 	  function setTimeOpera()
       {
-                   
+
                     var data=("startTime="+document.getElementById('startTime').value);
                     data+=("&endTime="+document.getElementById('endTime').value);
                     data+=("&method="+"setTimeInteraction");
-                    var xmlhttp;  
-                    if (window.XMLHttpRequest) 
-                    {   
-                        // code for IE7+, Firefox, Chrome, Opera, Safari  
-                        xmlhttp = new XMLHttpRequest();  
+                    var xmlhttp;
+                    if (window.XMLHttpRequest)
+                    {
+                        // code for IE7+, Firefox, Chrome, Opera, Safari
+                        xmlhttp = new XMLHttpRequest();
                     }
-                    else 
-                    {   // code for IE6, IE5  
-                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");  
-                    }  
-                    xmlhttp.open("POST","<%=path%>/servlet/BasicInteractionServlet",true);  
-                    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");  
-                    xmlhttp.onreadystatechange = function() 
-                    {  
-                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
-                        {  
+                    else
+                    {   // code for IE6, IE5
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp.open("POST","<%=path%>/servlet/BasicInteractionServlet",true);
+                    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                    xmlhttp.onreadystatechange = function()
+                    {
+                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+                        {
                             location.reload();
-                        }  
+                        }
                     };
-                    xmlhttp.send(data);  
-            
+                    xmlhttp.send(data);
+
         }
 </script>
 
@@ -148,23 +148,23 @@
 				onclick="changeCatalog()">
 		</div>
 		<div>
-			<a class="smoothScroll" href="<%=basePath%>MTFX.jsp#head1"
+			<a class="smoothScroll" href="<%=basePath%>MediaAnalysis.jsp#head1"
 				title="媒体来源情况">媒体来源情况</a>
 		</div>
 		<div>
-			<a class="smoothScroll" href="<%=basePath%>MTFX.jsp#head2"
-				title="信息来源类型">信息来源类型</a>
+			<a class="smoothScroll" href="<%=basePath%>MediaAnalysis.jsp#head2"
+				title="媒体来源类型">媒体来源类型</a>
 		</div>
 		<div>
-			<a class="smoothScroll" href="<%=basePath%>MTFX.jsp#head3"
+			<a class="smoothScroll" href="<%=basePath%>MediaAnalysis.jsp#head3"
 				title="媒体活跃度">媒体活跃度</a>
 		</div>
 		<div>
-			<a class="smoothScroll" href="<%=basePath%>MTFX.jsp#head4"
+			<a class="smoothScroll" href="<%=basePath%>MediaAnalysis.jsp#head4"
 				title="热点关系图">热点关系图</a>
 		</div>
 		<div>
-			<a class="smoothScroll" href="<%=basePath%>MTFX.jsp#head5"
+			<a class="smoothScroll" href="<%=basePath%>MediaAnalysis.jsp#head5"
 				title="传播路径图">传播路径图</a>
 		</div>
 	</div>
@@ -186,9 +186,9 @@
 		<div class="container">
 			<div class="row">
 
-
+             <!--信息来源情况-->
 				<div class="Ancestor" id="head1">
-					<h1 class="h1Title">媒体来源情况</h1>
+					<h1 class="h1Title">信息来源情况</h1>
 					<div class="Father" style="z-index: 100">
 						<div id="MTorigin"
 							style="width: 800px;height:600px;margin: 0 auto"></div>
@@ -206,9 +206,9 @@
 
 				</div>
 
-
+	          <!--媒体来源类型-->
 				<div class="Ancestor" id="head2">
-					<h1 class="h1Title">信息来源类型</h1>
+					<h1 class="h1Title">媒体来源类型</h1>
 					<div class="Father" style="z-index: 98">
 						<div id="MTcome" style="width: 800px;height:600px;margin: 0 auto"></div>
 						<div class="FatherDown">
@@ -225,7 +225,7 @@
 
 				</div>
 
-
+	         <!--媒体活跃度-->
 				<div class="Ancestor" id="head3">
 					<h1 class="h1Title">媒体活跃度</h1>
 					<div class="Father" style="z-index: 96">
@@ -245,7 +245,7 @@
 				</div>
 
 
-
+	<!--热点关系图-->
 				<div class="Ancestor" id="head4">
 					<h1 class="h1Title">热点关系图</h1>
 					<div class="Father" style="z-index: 94">
@@ -264,7 +264,7 @@
 					</div>
 				</div>
 
-
+	<!--传播路径图-->
 				<div class="Ancestor" id="head5">
 					<h1 class="h1Title">传播路径图</h1>
 					<div class="Father" style="z-index: 92">
@@ -295,26 +295,23 @@
 
 
 	<!--foot-->
-
-
 	<script type="text/javascript">
-		        
-		        
-		        
+
+
+
 				function getChart(startTime,endTime,userId)
 				{
 					//媒体来源图
-					
-					
+
+
 					MediaSourcesChart("./servlet/SiteEvaluationServlet",
 							'MTorigin', startTime, endTime, userId,
 							'getWebTend');
 					//测试专用
 					//MediaSourcesChart("json/MTorigin.json",'MTorigin',"2012-09-10","2016-12-21",'1','getWebTend');
-					
-					//信息来源类型
-					InformationSourcesChart("json/MTcome.json", "MTcome",
-							startTime, endTime, userId, null);
+
+					//媒体来源类型
+					InformationSourcesChart("json/MTcome.json", "MTcome",startTime, endTime, userId, null);
 					//媒体活跃度
 					MediaActivityChart("json/MTactive.json", 'MTactive',
 							startTime, endTime, userId, null);
@@ -324,9 +321,9 @@
 					//舆情热点  数据返回仍然有问题
 					HotPublicOpinion("./servlet/HotWordsServlet", 'hotpoint',
 							startTime, endTime, userId, 'getHotWords');
-					
-					//测试专用		
-					
+
+					//测试专用
+
 					// HotPublicOpinion("json/hotpoint.json",'hotpoint','2012-09-10','2013-01-10','1','getHotWords');
 
 				};

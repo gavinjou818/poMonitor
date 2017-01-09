@@ -110,7 +110,12 @@ public class sImageAndcTemplateServlet extends HttpServlet
 	 *             if an error occurred
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException 
+	{
+		
+		
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
 		
 		int max;
 		int index;
@@ -126,14 +131,15 @@ public class sImageAndcTemplateServlet extends HttpServlet
 	   
 
 
-		switch (method) {
-		case "getPreviewBriefing"://获取预览所选择的词条信息
+		switch (method) 
+		{
+		case "getPreviewMessage"://获取预览所选择的词条信息
 
-			// 获取最大字条
+			// 获取最大新闻条数
 			max = Integer.parseInt(request.getParameter("max"));
-			// 获取开始序列
+			// 获取开始索引 index=(max*第几页) 开始索引为0
 			index = Integer.parseInt(request.getParameter("index"));
-			resJSON = getPreviewBriefing(requestString, max, index);
+			resJSON = getPreviewMessage(requestString, max, index);
 			break;
 		case "getPreviewChart"://根据所选择的词条信息,创建所需要的图表
 			// 获取最图表
@@ -142,9 +148,9 @@ public class sImageAndcTemplateServlet extends HttpServlet
 			break;
 		case "createTemplate1":
 			resJSON = "{\"message\":\"成功生成报表\"}";
-			createTemplate1(request);
+			createTemplate1(request,response);
 			break;
-		case "getIntimateBriefing":	//得到私人生成的图表,这是不公开的,自己生成的便是自己的报表.
+		case "getIntimateBriefing":	//得到私人生成的报表,这是不公开的,自己生成的便是自己的报表.
 			// 获取最大字条
 			max = Integer.parseInt(request.getParameter("max"));
 			// 获取开始序列
@@ -156,8 +162,7 @@ public class sImageAndcTemplateServlet extends HttpServlet
 			break;
 		}
 
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
+		
 		response.getWriter().write(resJSON);
 
 	}
@@ -237,7 +242,7 @@ public class sImageAndcTemplateServlet extends HttpServlet
 	 * 
 	 * @return
 	 */
-	private String getPreviewBriefing(String requestString, int max, int index) 
+	private String getPreviewMessage(String requestString, int max, int index) 
 	{
 		BriefingSummarize briefingSummarize = new BriefingSummarize();
 		return briefingSummarize.getPreviewMessage(requestString, max, index);
@@ -290,9 +295,10 @@ public class sImageAndcTemplateServlet extends HttpServlet
 	 * 
 	 * @param request
 	 *            这是存在servlet中的一些信息
+	 * @throws IOException 
 	 */
 	@SuppressWarnings("deprecation")
-	private void createTemplate1(HttpServletRequest request) 
+	private void createTemplate1(HttpServletRequest request, HttpServletResponse response) throws IOException 
 	{     
         //倾向性的趋势.分别对应NewsTend表下tendClass类型
 		String[] state = { "负", "中", "正" };
@@ -316,7 +322,10 @@ public class sImageAndcTemplateServlet extends HttpServlet
 		//设置要创建的文件名
 		String uniqueName=createTimestr();
 		briefing.setFileName("BEF"+uniqueName+".doc");
-        
+	
+		
+		
+		
 		//获取有几个图片
 		int limited = Integer.parseInt(request.getParameter("length"));
 		
@@ -340,6 +349,8 @@ public class sImageAndcTemplateServlet extends HttpServlet
 				e.printStackTrace();
 			}
 		}
+	
+		
         //这些属性可以看template1.doc一个个对。
 		dataMap.put("theme", "南华大学");
 		dataMap.put("year", cal.get(Calendar.YEAR));
@@ -368,7 +379,7 @@ public class sImageAndcTemplateServlet extends HttpServlet
 		//打开template1.doc可以查看,都是对应名称的关键
 		List<Map<String, Object>> newsList = new ArrayList<Map<String, Object>>();
 		List<Map<String, Object>> allnewsList = new ArrayList<Map<String, Object>>();
-		 
+		
 		//计算
 		for (int i = 0; i < obj.length; i++) 
 		{
@@ -413,6 +424,7 @@ public class sImageAndcTemplateServlet extends HttpServlet
 			allnewsList.add(alllistKey);
 
 		}
+	
 		
 		//打开template1.doc可以查看
 		dataMap.put("newsList", newsList);
@@ -446,7 +458,8 @@ public class sImageAndcTemplateServlet extends HttpServlet
 		int PosOfNews = 0;
 		String vPosOfNews = "0%";
 
-		for (Entry<String, Integer> entry : countTendClass.entrySet()) {
+		for (Entry<String, Integer> entry : countTendClass.entrySet()) 
+		{
 			if (entry.getKey() == state[0]) {
 				NevOfNews = entry.getValue();
 				vNevOfNews = (int)((double)entry.getValue() / obj.length * 100.0) + "%";
@@ -468,7 +481,8 @@ public class sImageAndcTemplateServlet extends HttpServlet
 
 		dataMap.put("PosOfNews", PosOfNews);
 		dataMap.put("vPosOfNews", vPosOfNews);
-
+        
+		
 		briefing.setDataMap(dataMap);
 
 		String userPath=(userid+"/");//为每个用户独立建立一个文件夹以减少索引

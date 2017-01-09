@@ -73,7 +73,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div id="Notice">
                 <div id="Noticetitle"><img src="./image/noticetitle.PNG"></div>
             </div>
-            <a href="SY.jsp"><img src="./image/title.PNG" /></a>
+            <a href="HomePage.jsp"><img src="./image/title.PNG" /></a>
         </div>
 
         <div id="Login_Center" role="form">

@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="description" content="This is my page">
 <title>南华大学核电舆情系统</title>
 
-<link href="css/SY.css" rel="stylesheet" type="text/css" />
+<link href="css/HomePage.css" rel="stylesheet" type="text/css" />
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
 <!--在线jq-->
@@ -25,7 +25,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="js/bootstrap.js"></script>
 <script src="js/echarts.js"></script>
 <script src="js/china.js"></script>
-<script src="js/d3.js"></script>
 
 <script type="text/javascript" src="./js/YQCHART.js"></script>
 <link rel="stylesheet" type="text/css" href="./css/master.css">
@@ -36,17 +35,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <!--加载数据表-->
 <script type="text/javascript">
-        
+
         var sum = 13;//限制最大条数
 
         var starttime = new Date();
         var endttime = new Date();
-        
+
         //图片指向
         var imgsrc = ["image/nev.jpg", "image/cen.jpg", "image/pos.jpg"];
 
-        function preload() 
+        function preload()
         {
+
+             //设置开始时间
              <%if (session.getAttribute("startTime") == null) {
 				Calendar cal = Calendar.getInstance();
 				Date date = cal.getTime();
@@ -61,55 +62,57 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				session.setAttribute("endTime", sf.format(date));
 			}
 			%>
-			
+
 			var startTime='<%=session.getAttribute("startTime")%>';
 			var endTime='<%=session.getAttribute("endTime")%>';
+            //记录登录id
 			var userId='<%=session.getAttribute("userId")%>';
-			
-		
+
+
             document.getElementById('startTime').value=startTime;
             document.getElementById('endTime').value=endTime;
-             
-            
+
+
              //最新舆情加载
             getLatestMessage(startTime,endTime);
              //热点舆情加载
             getPointMessage(startTime,endTime);
              //数据图表加载
             getChart(startTime,endTime,userId);
- 
-         } 
-            
+
+         }
+
+         //设置时间提交
          function setTimeOpera()
          {
-                   
+
                     var data=("startTime="+document.getElementById('startTime').value);
                     data+=("&endTime="+document.getElementById('endTime').value);
                     data+=("&method="+"setTimeInteraction");
-                    var xmlhttp;  
-                    if (window.XMLHttpRequest) 
-                    {   
-                        // code for IE7+, Firefox, Chrome, Opera, Safari  
-                        xmlhttp = new XMLHttpRequest();  
-                    } 
-                    else 
-                    {   // code for IE6, IE5  
-                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");  
-                    }  
-                    xmlhttp.open("POST","<%=path%>/servlet/BasicInteractionServlet",true);  
-                    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");  
-                    xmlhttp.onreadystatechange = function() 
-                    {  
-                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
-                        {  
-                            
+                    var xmlhttp;
+                    if (window.XMLHttpRequest)
+                    {
+                        // code for IE7+, Firefox, Chrome, Opera, Safari
+                        xmlhttp = new XMLHttpRequest();
+                    }
+                    else
+                    {   // code for IE6, IE5
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp.open("POST","<%=path%>/servlet/BasicInteractionServlet",true);
+                    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                    xmlhttp.onreadystatechange = function()
+                    {
+                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+                        {
+
                             location.reload();
-                        }  
+                        }
                     };
-                    xmlhttp.send(data);  
-            
+                    xmlhttp.send(data);
+
          }
- 
+
     </script>
 
 </head>
@@ -137,34 +140,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				onclick="changeCatalog()">
 		</div>
 		<div>
-			<a class="smoothScroll" href="<%=basePath%>SY.jsp#head1" title="最新舆情">最新舆情</a>
+			<a class="smoothScroll" href="<%=basePath%>HomePage.jsp#head1" title="最新舆情">最新舆情</a>
 		</div>
 		<div>
-			<a class="smoothScroll" href="<%=basePath%>SY.jsp#head2"
-				title="一周走势情况">一周走势情况</a>
+			<a class="smoothScroll" href="<%=basePath%>HomePage.jsp#head2"
+				title="舆情走势">舆情走势</a>
 		</div>
 		<div>
-			<a class="smoothScroll" href="<%=basePath%>SY.jsp#head3"
+			<a class="smoothScroll" href="<%=basePath%>HomePage.jsp#head3"
 				title="全国舆情情况">全国舆情情况</a>
 		</div>
 		<div>
-			<a class="smoothScroll" href="<%=basePath%>SY.jsp#head4"
+			<a class="smoothScroll" href="<%=basePath%>HomePage.jsp#head4"
 				title="媒体倾向度分析">媒体倾向度分析</a>
 		</div>
 
 	</div>
-	
 
 
+        <!--主体-->
 	<div id="rightbody">
-
-		<!--主体-->
 		<div class="container">
 			<div class="row">
 
+
+        <!--最新舆情-->
 				<div class="Ancestor" id="head1">
 					<h1 class="h1Title">
-						最新舆情 <a href="QBYQ.jsp" style="float: right;font-size: 15px">more<span
+						最新舆情 <a href="AllPublicOpinion.jsp" style="float: right;font-size: 15px">more<span
 							class="glyphicon glyphicon-chevron-right"></span></a>
 					</h1>
 					<div class="col-md-6 col-xs-6 col-lg-6">
@@ -179,7 +182,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 
 
-				<!--一周舆情走势+最新舆情-->
+        <!--一周舆情走势-->
 				<div class="Ancestor" id="head2">
 					<h1 class="h1Title">一周走势情况</h1>
 					<div class="Father" style="z-index: 100">
@@ -198,7 +201,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 				</div>
 
-
+        <!--全国舆情情况-->
 				<div class="Ancestor" id="head3">
 
 					<h1 class="h1Title">全国舆情情况</h1>
@@ -216,10 +219,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<div class="SonContext">aaa</div>
 					</div>
 					<div style="clear: both"></div>
-					<!--<h1 class="h1Title">最新舆情</h1>-->
+
 				</div>
 
-
+              <!--媒体倾向度分析-->
 				<div class="Ancestor" id="head4">
 
 					<h1 class="h1Title"><%=session.getAttribute("endTime") %>&nbsp;&nbsp;媒体倾向度分析</h1>
@@ -261,14 +264,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 type: "GET",
                 dataType: "json",
                 url: "./servlet/IndexServlet",
-                data : 
+                data :
 				{
 					"startTime" : startTime,
 					"endTime" : endTime,
 				    "userId" : 1,
 					"method" : 'getLatestMessage'
 				},
-                success: function (data) 
+                success: function (data)
                 {
                     var limit = Math.min(data.length, sum);
 
@@ -280,12 +283,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         var div1 = document.createElement("div");
                         //创建内嵌节点
                         var span1 = document.createElement("span");
-                        //创建图片节点
-
-                       // var img1 = document.createElement("img");
-                       //img1.setAttribute("class", "Logo");
-                       // img1.setAttribute("src", imgsrc[data[i].tendency]);
-
 
                         //创建链接节点
                         var a1 = document.createElement("a");
@@ -296,7 +293,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         var span2 = document.createElement("span");
                         span2.setAttribute("class", "Time");
                         span2.innerText = data[i].time;
-
 
                         //组装
                         //span1.appendChild(img1);
@@ -311,24 +307,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
                 }
             });
-    
+
     };
-    
+
     function getPointMessage(startTime,endTime)
-    {  
-      
+    {
+
       $.ajax
       ({
                 type: "GET",
                 dataType: "json",
                 url: "json/pointyq.json",
-                
-                data: 
+
+                data:
                 {
                     "starttime": startTime,
                     "endtime": endTime
                 },
-                success: function (data) 
+                success: function (data)
                 {
                     var limit = Math.min(data.length, sum);
 
@@ -357,10 +353,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             });
 
     }
-    
+
     function getChart(startTime,endTime,userId)
     {
-        
+
         //地域分布图
         ChinaPictureChart("./json/ChinaPiture.json",'ChinaPiture',startTime,endTime,userId,null);
         //今日舆情图
@@ -371,9 +367,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          WeeklyChart("./servlet/IndexServlet",'yqto',startTime,endTime,userId,'getTendency');
         //测试用
         //WeeklyChart("./json/yqto.json",'yqto',new Date(),new Date(),null,'getTendency');
-        
+
     }
-   
+
 
 </script>
 

@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="description" content="This is my page">
 
 <title>南华大学核电舆情系统</title>
-<link href="css/TP.css" rel="stylesheet" type="text/css" />
+<link href="css/TimeBriefing.css" rel="stylesheet" type="text/css" />
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
 <script src="js/jquery-3.1.1.js"></script>
 <script src="js/bootstrap.js"></script>
@@ -27,26 +27,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="./js/master.js"></script>
 <script type="text/javascript" src="./js/smoothscroll.js"></script>
 
-<!-- 内部css -->
-<style>
-.tab-content {
-	height: 550px !important;
-}
 
-.pagination {
-	margin: 0px !important;
-}
-</style>
 
 <script type="text/javascript">
          //用于存储选择的数据的id;
          var SelectID=new Array();
-         
-         
+
+
         function preload()
-        {  
-           
-           
+        {
+
+
             <%if (session.getAttribute("startTime") == null) {
 				Calendar cal = Calendar.getInstance();
 				Date date = cal.getTime();
@@ -62,42 +53,42 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}%>
            document.getElementById('startTime').value='<%=session.getAttribute("startTime")%>';
            document.getElementById('endTime').value='<%=session.getAttribute("endTime")%>';
-           
+
            initData(1,'json/test_data.json','dnewspaper');
            initData(1,'json/test_data.json','wnewspaper');
            initData(1,'json/test_data.json','mnewspaper');
         }
-        
+
          function setTimeOpera()
          {
-                   
+
                     var data=("startTime="+document.getElementById('startTime').value);
                     data+=("&endTime="+document.getElementById('endTime').value);
                     data+=("&method="+"setTimeInteraction");
-                    var xmlhttp;  
-                    if (window.XMLHttpRequest) 
-                    {   
-                        // code for IE7+, Firefox, Chrome, Opera, Safari  
-                        xmlhttp = new XMLHttpRequest();  
-                    } 
-                    else 
-                    {   // code for IE6, IE5  
-                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");  
-                    }  
-                    xmlhttp.open("POST","<%=path%>/servlet/BasicInteractionServlet",true);  
-                    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");  
-                    xmlhttp.onreadystatechange = function() 
-                    {  
-                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
-                        {  
-                            
+                    var xmlhttp;
+                    if (window.XMLHttpRequest)
+                    {
+                        // code for IE7+, Firefox, Chrome, Opera, Safari
+                        xmlhttp = new XMLHttpRequest();
+                    }
+                    else
+                    {   // code for IE6, IE5
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp.open("POST","<%=path%>/servlet/BasicInteractionServlet",true);
+                    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                    xmlhttp.onreadystatechange = function()
+                    {
+                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+                        {
+
                             location.reload();
-                        }  
+                        }
                     };
-                    xmlhttp.send(data);  
-            
+                    xmlhttp.send(data);
+
          }
-         
+
     </script>
 
 
@@ -109,7 +100,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         var barsum=10;//最大条目数2;
         var pagesum;//总共有的页数
         var curpage=1;//当前页
-     
+
 
         function initData(start,dataroot,tparent)
         {
@@ -307,28 +298,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				onclick="changeCatalog()">
 		</div>
 		<div>
-			<a class="smoothScroll" href="<%=basePath%>TP.jsp#head1" title="日报中心">日报中心</a>
+			<a class="smoothScroll" href="<%=basePath%>TimeBriefing.jsp#head1" title="日报中心">日报中心</a>
 		</div>
 		<div>
-			<a class="smoothScroll" href="<%=basePath%>TP.jsp#head2" title="周报中心">周报中心</a>
+			<a class="smoothScroll" href="<%=basePath%>TimeBriefing.jsp#head2" title="周报中心">周报中心</a>
 		</div>
 		<div>
-			<a class="smoothScroll" href="<%=basePath%>TP.jsp#head3" title="月报中心">月报中心</a>
+			<a class="smoothScroll" href="<%=basePath%>TimeBriefing.jsp#head3" title="月报中心">月报中心</a>
 		</div>
 	</div>
-	<!--右边标题-->
-	<div id="cansetTime">
-		<div class="cansetTimeR">
-			<span>从<span><input type="date" id="starttime"
-					name="starttime" />
-		</div>
-		<div class="cansetTimeR">
-			<span>到<span><input type="date" id="endtime"
-					name="endtime" />
-		</div>
-		<button type="button" class="btn btn-primary .btn-sm"
-			style="float: right;margin-right: 5px">确定</button>
-	</div>
+
 
 
 	<div id="rightbody">
@@ -469,9 +448,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
 
-
-
-
-		<!--foot-->
+    <!--foot-->
 </body>
 </html>

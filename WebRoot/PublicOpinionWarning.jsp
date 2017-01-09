@@ -7,38 +7,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head>
-    <base href="<%=basePath%>">
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-    <title>南华大学核电舆情系统</title>
-    <link href="css/SP.css" rel="stylesheet" type="text/css"  />
-    <link href="css/bootstrap.css" rel="stylesheet" type="text/css"  />
+<head>
+<base href="<%=basePath%>">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
 
-    <!--在线jq-->
-    <script src="js/jquery-3.1.1.js" ></script>
-    <script src="js/bootstrap.js" ></script>
-    <script src="js/examples.js"></script>
+<title>南华大学核电舆情系统</title>
+
+<link href="css/PublicOpinionWarning.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery-3.1.1.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/examples.js"></script>
+
+<link rel="stylesheet" type="text/css" href="./css/master.css">
+<script type="text/javascript" src="./js/master.js"></script>
+<script type="text/javascript" src="./js/smoothscroll.js"></script>
 
 
-    <link rel="stylesheet" type="text/css" href="./css/master.css">
-    <script type="text/javascript" src="./js/master.js"></script>
-    <script type="text/javascript" src="./js/smoothscroll.js"></script>
-     
- <style>
-.pagination {
-	margin: 0px !important;
-}
-</style>
-
-    <!--加载数据表-->
-    <script type="text/javascript">
+<!--加载数据表-->
+<script type="text/javascript">
 
         var operate=["查看","导出","邮箱发送"];
+        //总条数
         var sum=5;//最大页数5;
         var barsum=10;//最大条目数2;
         var pagesum;//总共有的页数
@@ -57,6 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 data:{"curpage":curpage},
                 success: function (data)
                 {
+
 
                     //获取ul节点
                     pagesum=parseInt(data[0].sum/barsum);
@@ -112,7 +107,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     son2=document.createElement("a");
                     son2.setAttribute("href","#");
                     son2.innerHTML="&raquo;";
-
                     if(i<=pagesum)
                     {
                         son2.addEventListener("click",function ()
@@ -126,13 +120,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     parent.appendChild(son1);
 
 
-
-
                     //下面是加载数据
 
-
                     var parent2=document.getElementById(tparent);
-                    var parent2=parent2.getElementsByTagName("tbody");
+                    parent2=parent2.getElementsByTagName("tbody");
                     parent2=parent2[0];
 
                     while(parent2.hasChildNodes())parent2.removeChild(parent2.firstChild);
@@ -141,8 +132,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     for(i=barsum*(curpage-1)+1,DEF=0;DEF<barsum&&i<=data[0].now;i++,DEF++)
                     {
                         var tr=document.createElement("tr");
-
-                        //加载id
+                        //加入编号
                         var td1=document.createElement("td");
                         var td1input=document.createElement("input");
                         td1input.setAttribute("type","checkbox");
@@ -152,34 +142,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         td1.innerHTML+=data[i].id;
                         tr.appendChild(td1);
 
-                        //加载时间
+                        //加入标题
                         var td2=document.createElement("td");
-                        td2.innerText=data[i].time;
+                        var td2a=document.createElement("a");
+                        td2a.setAttribute("href","#");
+                        td2a.innerText=data[i].title;
+                        td2.appendChild(td2a);
                         tr.appendChild(td2);
 
-                        //加标题
+                        //加入内容
                         var td3=document.createElement("td");
-                        var td3a=document.createElement("a");
-                        td3a.innerText=data[i].name;
-                        td3a.setAttribute("href","#");
-                        td3.appendChild(td3a);
+                        td3.innerText=data[i].context;
                         tr.appendChild(td3);
 
-                        //加载链接查看与信息
+                        //加入时间
                         var td4=document.createElement("td");
-                        for(var j=0;j<operate.length;j++)
-                        {
-                            if(j!=0)
-                            {
-                                var textnode=document.createTextNode("|");
-                                td4.appendChild(textnode);
-                            }
-                            var a1=document.createElement("a");
-                            a1.setAttribute("href","#");
-                            a1.innerHTML=operate[j];
-                            td4.appendChild(a1);
-                        }
+                        td4.innerText=data[i].time;
                         tr.appendChild(td4);
+
+                        //加入作者
+                        var td5=document.createElement("td");
+                        td5.innerText=data[i].author;
+                        tr.appendChild(td5);
+
+                        //加入相似文章
+                        var td6=document.createElement("td");
+                        td6.innerText=data[i].relative;
+                        tr.appendChild(td6);
+
+                        //加入等级
+                        var td7=document.createElement("td");
+                        td7.innerText=data[i].grade;
+                        tr.appendChild(td7);
+
+
+                        //加入行
                         parent2.appendChild(tr);
                     }
 
@@ -189,10 +186,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         }
 
+
+
     </script>
 
-    <!--全选事件-->
-    <script type="text/javascript">
+<!--全选事件-->
+<script type="text/javascript">
         function allseleck(papername)
         {
 
@@ -206,25 +205,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
             for(var i=0;i<parent.length;i++)
             {
-                /*var son=parent[i].getElementsByTagName("td");
-                 son=son[0];*/
+
                 var son=parent[i].getElementsByTagName("input");
                 son=son[0];
                 son.checked=true;
             }
         }
-        
+
+
         function preload()
-        {  
-           initData(1,'json/test_data.json','snewspaper');
-           
-           <%if (session.getAttribute("startTime") == null) {
+        {
+           initData(1,'json/YJZX.json','snewspaper');
+
+            <%if (session.getAttribute("startTime") == null) {
 				Calendar cal = Calendar.getInstance();
 				Date date = cal.getTime();
 				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 				session.setAttribute("startTime", sf.format(date));
 			}
-
 			if (session.getAttribute("endTime") == null) {
 
 				Calendar cal = Calendar.getInstance();
@@ -234,41 +232,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}%>
            document.getElementById('startTime').value='<%=session.getAttribute("startTime")%>';
            document.getElementById('endTime').value='<%=session.getAttribute("endTime")%>';
-           
-           
         }
-        
+
         function setTimeOpera()
         {
-                   
+
                     var data=("startTime="+document.getElementById('startTime').value);
                     data+=("&endTime="+document.getElementById('endTime').value);
                     data+=("&method="+"setTimeInteraction");
-                    var xmlhttp;  
-                    if (window.XMLHttpRequest) 
-                    {   
-                        // code for IE7+, Firefox, Chrome, Opera, Safari  
-                        xmlhttp = new XMLHttpRequest();  
+                    var xmlhttp;
+                    if (window.XMLHttpRequest)
+                    {
+                        // code for IE7+, Firefox, Chrome, Opera, Safari
+                        xmlhttp = new XMLHttpRequest();
                     }
-                    else 
-                    {   // code for IE6, IE5  
-                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");  
-                    }  
-                    xmlhttp.open("POST","<%=path%>/servlet/BasicInteractionServlet",true);  
-                    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");  
-                    xmlhttp.onreadystatechange = function() 
-                    {  
-                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
-                        {  
-                            location.reload();
-                        }  
-                    };
-                    xmlhttp.send(data);  
-            
-        }
+                    else
+                    {   // code for IE6, IE5
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp.open("POST","<%=path%>/servlet/BasicInteractionServlet",true);
+                    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                    xmlhttp.onreadystatechange = function()
+                    {
+                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+                        {
 
+                            location.reload();
+                        }
+                    };
+                    xmlhttp.send(data);
+
+         }
     </script>
-    <style>
+
+
+<style>
         .tab-content
         {
             height: 550px !important;
@@ -279,9 +277,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <body onload="preload()">
 
-<jsp:include page="master.jsp"  flush="true"/>
+    <jsp:include page="master.jsp"  flush="true"/>
 
-	<div id="cansetTime">
+    <div id="cansetTime">
 		<div class="cansetTimeR">
 			<span>从</span><input type="date" id="startTime" name="startTime" />
 		</div>
@@ -292,72 +290,77 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			style="float: right;margin-right: 5px" onclick="setTimeOpera()">确定</button>
 	</div>
 
-<div id="Catalog">
-    <div style="text-align: left"><img src="./image/barleft.png" style="width: 25px;height:25px;cursor: pointer;" title="时间设置显示" onclick="changeCatalog()"></div>
-    <div><a class="smoothScroll" href="<%=basePath%>SP.jsp#head1" title="事件报表">事件报表</a></div>
-</div>
+	<div id="Catalog">
+		<div style="text-align: left">
+			<img src="./image/barleft.png"
+				style="width: 25px;height:25px;cursor: pointer;" title="时间设置显示"
+				onclick="changeCatalog()">
+		</div>
+		<div>
+			<a class="smoothScroll" href="<%=basePath%>PublicOpinionWarning.jsp#head1"
+				title="预警中心">预警中心</a>
+		</div>
+	</div>
 
 
-
-
-<div  id="rightbody">
     <!--主体-->
-    <div class="container" >
-        <div class="row">
-
-
-            <div class="Ancestor" id="head1">
-                <h1 class="h1Title">事件报表</h1>
-
-                <!--Tab panes-->
-
-                <div class="tab-content">
-                    <!--事件报表-->
-                    <div role="tabpanel" class="tab-pane active" id="snewspaper" style="padding-top:10px" >
-                        <table class="table table-hover " >
-                            <thead>
-                            <th style="width:10%;">编号</th>
-                            <th style="width:20%;">时间</th>
-                            <th style="width:50%">报表名称</th>
-                            <th style="width:20%;">操作</th>
-                            </thead>
-                            <tbody>
+	<div id="rightbody">
+		<div class="container" id="pointnewyq">
+			<div class="row">
 
 
 
-                            </tbody>
-                        </table>
+            <!--预警中心-->
+				<div class="Ancestor" id="head1">
+					<h1 class="h1Title">预警中心</h1>
 
-                        <ul class="pagination pagsize">
+					<div class="tab-content">
+
+						<!--数据报-->
+						<div role="tabpanel" class="tab-pane active" id="snewspaper"
+							style="padding-top:10px">
+							<table class="table table-hover">
+								<thead>
+									<th style="width:5%;">编号</th>
+									<th style="width:13%;">标题</th>
+									<th style="width:50%">内容</th>
+									<th style="width:10%">时间</th>
+									<th style="width:10%">作者</th>
+									<th style="width:7%">相似文章</th>
+									<th style="width:5%">等级</th>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+
+							<ul class="pagination pagsize">
+							</ul>
+							<div style="float: right">
+								<button type="button" class="btn btn-default"
+									onclick="allseleck('snewspaper')">全选</button>
+								<button type="button" class="btn btn-default">加入收藏夹</button>
+								<button type="button" class="btn btn-default">邮件发送</button>
+								<button type="button" class="btn btn-default">导出</button>
+							</div>
+
+						</div>
+
+					</div>
+
+					<div style="clear: both"></div>
+				</div>
 
 
-                        </ul>
-                        <div style="float: right">
-                            <button type="button" class="btn btn-default" onclick="allseleck('snewspaper')">全选</button>
-                            <button type="button" class="btn btn-default">邮件发送</button>
-                            <button type="button" class="btn btn-default">导出</button>
-                        </div>
 
 
-                    </div>
-                </div>
 
-                <div style="clear: both"></div>
             </div>
-
-
-        </div>
-
-
-    </div>
-
-
-</div>
+		</div>
+	</div>
 
 
 
-
-<!--foot-->
+	<!--foot-->
 
 
 

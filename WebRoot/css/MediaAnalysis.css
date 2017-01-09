@@ -1,15 +1,4 @@
 
-/*传播路径图*/
-
-html,body
-{
-     margin:0px;
-     width:100%;
-     height:100%;
-    font-family: "微软雅黑 Light"  !important;
-}
-
-
 /*关键词云*/
 #CloudBall
 {
@@ -52,13 +41,5 @@ html,body
 
 
 
-/*页脚*/
-.foot
-{
-	background-color:#377BB6;
-	height:50px;
-	text-align:center;
-	color:white;
-}
 
 

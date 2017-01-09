@@ -865,60 +865,72 @@ function InformationSourcesChart(loadurl, elementId, starttime, endtime,
 			//'MTcome'
 			var myChart = echarts.init(document.getElementById(elementId));
 
-			option = {
-				title : {
-					text : datt.title, //图标标题
-					subtext : datt.subtitle, //图标二级标题
-					x : 'center'
-				},
-				tooltip : {
-					trigger : 'item',
-					formatter : "{a} <br/>{b} : {c} ({d}%)"
-				},
-				legend : {
-					x : 'center',
-					y : 'bottom',
-				},
-				toolbox : {
+			var option = {
+				    title : {
+				        text: '南丁格尔玫瑰图',
+				        subtext: '纯属虚构',
+				        x:'center'
+				    },
+				    tooltip : {
+				        trigger: 'item',
+				        formatter: "{a} <br/>{b} : {c} ({d}%)"
+				    },
+				    legend: {
+				        x : 'center',
+				        y : 'bottom',
+				        data:datt.lengdata
+				    },
+				    toolbox: {
+				        show : true,
+				        orient : 'vertical',
+				        feature : {
+				            mark : {show: true},
+				            dataView : {show: true, readOnly: false},
+				            magicType : {
+				                show: true,
+				                type: ['pie', 'funnel']
+				            },
+				            restore : {show: true},
+				            saveAsImage : {show: true}
+				        }
+				    },
+				    calculable : true,
+				    series : [
+				        {
+				            name:'半径模式',
+				            type:'pie',
+				            radius : [20, 110],
+				            center : ['25%', '50%'],
+				            roseType : 'radius',
+				            label: {
+				                normal: {
+				                    show: false
+				                },
+				                emphasis: {
+				                    show: true
+				                }
+				            },
+				            lableLine: {
+				                normal: {
+				                    show: false
+				                },
+				                emphasis: {
+				                    show: true
+				                }
+				            },
+				            data:datt.data
+				        },
+				        {
+				            name:'面积模式',
+				            type:'pie',
+				            radius : [30, 110],
+				            center : ['75%', '50%'],
+				            roseType : 'area',
+				            data:datt.data
+				        }
+				    ]
+				};
 
-					show : true,
-					feature : {
-						mark : {
-							show : true
-						},
-						dataView : {
-							show : true,
-							readOnly : false
-						},
-						magicType : {
-							show : true,
-							type : [ 'pie', 'funnel' ]
-						},
-						restore : {
-							show : true
-						},
-						saveAsImage : {
-							show : true
-						}
-					},
-					orient : 'vertical',
-				},
-				calculable : true,
-				series : [
-
-				{
-					name : datt.typename,
-					type : 'pie',
-					radius : [ 30, 110 ],
-					center : [ '50%', 200 ],
-					roseType : 'area',
-					x : '50%', // for funnel
-					max : 40, // for funnel
-					sort : 'ascending', // for funnel
-					data : datt.data
-				//面积模式图标中的数据
-				} ]
-			};
 			myChart.setOption(option);
 			Chart = myChart;
 
@@ -927,8 +939,7 @@ function InformationSourcesChart(loadurl, elementId, starttime, endtime,
 	return Chart;
 }
 //媒体活跃度图
-function MediaActivityChart(loadurl, elementId, starttime, endtime, userId,
-		method) {
+function MediaActivityChart(loadurl, elementId, starttime, endtime, userId,method) {
 
 	var Chart;
 	$.ajax({
@@ -947,46 +958,77 @@ function MediaActivityChart(loadurl, elementId, starttime, endtime, userId,
 			var myChart = echarts.init(document.getElementById(elementId));
 
 			var option = {
-				title : {
-					text : datt.title
-				},
-				tooltip : {},
-				toolbox : {
-					show : true,
-					feature : {
-						mark : {
-							show : true
-						},
-						dataView : {
-							show : true,
-							readOnly : false
-						},
-						magicType : {
-							show : true,
-							type : [ 'pie', 'funnel' ]
-						},
-						restore : {
-							show : true
-						},
-						saveAsImage : {
-							show : true
-						}
-					},
-					orient : 'vertical',
-				},
-				legend : {
-					data : datt.lengdname
-				},
-				xAxis : {
-					data : datt.lengdata,
-				},
-				yAxis : {},
-				series : [ {
-					name : datt.lengdname,
-					type : 'bar',
-					data : datt.lengdcount
-				} ]
-			};
+				    title: {
+				        text: '折线图堆叠'
+				    },
+				    tooltip: {
+				        trigger: 'axis'
+				    },
+				    legend: {
+				        data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+				    },
+				    grid: {
+				        left: '3%',
+				        right: '4%',
+				        bottom: '3%',
+				        containLabel: true
+				    },
+				    toolbox: {
+				        show : true,
+				        orient : 'vertical',
+				        feature : {
+				            mark : {show: true},
+				            dataView : {show: true, readOnly: false},
+				            magicType : {
+				                show: true,
+				                type: ['pie', 'funnel']
+				            },
+				            restore : {show: true},
+				            saveAsImage : {show: true}
+				        }
+				    },
+				    xAxis: {
+				        type: 'category',
+				        boundaryGap: false,
+				        data: ['周一','周二','周三','周四','周五','周六','周日']
+				    },
+				    yAxis: {
+				        type: 'value'
+				    },
+				    series: [
+				        {
+				            name:'邮件营销',
+				            type:'line',
+				            stack: '总量',
+				            data:[120, 132, 101, 134, 90, 230, 210]
+				        },
+				        {
+				            name:'联盟广告',
+				            type:'line',
+				            stack: '总量',
+				            data:[220, 182, 191, 234, 290, 330, 310]
+				        },
+				        {
+				            name:'视频广告',
+				            type:'line',
+				            stack: '总量',
+				            data:[150, 232, 201, 154, 190, 330, 410]
+				        },
+				        {
+				            name:'直接访问',
+				            type:'line',
+				            stack: '总量',
+				            data:[320, 332, 301, 334, 390, 330, 320]
+				        },
+				        {
+				            name:'搜索引擎',
+				            type:'line',
+				            stack: '总量',
+				            data:[820, 932, 901, 934, 1290, 1330, 1320]
+				        }
+				    ]
+				};
+
 
 			myChart.setOption(option);
 			Chart = myChart;
