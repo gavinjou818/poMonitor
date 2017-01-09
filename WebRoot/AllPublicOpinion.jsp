@@ -145,18 +145,21 @@
 						var son2 = document.createElement("a");
 						son2.innerHTML = "&laquo;";
 
-						if ((pagesum - curpage + 1) < sum) {
-							start = (pagesum - sum + 1);
+						if ((pagesum - curpage + 1) < barsum) 
+						{
+							start = (pagesum - barsum + 1);
 							if (start <= 0) {
 								start = 1;
 							}
 						}
 
-
-                        var halfsum=parseInt(sum/2)+1;
+                       
+                        var halfsum=parseInt(barsum/2)+1;
 						//确定开始标号范围.
-						if (parseInt(start) - halfsum > 0) {
-							son2.addEventListener("click", function() {
+						if (parseInt(start) - halfsum > 0) 
+						{
+							son2.addEventListener("click", function() 
+							{
 								initData(start - halfsum, dataroot, tparent);
 							});
 						}
@@ -174,13 +177,14 @@
 							var son2 = document.createElement("a");
 
 							son2.innerText = i;
-							son2.addEventListener("click", function() {
+							son2.addEventListener("click", function() 
+							{
 								initData(this.innerText, dataroot, tparent);
 							});
 							son1.appendChild(son2);
 							parent.appendChild(son1);
 						}
-
+                     
 						// 加入>>号
 						son1 = document.createElement("li");
 						// 添加小手指
@@ -188,16 +192,19 @@
 						//添加标号>>
 						son2 = document.createElement("a");
 						son2.innerHTML = "&raquo;";
-
+                        
+                       
 						//确定开始标号范围.
 						var End = parseInt(start) + halfsum;
-						if (start == 1 && (parseInt(start) + sum) < pagesum)
+						
+						if (start == 1 && (parseInt(start) + barsum) < pagesum)
 						{
-							End = parseInt(start) + sum;
+							End = parseInt(start) + barsum;
 						}
 
 						//如果右标签的最后一个超出了page的最大值,那么就不添加事件了。
-						if (End <= pagesum) {
+						if (End <= pagesum)
+						{
 							son2.addEventListener("click", function() {
 								initData(End, dataroot, tparent);
 							});

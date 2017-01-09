@@ -12,12 +12,42 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.Authenticator;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.MimeUtility;
+
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
+
+import pomonitor.entity.Briefing;
+import pomonitor.entity.BriefingDAO;
+import pomonitor.util.ConsoleLog;
+import pomonitor.util.PropertiesReader;
 
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.ComThread;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
+import com.sun.xml.internal.ws.client.SenderException;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -41,7 +71,7 @@ import freemarker.template.TemplateException;
  */
 
 /**
- * 文档操作类,例如创建word,加载freemarket加载器, 转word到pdf等,创建word目录等
+ * 文档操作类,例如创建word,加载freemarket加载器, 转word到pdf等,创建word目录,发送邮件等
  * 
  * 注意 范用到jacob 方法的文件调用都会有平台限制,同时必须在平台安装word，
  * 有局限性,当需要移植到其他平台时,必须考虑到这个问题。或者当有新方法必须更换.
@@ -49,12 +79,34 @@ import freemarker.template.TemplateException;
  * @author zhouzhifeng
  * 
  */
-public class DocumentHandler {
+public class DocumentHandler 
+{
 	// freemarket配置加载器
 	private Configuration configuration = null;
+	
+	//官方邮箱账号
+	private  static String officialEmailAccount;
+	//官方邮箱密码
+	private  static String officialEmailPassword;
+    //官方邮箱端口
+	private  static String officialEmailPort;
+	//官方邮箱服务器
+	private  static String officialEmailServer;
 
+	static
+	{    
+		PropertiesReader propertiesReader = new PropertiesReader();
+		
+		officialEmailAccount = propertiesReader.getPropertyByName("officialEmailAccount");
+		officialEmailPassword = propertiesReader.getPropertyByName("officialEmailPassword");
+		officialEmailPort =propertiesReader.getPropertyByName("officialEmailPort");
+		officialEmailServer=propertiesReader.getPropertyByName("officialEmailServer");
+	}
+	
+	
 	// 初始化参数,并设置默认编码
-	public DocumentHandler() {
+	public DocumentHandler() 
+	{
 		// 创建配置实例
 		configuration = new Configuration();
 		// 设置编码
@@ -197,7 +249,8 @@ public class DocumentHandler {
      * @param sfileName  要转换的doc的filepath+filename;
      * @param toFileName 转换后的pdf的filepath+filename;
      */
-	public void wordToPDF(String sfileName, String toFileName) {
+	public void wordToPDF(String sfileName, String toFileName)
+	{
 
 		System.out.println("启动Word...");
 		long start = System.currentTimeMillis();
@@ -237,5 +290,154 @@ public class DocumentHandler {
 		// 如果没有这句话,winword.exe进程将不会关闭
 		ComThread.Release();
 	}
+     
+	/**
+	 * @author zhouzhifeng
+	 * 邮件发送:
+	 * 邮件发送前提是必须建立一个官方邮箱,
+	 * 同时开启POP3/SMTP服务.
+	 * 开启方法以QQ邮箱为例:打开QQ邮箱->设置->账户->POP3/IMAP/SMTP/Exchange/CardDAV/CalDAV服务->POP3/SMTP服务开启
+	 * 即可获得密码.必须利用此密码
+	 * 
+	 * 暂无利用安全机制
+	 * 
+	 * 若以后需要拓展,可以开始修改
+	 * @throws MessagingException 
+	 * 
+	 * @param recipientString  所有要发的接收人,其中请以分号;隔开例如“xxx@qq.com;xxx@qq.com...”
+	 * 
+	 * @param requestString 所要发的文件,其中请以逗号,隔开对应相应的邮件例如“id1,id2,id3.....”,对应各个
+	 * @throws UnsupportedEncodingException 
+	 * 
+	 */
+	
+	public String sendEmail(String recipientString,String requestString) throws MessagingException, UnsupportedEncodingException
+	{
+        
+		//------->设置邮件属性		
+		
+		// 创建Properties 类用于记录邮箱的一些属性
+        final Properties props = new Properties();
+        // 表示SMTP发送邮件，必须进行身份验证
+        props.put("mail.smtp.auth", "true");
+        //此处填写SMTP服务器
+        props.put("mail.smtp.host", officialEmailServer);
+        //端口号
+        props.put("mail.smtp.port", officialEmailPort);
+        // 此处填写你的账号
+        props.put("mail.user", officialEmailAccount);
+        // 此处的密码就是前面说的16位STMP口令
+        props.put("mail.password", officialEmailPassword);
+        
+        
+        // 构建授权信息，用于进行SMTP进行身份验证
+        Authenticator authenticator = new Authenticator() 
+        {
 
+            protected PasswordAuthentication getPasswordAuthentication() {
+                // 用户名、密码
+                String userName = props.getProperty("mail.user");
+                String password = props.getProperty("mail.password");
+                return new PasswordAuthentication(userName, password);
+            }
+        };
+        //------>
+        
+        
+        // 使用环境属性和授权信息，创建邮件会话
+        Session mailSession = Session.getInstance(props, authenticator);
+        
+        // 创建邮件消息
+        MimeMessage message = new MimeMessage(mailSession);
+        
+        // 设置发件人
+        InternetAddress form = new InternetAddress(props.getProperty("mail.user"));
+        message.setFrom(form);
+        
+        //Subject: 邮件主题
+        message.setSubject("南华大学舆情系统中心邮件", "UTF-8");
+        
+        
+        //创建节点
+        BodyPart MimeBodyPart=new MimeBodyPart();
+        //创建信息
+        MimeBodyPart.setText("官方推送邮件,请勿回复.");
+        
+        //切分出邮箱
+        String[] recipients=recipientString.split(";");
+        
+        //匹配邮箱正则
+        Pattern pattern = Pattern.compile("^([a-zA-Z0-9_\\-\\.]+)"
+        		+ "@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$");
+        
+        //先判断传过来的字符串的邮箱个数
+        if(recipients.length>0)
+        {
+        	//存放合法的字符串
+        	List<String> addressList=new ArrayList<>();
+        	//检测接收人邮箱是否合法
+        	for(int i=0;i<recipients.length;i++)
+        	{
+        		Matcher matcher = pattern.matcher(recipients[i]);
+        		if(matcher.matches())
+        		{
+        			addressList.add(recipients[i]);
+        		}
+        	}
+        	//存在合法的邮箱才继续
+        	if(addressList.size()>0)
+        	{
+        		InternetAddress[] address = new InternetAddress[addressList.size()]; 
+        		for(int i=0;i<addressList.size();i++)
+        		{
+        			address[i]=new InternetAddress(addressList.get(i));
+        		}
+        		//添加所有接收人.
+        		message.addRecipients(Message.RecipientType.TO, address);
+        		
+        		String [] requests=requestString.split(",");
+        		if(requests.length>0)
+        		{
+        		    BriefingDAO briefingDAO=new BriefingDAO();
+        		    //创建节点
+        		    MimeMultipart mimemultipart=new MimeMultipart();
+        		    //添加节点
+        		    mimemultipart.addBodyPart(MimeBodyPart);
+        		    
+        		    for(int i=0;i<requests.length;i++)
+        		    {
+        		    	
+        		    	//通过id找到对应的报表
+        		    	Briefing briefing=briefingDAO.findById(Integer.parseInt(requests[i]));
+        		    	//附件文档
+        		    	MimeBodyPart attachment= new MimeBodyPart();
+        		    	//创建数据档
+        		    	DataHandler dh2=new DataHandler(new FileDataSource(briefing.getEntityurl()));
+        		    	//增加文件句柄
+        		    	attachment.setDataHandler(dh2);  
+        		        //解码
+        		    	attachment.setFileName(MimeUtility.encodeText(dh2.getName()));   
+        		        //增加节点
+        		    	mimemultipart.addBodyPart(attachment);
+        		    }
+        		    //设置内容邮件节点
+        		    message.setContent(mimemultipart);
+        		    //开启日期
+        		    Calendar cal=Calendar.getInstance();
+        		    //设置时间
+        		    message.setSentDate(cal.getTime());
+        			//保存所有设置
+        		    message.saveChanges();
+        		    //最后当然发送邮件啦
+        		    Transport.send(message);
+        		    
+        		    return "{\"message\":\"发送邮件成功\"}";
+        		}	
+        		
+        	}
+        	
+        }
+        	
+        return "{\"message\":\"发送邮件失败\"}";
+	}
 }

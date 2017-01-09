@@ -13,9 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSON;
+import com.sun.org.apache.bcel.internal.generic.SWAP;
 
 import pomonitor.entity.User;
 import pomonitor.entity.UserDAO;
+import ucar.unidata.io.Swap;
 
 
 /**
@@ -106,7 +108,7 @@ public class BasicInteractionServlet extends HttpServlet
 		
 			if(VerificationFlag==true)
 			{   
-				response.sendRedirect(basePath+"SY.jsp");
+				response.sendRedirect(basePath+"HomePage.jsp");
 			}
 			else 
 			{    
@@ -127,11 +129,27 @@ public class BasicInteractionServlet extends HttpServlet
 		// Put your code here
 	}
 	
+	/**
+	 *  @author zhouzhifeng
+	 *  设置时间,当request提交把时间设置存在session
+	 */
 	public void setTimeInteraction(HttpServletRequest request)
 	{
 		HttpSession session=request.getSession();
-		session.setAttribute("startTime", request.getParameter("startTime"));
-		session.setAttribute("endTime", request.getParameter("endTime"));
+		String startTime=request.getParameter("startTime");
+		String endTime=request.getParameter("endTime");
+		 
+
+		if(startTime.compareTo(endTime)>0)
+		{  
+		   String temp=startTime;
+		   startTime=endTime;
+		   endTime=temp;  
+		}
+	
+		
+		session.setAttribute("startTime", startTime);
+		session.setAttribute("endTime", endTime);
 	}
     /**
      * 简单的登录验证,没做防护措施,待修改.

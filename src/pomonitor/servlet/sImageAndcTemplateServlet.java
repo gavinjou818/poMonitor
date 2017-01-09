@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,6 +34,7 @@ import pomonitor.entity.NewsDAO;
 import pomonitor.entity.NewsTend;
 import pomonitor.entity.NewsTendDAO;
 import pomonitor.statistics.BriefingSummarize;
+import pomonitor.util.ConsoleLog;
 import pomonitor.util.PropertiesReader;
 import sun.misc.BASE64Decoder;
 
@@ -144,7 +146,6 @@ public class sImageAndcTemplateServlet extends HttpServlet
 		case "getPreviewChart"://根据所选择的词条信息,创建所需要的图表
 			// 获取最图表
 			resJSON = getPreviewChart(requestString,request.getParameter("templateName"));
-			System.out.println("getPreviewChart--->" + resJSON);
 			break;
 		case "createTemplate1":
 			resJSON = "{\"message\":\"成功生成报表\"}";
@@ -156,13 +157,24 @@ public class sImageAndcTemplateServlet extends HttpServlet
 			// 获取开始序列
 			index = Integer.parseInt(request.getParameter("index"));
 			resJSON=getIntimateBriefing(max,index,userid,basePath);
-			System.out.println("getIntimateBriefing--->" + resJSON);
 			break;
+		case "sendEmail":
+		    DocumentHandler documentHandler=new DocumentHandler();
+		    String recipientString=request.getParameter("recipientString");
+		    try 
+		    {
+		    	resJSON=documentHandler.sendEmail(recipientString, requestString);
+			} catch (MessagingException e)
+			{	
+				e.printStackTrace();
+			}
+		    
+		    break;
 		default:
 			break;
 		}
 
-		
+		ConsoleLog.PrintInfo(getClass(), resJSON);
 		response.getWriter().write(resJSON);
 
 	}
@@ -261,6 +273,7 @@ public class sImageAndcTemplateServlet extends HttpServlet
 		return briefingSummarize.getIntimateBriefing(max, index, userid,basePath);
 	}
 	
+
 	
 	
 	/**
@@ -289,6 +302,7 @@ public class sImageAndcTemplateServlet extends HttpServlet
 	}
 
 	/**
+	 * @author zhouzhifeng
 	 * 因为是从前端传过来的图表只能用字符串的形式传过来, 没办法用数组存,对于每个key就不一样了,所以暂时的想法
 	 * 就是有多少个模板,就要有多少个对应的模板函数,准确定位每个位置. 创造模板1的方法。
 	 * 每个报表有每个报表的生成要求,所以在servlet中自动进行选择。
@@ -311,7 +325,7 @@ public class sImageAndcTemplateServlet extends HttpServlet
 		Map<String, Object> dataMap = new HashMap<String, Object>();
         //创建日历
 		Calendar cal = Calendar.getInstance();
-		// 创建基本报表模型,主要填入数据
+		//创建基本报表模型,主要填入数据
 		BriefingData briefing = new BriefingData();
 		//写入要所要存入的文件夹,filePath默认为当前servlet定义的filepath
 		briefing.setFilePath(filePath);
@@ -323,8 +337,6 @@ public class sImageAndcTemplateServlet extends HttpServlet
 		String uniqueName=createTimestr();
 		briefing.setFileName("BEF"+uniqueName+".doc");
 	
-		
-		
 		
 		//获取有几个图片
 		int limited = Integer.parseInt(request.getParameter("length"));
@@ -506,7 +518,9 @@ public class sImageAndcTemplateServlet extends HttpServlet
 		briefingEntity.setVirtualname("经典版"+year+"-"+month+"-"+day);
 		briefingDAO.save(briefingEntity);
 		
-		System.out.println("报表生成成功-----"+briefing.getFilePath()+userPath + briefing.getFileName());
+		
+		ConsoleLog.PrintInfo(getClass(), "报表生成成功:"+briefing.getFilePath()+userPath + briefing.getFileName());
+		
 		
 	}
 	

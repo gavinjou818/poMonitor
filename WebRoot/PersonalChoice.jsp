@@ -37,6 +37,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     var IMGroot=["image/nev.png","image/cen.png","image/pos.png"];
     var images = new Array();
     var Charts=new Array();
+    
+    function checkstate(val)
+	{
+	    if(parseInt(val)==0) return 1;//中性
+	    else if(parseInt(val)>0)return 2;//正
+	    return 0;//负性
+	}
+    
 
     function preload()
     {
@@ -195,18 +203,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						var son2 = document.createElement("a");
 						son2.innerHTML = "&laquo;";
 
-						if ((pagesum - curpage + 1) < sum) {
-							start = (pagesum - sum + 1);
+						if ((pagesum - curpage + 1) < barsum) 
+						{
+							start = (pagesum - barsum + 1);
 							if (start <= 0) {
 								start = 1;
 							}
 						}
 
-
-                        var halfsum=parseInt(sum/2)+1;
+                       
+                        var halfsum=parseInt(barsum/2)+1;
 						//确定开始标号范围.
-						if (parseInt(start) - halfsum > 0) {
-							son2.addEventListener("click", function() {
+						if (parseInt(start) - halfsum > 0) 
+						{
+							son2.addEventListener("click", function() 
+							{
 								initData(start - halfsum, dataroot, tparent);
 							});
 						}
@@ -224,13 +235,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							var son2 = document.createElement("a");
 
 							son2.innerText = i;
-							son2.addEventListener("click", function() {
+							son2.addEventListener("click", function() 
+							{
 								initData(this.innerText, dataroot, tparent);
 							});
 							son1.appendChild(son2);
 							parent.appendChild(son1);
 						}
-
+                     
 						// 加入>>号
 						son1 = document.createElement("li");
 						// 添加小手指
@@ -238,15 +250,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						//添加标号>>
 						son2 = document.createElement("a");
 						son2.innerHTML = "&raquo;";
-
+                        
+                       
 						//确定开始标号范围.
 						var End = parseInt(start) + halfsum;
-						if (start == 1 && (parseInt(start) + sum) < pagesum)
+						
+						if (start == 1 && (parseInt(start) + barsum) < pagesum)
 						{
-							End = parseInt(start) + sum;
+							End = parseInt(start) + barsum;
 						}
+
 						//如果右标签的最后一个超出了page的最大值,那么就不添加事件了。
-						if (End <= pagesum) {
+						if (End <= pagesum)
+						{
 							son2.addEventListener("click", function() {
 								initData(End, dataroot, tparent);
 							});
@@ -274,7 +290,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							div2.setAttribute("class", "panel-heading");
 							div2.style.setProperty("font-weight", "bold");
 
-							div2.appendChild(images[parseInt(data.gAM_Result_Briefings[i].tendclass) + 1]);
+							div2.appendChild(images[checkstate(parseInt(data.gAM_Result_Briefings[i].tendclass))]);
 							div2.innerHTML +=" "+data.gAM_Result_Briefings[i].title;
 
 							//加入内容
@@ -368,7 +384,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 						</div>
 					</div>
-
+                    
 					<div style="clear: both"></div>
 				</div>
 

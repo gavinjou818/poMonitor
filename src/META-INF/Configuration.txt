@@ -1,6 +1,6 @@
 /**
 *  @author zhouzhifeng
-     问题配置
+       问题配置
 */
 //用于更新目录
 1.配置Jacob包
@@ -21,3 +21,10 @@
 
 //生成报表功能配置
 5.在src目录下的pomonitor.properties的BEF_savePath下配置
+
+//设置邮箱发送：
+6.打开pomonitor.properties设置officialEmailAccount,officialEmailPassword,officialEmailPort,officialEmailServer
+后面两个可以百度得到,一般邮箱上都可以找到,- -我是直接百度的,所以这里没给查找信息
+想了解怎么写可以看这个博客http://blog.csdn.net/xietansheng/article/details/51722660
+邮件发送前提是必须建立一个官方邮箱, 同时开启POP3/SMTP服务.开启方法以QQ邮箱为例:打开QQ邮箱->设置->账户->POP3/IMAP/SMTP/Exchange/CardDAV/CalDAV服务->POP3/SMTP服务开启
+ 即可获得密码.必须利用此密码

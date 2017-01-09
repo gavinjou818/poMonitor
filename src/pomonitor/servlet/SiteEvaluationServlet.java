@@ -43,7 +43,6 @@ public class SiteEvaluationServlet extends HttpServlet
 		String end_time = request.getParameter("end_time");
 		String method = request.getParameter("method");
 		String userID = request.getParameter("userID");
-		//System.out.println(start_time);
 		String resJson = "";
 		
 		switch (method)
