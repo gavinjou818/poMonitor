@@ -129,7 +129,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!--主体-->
     <div class="container" id="mainbody">
         <div class="row">
-
+           
+           
+           <!--地域舆情数据-->
             <div class="Ancestor" id="head1">
                 <h1 class="h1Title" >地域舆情数据</h1>
                 <div class="col-md-6 col-xs-6 col-lg-6" >
@@ -165,7 +167,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div style="clear: both"></div>
             </div>
 
-
+           <!--媒体情感分析 -->
             <div class="Ancestor" id="head2">
                 <h1 class="h1Title">媒体情感分析</h1>
                 <div class="Father" style="z-index: 100">
@@ -179,7 +181,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </div>
             </div>
 
-
+            <!--整体信息走势分析 -->
             <div class="Ancestor" id="head3">
                 <h1 class="h1Title">整体信息走势分析</h1>
                 <div class="Father" style="z-index: 98">
@@ -193,7 +195,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </div>
             </div>
 
-
+             <!--媒体负面倾向性走势 -->
             <div class="Ancestor" id="head4">
                 <h1 class="h1Title">媒体负面倾向性走势</h1>
                 <div class="Father" style="z-index: 96">
@@ -207,7 +209,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </div>
             </div>
 
-            
+            <!--信息敏感分类情况 -->
             <div class="Ancestor" id="head5">
                 <h1 class="h1Title">信息敏感分类情况</h1>
                 <div class="Father" style="z-index: 94">
@@ -234,7 +236,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         function getChart(startTime,endTime,userId)
         {
             //媒体分析
-            MediaAnalysisChart("json/MediaAnalysis.json",'MediaAnalysis',startTime,endTime,userId,null);
+            MediaAnalysisChart("./servlet/IndexServlet",'MediaAnalysis',startTime,endTime,userId,"getMediaAnalysis");
             //整体走势分析
             OverallTrendChart("json/otrendAnalysis.json",'otrendAnalysis',startTime,endTime,userId,null);
             //信息敏感分类图

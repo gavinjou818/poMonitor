@@ -8,7 +8,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
+import javax.json.Json;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -301,6 +303,7 @@ public class Summarize
 			     this.now=now;
 			}
 		}
+		   
 		
 		 
 		  //获取实体管理者
@@ -345,11 +348,160 @@ public class Summarize
 		  
 	}
 	
+	
+	public String getMediaAnalysis(String startTime,String endTime)
+	{   
+		
+		class element3
+		{
+			public boolean show;
+			public String position;
+			public element3(boolean show,String position)
+			{
+				this.show=show;
+				this.position=position;
+			}
+		}
+		class element2
+		{
+			public element3 normal;
+			public element2(element3 normal)
+			{
+				this.normal=normal;
+			}
+		}
+		class element1
+		{
+			public String name;
+			public String type;
+			public String stack;
+			public element2 label;
+			public Integer[] data;
+			public element1(String name,String type,String stack,element2 label,Integer[] data)
+   			{
+	                  this.name=name;
+	                  this.type=type;
+	                  this.stack=stack;
+	                  this.label=label;
+	                  this.data=data;
+			}
+		}
+		class JSONData 
+		{
+			public String[] lengdata;
+			public String[] xAxisdata;
+			public List<element1> series;
+			public JSONData(String[] lengdata,String[] xAxisdata,List<element1> series)
+			{
+				this.lengdata=lengdata;
+				this.xAxisdata=xAxisdata;
+				this.series=series;
+			}
+		}
+		
 
-	
-	
-	
-	
-	
+		  //获取实体管理者
+		  EntityManager  entityManager=EntityManagerHelper.getEntityManager();
+		  
+		  //JPQL语句,获取数据库表新闻类和新闻倾向类的联合关系中的信息。
+		  final String queryString ="SELECT new pomonitor.briefing.gAM_Result(n.relId,n.title,n.content,n.web,nt.tendclass,nt.date) as t "
+				  +" from News n JOIN NewsTend nt where (n.relId = nt.newsId and (n.time between ?1 and ?2))";
+          //创建查询
+		  Query query = entityManager.createQuery(queryString);
+		  
+		  //格式化时间
+		  Date startDate = null;
+	      Date endDate = null;
+	      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		   try 
+		    {
+				startDate = sdf.parse(startTime);
+				endDate = sdf.parse(endTime);
+			} 
+		   catch (ParseException e) 
+			{
+				e.printStackTrace();
+			}
+		   
+		  //设置对应位置的参数 
+	      query.setParameter(1, startDate, TemporalType.DATE);
+		  query.setParameter(2, endDate, TemporalType.DATE);
 
+		  //获取分页后的数据。
+		  List<gAM_Result> gAM_Result_Briefings=query.getResultList();
+		  
+		  Map<String,Integer[]> countWebState=new HashMap<>();
+		  
+		  for(int i=0;i<gAM_Result_Briefings.size();i++)
+		  {
+			  
+			   gAM_Result grm_Result=gAM_Result_Briefings.get(i);
+			  if(countWebState.get(grm_Result.getWeb())==null)
+				{   
+				    Integer[] status={0,0,0};
+				    status[checkstate(grm_Result.getTendclass())]+=1;
+				    countWebState.put(grm_Result.getWeb(),status);
+				}
+				else 
+				{    
+					  Integer[] status=countWebState.get(grm_Result.getWeb());
+					  status[checkstate(grm_Result.getTendclass())]+=1;
+					  countWebState.put(grm_Result.getWeb(),status);
+			    }
+		  }
+		  
+		  
+		  String[] xAxisdata=new String[countWebState.size()]; 
+		  String[] lengdata={"负","中","正"};
+		  Integer[] neg= new Integer[countWebState.size()];
+		  Integer[] cen= new Integer[countWebState.size()];
+		  Integer[] pos= new Integer[countWebState.size()];
+          
+		  List<element1> series=new ArrayList<>();
+		  
+		  int index=0;
+		  for( Entry<String, Integer[]> entry:countWebState.entrySet())
+		  {
+			  
+			  Integer[] tmp=entry.getValue();
+			  xAxisdata[index]=entry.getKey();
+			  neg[index]=tmp[0];
+			  cen[index]=tmp[1];
+			  pos[index++]=tmp[2];
+			  
+	          
+		  }
+          
+		  element3 e3=new element3(true, "insideRight");
+		  element2 e2=new element2(e3);
+		  element1 e1=new element1(lengdata[0], "bar", "总量", e2,neg);
+		  JSONData jsonData=new JSONData(lengdata, xAxisdata, series);
+		  series.add(e1);
+		  
+		  e3=new element3(true, "insideRight");
+		  e2=new element2(e3);
+		  e1=new element1(lengdata[1], "bar", "总量", e2,cen);
+		  jsonData=new JSONData(lengdata, xAxisdata, series);
+		  series.add(e1);
+		  
+		  e3=new element3(true, "insideRight");
+		  e2=new element2(e3);
+		  e1=new element1(lengdata[2], "bar", "总量", e2,pos);
+		  jsonData=new JSONData(lengdata, xAxisdata, series);
+		  series.add(e1);
+		  
+		  //System.out.println(JSON.toJSON(jsonData));
+		  entityManager.close();
+		 
+		  return JSON.toJSONString(jsonData);
+	}
+	private int checkstate(int val)
+	{
+		if(val==0) return 1;//中
+		else if(val>0) return 2;//正
+		return 0;//负
+	}
+	
+	//zhouzhifeng ----->
+	
 }

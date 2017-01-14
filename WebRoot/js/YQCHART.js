@@ -370,16 +370,16 @@ function WeeklyChart(loadurl, elementId, starttime, endtime, userId, method) {
 }
 
 //媒体分析图，在情感分析页面
-function MediaAnalysisChart(loadurl, elementId, starttime, endtime, userId,
-		method) {
+function MediaAnalysisChart(loadurl, elementId, starttime, endtime, userId,method) {
 	var Chart;
 	$.ajax({
 		type : "GET",
 		url : loadurl,
 		dataType : "json",
-		data : {
-			"start_time" : setFormat(starttime),
-			"end_time" : setFormat(endtime),
+		data : 
+		{
+			"startTime" : setFormat(starttime),
+			"endTime" : setFormat(endtime),
 			"userId" : userId,
 			"method" : method
 		},
@@ -430,63 +430,7 @@ function MediaAnalysisChart(loadurl, elementId, starttime, endtime, userId,
 					data : datt.xAxisdata
 				//纵坐标表示数据
 				},
-				series : [ {
-					name : datt.lengd1, //图例1内容
-					type : 'bar',
-					stack : '总量',
-					label : {
-						normal : {
-							show : true,
-							position : 'insideRight'
-						}
-					},
-					data : datt.lengd1data
-				//图例1对应数据
-				}, {
-					name : datt.lengd2,
-					type : 'bar',
-					stack : '总量',
-					label : {
-						normal : {
-							show : true,
-							position : 'insideRight'
-						}
-					},
-					data : datt.lengd2data
-				}, {
-					name : datt.lengd3,
-					type : 'bar',
-					stack : '总量',
-					label : {
-						normal : {
-							show : true,
-							position : 'insideRight'
-						}
-					},
-					data : datt.lengd3data
-				}, {
-					name : datt.lengd4,
-					type : 'bar',
-					stack : '总量',
-					label : {
-						normal : {
-							show : true,
-							position : 'insideRight'
-						}
-					},
-					data : datt.lengd4data
-				}, {
-					name : datt.lengd5,
-					type : 'bar',
-					stack : '总量',
-					label : {
-						normal : {
-							show : true,
-							position : 'insideRight'
-						}
-					},
-					data : datt.lengd5data
-				} ]
+				series : datt.series
 			};
 
 			myChart.setOption(option);

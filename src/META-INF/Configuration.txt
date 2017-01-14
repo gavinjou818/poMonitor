@@ -2,9 +2,13 @@
 *  @author zhouzhifeng
        问题配置
 */
-//用于更新目录
+
+//用于更新目录和转word
 1.配置Jacob包
 将jacob包里面的dll文件存入jre的bin目录下
+如何查看jre目录:打开window->preferences->输入jre->Installed jres->选择本包安装的jre就可以看到相应jre的路径
+同时本机必须装上office或wps软件,否则没法调用插件转pdf
+
 
 //用于开启baes64权限
 2.右键poMonitor->Build Path->JRE system Library(这个根据原来自己的JRE包）->Access rules->右边一排有个Edit点击->Add..->Resolution:Accessible,Rule Pattern:** 保存
@@ -12,7 +16,6 @@
 //配置最大内存
 3.Window->Preferences->输入jre->Installed JREs->单击(你正在使用的)jre
 ->Edit->Default VM arguments填写-Xms128M -Xmx512M;
-
 
 //配置中文词库
 4.选择src包->hanlp.properties,自行上https://github.com/hankcs/HanLP/releases下载data-for-1.2.7.zip
@@ -28,3 +31,4 @@
 想了解怎么写可以看这个博客http://blog.csdn.net/xietansheng/article/details/51722660
 邮件发送前提是必须建立一个官方邮箱, 同时开启POP3/SMTP服务.开启方法以QQ邮箱为例:打开QQ邮箱->设置->账户->POP3/IMAP/SMTP/Exchange/CardDAV/CalDAV服务->POP3/SMTP服务开启
  即可获得密码.必须利用此密码
+ 

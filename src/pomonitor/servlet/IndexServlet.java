@@ -106,8 +106,11 @@ public class IndexServlet extends HttpServlet
 				e.printStackTrace();
 			}
 			break;
-		case "getAllMessage_Briefing":
-			//zhouzhifeng
+		
+		
+			
+	    //@author  zhouzhifeng------>
+		case "getAllMessage_Briefing"://得到简报所需要的所有新闻 对应页面AllPublicOpinion.jsp
 			try
 			{
 				     int max=Integer.parseInt(request.getParameter("max"));//获取显示条数
@@ -119,6 +122,11 @@ public class IndexServlet extends HttpServlet
 				e.printStackTrace();
 			}
   			break;
+		case "getMediaAnalysis"://得到媒体分析
+			    resJSON=getMediaAnalysis(startTime,endTime);
+			break;
+  			
+  	    //zhouzhifeng------>
 		default:
 			break;
 		}
@@ -155,6 +163,8 @@ public class IndexServlet extends HttpServlet
 		
 	}
 	
+	
+	//@author zhouzhifeng----->
 	/**
 	 * 该方法主要用于获取news和newstend的联结关系的数据库表
 	 * 对应MGYQ.jsp的今日舆情,提供了一个显示接口,
@@ -171,4 +181,14 @@ public class IndexServlet extends HttpServlet
 		Summarize summarize = new Summarize();
 		return summarize.getAllMessage_Briefing(startTime,endTime,max,index);
 	}
+	
+	
+	private String getMediaAnalysis(String startTime,String endTime)
+	{
+		Summarize summarize = new Summarize();
+		return summarize.getMediaAnalysis(startTime,endTime);
+	}
+	
+	
+	//zhouzhifeng----->
 }
