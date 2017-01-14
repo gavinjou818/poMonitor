@@ -16,7 +16,6 @@ html,body
     border-bottom: 1px solid silver;
     text-align: center;
 
-
 }
 .h2Title
 {
@@ -120,16 +119,19 @@ html,body
 .Menu_fa
 {
     margin: 10px 10px;
-    text-align: right
+    text-align: left;
 
 }
 .Menu_fa
 {
     font-size: 25px;
+    text-align:right;
+    
 }
 .Menu_son
 {
     text-decoration: none;
+    margin-left:40px;
     color: white;
     font-size: 25px;
     display: inline-block;

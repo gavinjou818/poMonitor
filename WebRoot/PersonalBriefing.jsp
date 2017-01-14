@@ -308,7 +308,7 @@
                     }
                     xmlhttp.open("POST","<%=path%>/servlet/BasicInteractionServlet", true);
 		            xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-		            xmlhttp.onreadystatechange = function() 
+		            xmlhttp.onreadystatechange = function( ) 
 		            {
 			           if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
 			           {
@@ -333,11 +333,11 @@
                    
                     xmlhttp.open("POST","<%=path%>/servlet/sImageAndcTemplateServlet", true);
 		            xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-		            xmlhttp.onreadystatechange = function() 
+		            xmlhttp.onreadystatechange = function(event) 
 		            {
-			            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+			            if(xmlhttp.readyState == 4 && xmlhttp.status == 200) 
 			            {
-				            alert("邮件发送成功");
+				            alert(event.message);
 			            }
 		            };
 		            xmlhttp.send(data);
@@ -430,6 +430,8 @@
 
 	<!-- foot -->
 	
+	
+	<!--蒙层 -->
 	<div id="myModel">
         <div class="model-content">
             <div class="panel panel-form" style=" border:0px;box-shadow: 0px 0px 10px black;">

@@ -141,8 +141,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<a href="HomePage.jsp" class="Menu">首页</a>
 				</div>
 				<div class="Menu_fa" id="flip1">
-					<img src="./image/right.png" style="width: 20px;height: 20px"><span
-						class="Menu">舆情分析</span>
+					<span class="Menu">舆情分析</span>
 				</div>
 
 				<div id="Menu_panel1">
@@ -158,12 +157,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 
 				<div class="Menu_fa">
-					<a class="Menu">伪舆情分析</a>
+					<a href="PseudoPublicOpinionAnalysis.jsp" class="Menu" >伪舆情分析</a>
 				</div>
 
 				<div class="Menu_fa" id="flip2">
-					<img src="./image/right.png" style="width:20px;height: 20px"><span
-						class="Menu">舆情报表</span>
+				       <span class="Menu">舆情报表</span>
 				</div>
 				<div id="Menu_panel2">
 					<div class="Menu_fa">

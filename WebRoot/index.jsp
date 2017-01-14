@@ -71,23 +71,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div id="Login_Top_fengche" onclick="change()"><img src="./image/fengche.png"> </div>
             <!--公告-->
             <div id="Notice">
-                <div id="Noticetitle"><img src="./image/noticetitle.PNG"></div>
+                <div id="Noticetitle"><div id="sonNoticetitle">公告</div></div>
             </div>
-            <a href="HomePage.jsp"><img src="./image/title.PNG" /></a>
+            <a href="HomePage.jsp" style="text-decoration: none"><div id="title">南華大学舆情系統</div></a>
         </div>
 
         <div id="Login_Center" role="form">
-            <div id="upload"><img src="./image/Login.PNG"></div>
+            <div id="upload"><div id="Logintitle">登录</div></div>
             <div id="body">
                 <form method="post" action="./servlet/BasicInteractionServlet">
-                    <div class="body_input"><img src="./image/UserName.PNG"></div>
+                    <div class="body_input"><div id="UserNameTitle">用户名  <span >username</span> <span class="glyphicon glyphicon-user"></span>  </div></div>
                     <div class="body_up"><input type="text" class="form-control" id="username" name="username" placeholder="请输入账号"/></div>
-                    <div class="body_input"><img src="./image/password.PNG"></div>
+                    <div class="body_input">
+                          <div id="passwordTitle">
+                                                                             密&nbsp;&nbsp;&nbsp;码 
+                          <span>password</span>
+                          <span class="glyphicon glyphicon-lock"></span>
+                          </div> 
+                    </div>
                     <div class="body_up"><input type="password" class="form-control" id="userpwd" name="userpwd"  placeholder="请输入密码"/></div>
                     <div id="body_botton">
-                        <input type="button" id="register"/>
-                        <input type="reset" id="reset" value=""/>
-                        <input type="submit" value="" id="submit"/>
+                        <input type="button" id="register" name="register" value="注册"/>
+                        <input type="reset" id="reset" name="reset" value="重置"/>
+                        <input type="submit"id="submit" name="submit" value="登录"  />
+                        <div style="clear:both;"></div>
+                    </div>
+                    <div id="post-foot">
+                          <input type="checkbox" id="Checkbox" value="Checkbox"/><span style="margin-left:5px;">记住我</span>
+                          <span style="float:right"><a>忘记密码?</a></span>
+                    
                     </div>
                     <div style="display:none;"><input type="text" id="method" name="method" value="verifyUserInteraction"/></div>
                 </form>

@@ -330,6 +330,8 @@ public class DocumentHandler
         props.put("mail.password", officialEmailPassword);
         
         
+        
+        
         // 构建授权信息，用于进行SMTP进行身份验证
         Authenticator authenticator = new Authenticator() 
         {
